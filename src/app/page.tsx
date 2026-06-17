@@ -12,7 +12,7 @@ export default function Home() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [orderStatus, setOrderStatus] = useState<{ ok: boolean; msg: string } | null>(null);
-  const [cart, setCart] = useState<{ sku: string; quantity: number; size: string }[]>([]);
+  const [cart, setCart] = useState<{ sku: string; quantity: number; size: string; price: number }[]>([]);
   const router = useRouter();
 
   const handleAddToCart = () => {
@@ -20,7 +20,7 @@ export default function Home() {
     if (existing) {
       setCart(cart.map((c) => c.sku === selectedVariant.sku ? { ...c, quantity: c.quantity + quantity } : c));
     } else {
-      setCart([...cart, { sku: selectedVariant.sku, quantity, size: selectedVariant.size }]);
+      setCart([...cart, { sku: selectedVariant.sku, quantity, size: selectedVariant.size, price: selectedVariant.recommendPrice }]);
     }
     setOrderStatus({ ok: true, msg: `Talla ${selectedVariant.size} añadida al carrito ✓` });
     setTimeout(() => setOrderStatus(null), 2000);
@@ -29,9 +29,9 @@ export default function Home() {
   const handleCheckout = () => {
     // Navigate to /checkout, passing the first cart item via query params
     // For a full cart, a proper state manager or server session would be used
-    const item = cart[0] || { sku: selectedVariant.sku, quantity, size: selectedVariant.size };
+    const item = cart[0] || { sku: selectedVariant.sku, quantity, size: selectedVariant.size, price: selectedVariant.recommendPrice };
     router.push(
-      `/checkout?sku=${item.sku}&qty=${item.quantity}&size=${item.size}&price=${selectedVariant.recommendPrice}`
+      `/checkout?sku=${item.sku}&qty=${item.quantity}&size=${item.size}&price=${item.price}`
     );
   };
 
@@ -100,9 +100,8 @@ export default function Home() {
                 <button
                   key={i}
                   onClick={() => setSelectedImage(i)}
-                  className={`rounded-lg overflow-hidden w-16 h-16 flex-shrink-0 border-2 transition-all duration-200 ${
-                    selectedImage === i ? "border-[#00E5FF]" : "border-transparent opacity-50 hover:opacity-80"
-                  }`}
+                  className={`rounded-lg overflow-hidden w-16 h-16 flex-shrink-0 border-2 transition-all duration-200 ${selectedImage === i ? "border-[#00E5FF]" : "border-transparent opacity-50 hover:opacity-80"
+                    }`}
                 >
                   <img src={img} alt="" className="w-full h-full object-cover" />
                 </button>
@@ -141,11 +140,10 @@ export default function Home() {
                     <button
                       key={v.sku}
                       onClick={() => setSelectedVariant(v)}
-                      className={`w-12 h-12 rounded-xl font-bold text-sm transition-all duration-200 border-2 ${
-                        selectedVariant.sku === v.sku
-                          ? "border-[#00E5FF] bg-[#00E5FF]/10 text-[#00E5FF]"
-                          : "border-white/10 hover:border-white/30 text-gray-300"
-                      }`}
+                      className={`w-12 h-12 rounded-xl font-bold text-sm transition-all duration-200 border-2 ${selectedVariant.sku === v.sku
+                        ? "border-[#00E5FF] bg-[#00E5FF]/10 text-[#00E5FF]"
+                        : "border-white/10 hover:border-white/30 text-gray-300"
+                        }`}
                     >
                       {v.size}
                     </button>
@@ -232,7 +230,7 @@ export default function Home() {
 
         {/* Footer */}
         <div className="text-center text-xs text-gray-600 border-t border-white/5 pt-8">
-          <p>Powered by <span className="text-[#0033AD]">Cardano</span> × <span className="text-[#00E5FF]">POPCustoms</span></p>
+          <p>Powered by <span className="text-[#0033AD]">Cardano Merch</span></p>
         </div>
       </div>
     </main>
