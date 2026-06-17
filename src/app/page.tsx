@@ -59,7 +59,7 @@ export default function Home() {
         <div className="flex items-center gap-4">
           <img src="/logo.jpg" alt="Logo" className="w-10 h-10 rounded-full object-cover border border-white/10" />
           <div className="flex flex-col">
-            <span className="text-xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#0033AD] to-[#00E5FF]">CARDANO</span>
+            <span className="text-xl font-black tracking-tighter text-white">CARDANO</span>
             <span className="text-[10px] font-bold tracking-[0.3em] text-white uppercase">Merch</span>
           </div>
         </div>
