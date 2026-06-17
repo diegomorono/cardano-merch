@@ -59,9 +59,11 @@ function CheckoutContent() {
         setOrderNumber(data.order_number);
         setOrderStatus({ ok: true, msg: "¡Orden enviada exitosamente!" });
       } else {
+        const errorMsg = `Error del servidor: ${JSON.stringify(data)}`;
+        alert(errorMsg); // Aggressive alerting
         setOrderStatus({
           ok: false,
-          msg: `Error del servidor: ${JSON.stringify(data.details || data.message)}`,
+          msg: errorMsg,
         });
       }
     } catch {
