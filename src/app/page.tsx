@@ -56,9 +56,12 @@ export default function Home() {
 
       {/* Navbar */}
       <nav className="relative z-20 flex items-center justify-between px-8 py-5 border-b border-white/5">
-        <div className="flex items-center gap-6">
-          <img src="/logo.jpg" alt="Logo" className="w-10 h-10 rounded-full object-cover" />
-          <img src="/logo-name.png" alt="Cardano Merch" className="h-12 w-auto max-w-none object-contain" />
+        <div className="flex items-center gap-4">
+          <img src="/logo.jpg" alt="Logo" className="w-10 h-10 rounded-full object-cover border border-white/10" />
+          <div className="flex flex-col">
+            <span className="text-xl font-black tracking-tighter text-white">CARDANO</span>
+            <span className="text-xs font-bold tracking-widest text-[#00E5FF] uppercase">Merch</span>
+          </div>
         </div>
         <button
           onClick={handleCheckout}
