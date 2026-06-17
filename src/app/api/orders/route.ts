@@ -59,13 +59,9 @@ export async function POST(req: Request) {
     const signature = hmac.digest("base64");
 
     // Confirmed endpoint from POPCustoms API Docs (Apidog):
-    // POST https://i.popcustoms.com/api/v1/stores/{store_id}/webhooks/order?platform=General
+    // POST https://i.popcustoms.com/api/v1/stores/{store_id}/orders
     // Headers: x-hmac-sha256, x-topic: orders/paid, Authorization: Bearer <token>
-    //
-    // NOTE: The webhook endpoint also requires a Bearer token obtained via:
-    // POST https://i.popcustoms.com/api/v1/login with { account, password }
-    // Until credentials are provided, we attempt the webhook-only approach first.
-    const popCustomsUrl = `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/order?platform=General`;
+    const popCustomsUrl = `https://i.popcustoms.com/api/v1/stores/${storeId}/orders`;
 
     const popCustomsResponse = await fetch(popCustomsUrl, {
       method: "POST",
