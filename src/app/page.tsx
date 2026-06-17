@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, ChevronRight, Star, Shield, Zap } from "lucide-react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { products } from "@/lib/products";
 
 export default function Home() {
@@ -10,9 +11,9 @@ export default function Home() {
   const [selectedVariant, setSelectedVariant] = useState(product.variants[2]); // Default L
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [loading, setLoading] = useState(false);
   const [orderStatus, setOrderStatus] = useState<{ ok: boolean; msg: string } | null>(null);
   const [cart, setCart] = useState<{ sku: string; quantity: number; size: string }[]>([]);
+  const router = useRouter();
 
   const handleAddToCart = () => {
     const existing = cart.find((c) => c.sku === selectedVariant.sku);
@@ -25,43 +26,13 @@ export default function Home() {
     setTimeout(() => setOrderStatus(null), 2000);
   };
 
-  const handleCheckout = async () => {
-    if (cart.length === 0) {
-      setOrderStatus({ ok: false, msg: "Tu carrito está vacío. Agrega una talla primero." });
-      return;
-    }
-    setLoading(true);
-    setOrderStatus(null);
-    try {
-      const response = await fetch("/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          cart: cart.map(({ sku, quantity }) => ({ sku, quantity })),
-          shipping: {
-            name: "Satoshi Nakamoto",
-            address: "123 Blockchain Ave",
-            phone_number: "555-0192",
-            city: "Crypto City",
-            state: "Texas",
-            country_code: "US",
-            zip_code: "12345",
-            email: "satoshi@cardano.org",
-          },
-        }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setOrderStatus({ ok: true, msg: "¡Orden enviada a POPCustoms exitosamente!" });
-        setCart([]);
-      } else {
-        setOrderStatus({ ok: false, msg: `Error: ${JSON.stringify(data.details || data.message)}` });
-      }
-    } catch {
-      setOrderStatus({ ok: false, msg: "Error de conexión al servidor." });
-    } finally {
-      setLoading(false);
-    }
+  const handleCheckout = () => {
+    // Navigate to /checkout, passing the first cart item via query params
+    // For a full cart, a proper state manager or server session would be used
+    const item = cart[0] || { sku: selectedVariant.sku, quantity, size: selectedVariant.size };
+    router.push(
+      `/checkout?sku=${item.sku}&qty=${item.quantity}&size=${item.size}&price=${selectedVariant.recommendPrice}`
+    );
   };
 
   const totalCartItems = cart.reduce((acc, c) => acc + c.quantity, 0);
@@ -217,11 +188,10 @@ export default function Home() {
                   <motion.button
                     whileHover={{ scale: 1.01 }}
                     onClick={handleCheckout}
-                    disabled={loading}
-                    className="w-full mt-3 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 border border-[#00E5FF]/40 text-[#00E5FF] hover:bg-[#00E5FF]/10 transition-all duration-200 disabled:opacity-50"
+                    className="w-full mt-3 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 border border-[#00E5FF]/40 text-[#00E5FF] hover:bg-[#00E5FF]/10 transition-all duration-200"
                   >
-                    {loading ? "Enviando a POPCustoms..." : "Confirmar Orden →"}
-                    {!loading && <ChevronRight className="w-4 h-4" />}
+                    Ir al Checkout →
+                    <ChevronRight className="w-4 h-4" />
                   </motion.button>
                 </div>
               )}
