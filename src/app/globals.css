@@ -1,51 +1,95 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
 
 @theme {
-  --color-primary: #F59E0B;
-  --color-secondary: #FBBF24;
-  --color-accent: #8B5CF6;
-  --color-bg: #0F172A;
-  --color-fg: #F8FAFC;
+  --color-gold: #FFD700;
+  --color-purple-neon: #9D50BB;
+  --color-charcoal: #050505;
+  --color-obsidian: #0A0A0A;
+  --color-vapor: #6E48AA;
   
-  --font-orbitron: "Orbitron", sans-serif;
-  --font-exo: "Exo 2", sans-serif;
+  --font-syne: "Syne", sans-serif;
+  --font-inter: "Inter", sans-serif;
 }
 
 :root {
-  --background: #0F172A;
-  --foreground: #F8FAFC;
+  --background: #050505;
+  --foreground: #FFFFFF;
+  --accent: #FFD700;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-exo);
+  font-family: var(--font-inter);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-orbitron);
+h1, h2, h3, .heading-xl {
+  font-family: var(--font-syne);
+  text-transform: uppercase;
+  font-weight: 800;
 }
 
-.glass-panel {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+/* Liquid Metal Blur */
+.liquid-blur {
+  filter: blur(80px);
+  opacity: 0.4;
+  mix-blend-mode: screen;
 }
 
-.glass-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  transition: all 0.3s ease;
+/* Sovereign Vault Card */
+.vault-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glass-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(245, 158, 11, 0.4);
-  transform: translateY(-2px);
+.vault-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 215, 0, 0.2);
+  transform: translateY(-10px) scale(1.01);
+}
+
+/* Animated Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  white-space: nowrap;
+  animation: marquee 30s linear infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Utilities */
+.text-outline {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+  color: transparent;
+}
+
+.glow-text {
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
 }

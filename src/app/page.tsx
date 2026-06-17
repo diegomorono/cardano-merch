@@ -1,8 +1,8 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingCart, ChevronRight, Star, Shield, Zap } from "lucide-react";
-import { useState } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { ShoppingCart, ArrowRight, Star, Plus, Minus, Command } from "lucide-react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { products } from "@/lib/products";
 import { useCart } from "@/context/CartContext";
@@ -16,6 +16,11 @@ export default function Home() {
   
   const { items, addToCart } = useCart();
   const router = useRouter();
+  
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: containerRef });
+  const titleY = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
+  const imageScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.1]);
 
   const handleAddToCart = () => {
     addToCart({ 
@@ -25,215 +30,246 @@ export default function Home() {
         price: selectedVariant.recommendPrice,
         title: product.title 
     });
-    setOrderStatus({ ok: true, msg: `Talla ${selectedVariant.size} añadida al carrito ✓` });
+    setOrderStatus({ ok: true, msg: "AUTHENTICATED & ADDED TO VAULT" });
     setQuantity(1);
-    setTimeout(() => setOrderStatus(null), 2000);
-  };
-
-  const handleCheckout = () => {
-    router.push("/checkout");
+    setTimeout(() => setOrderStatus(null), 3000);
   };
 
   const totalCartItems = items.reduce((acc, c) => acc + c.quantity, 0);
 
   return (
-    <main className="min-h-screen bg-bg text-fg overflow-x-hidden font-exo">
-      {/* Animated background blobs */}
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <motion.div
-          animate={{ scale: [1, 1.3, 1], x: [-50, 50, -50] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-200px] left-[-100px] w-[600px] h-[600px] rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%)" }}
+    <main ref={containerRef} className="min-h-screen bg-charcoal text-white font-inter selection:bg-gold selection:text-charcoal">
+      {/* Cinematic Background */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <motion.div 
+          animate={{ x: [0, 100, 0], y: [0, -50, 0] }}
+          transition={{ duration: 25, repeat: Infinity }}
+          className="absolute -top-[10%] -left-[10%] w-[80vw] h-[80vh] bg-gold liquid-blur rounded-full opacity-20" 
         />
-        <motion.div
-          animate={{ scale: [1.2, 1, 1.2], x: [50, -50, 50] }}
-          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-[-100px] right-[-100px] w-[500px] h-[500px] rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 70%)" }}
+        <motion.div 
+          animate={{ x: [0, -100, 0], y: [0, 50, 0] }}
+          transition={{ duration: 20, repeat: Infinity }}
+          className="absolute -bottom-[10%] -right-[10%] w-[70vw] h-[70vh] bg-purple-neon liquid-blur rounded-full opacity-10" 
         />
       </div>
 
-      {/* Navbar */}
-      <nav className="relative z-20 flex items-center justify-between px-8 py-5 border-b border-white/10 glass-panel">
-        <div className="flex items-center gap-4">
-          <img src="/logo.jpg" alt="Logo" className="w-10 h-10 rounded-full object-cover border border-primary/40 shadow-[0_0_15px_rgba(245,158,11,0.3)]" />
-          <div className="flex flex-col">
-            <span className="text-xl font-black tracking-tighter text-white font-orbitron">CARDANO</span>
-            <span className="text-[10px] font-bold tracking-[0.3em] text-primary uppercase">Merch</span>
-          </div>
-        </div>
-        <button
-          onClick={handleCheckout}
-          className="relative flex items-center gap-2 bg-white/5 hover:bg-primary/20 border border-white/20 rounded-full px-5 py-2.5 text-sm transition-all duration-300 cursor-pointer group"
+      {/* Sovereign Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 px-10 py-8 flex justify-between items-center mix-blend-difference">
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="flex items-center gap-3 cursor-pointer group"
         >
-          <ShoppingCart className="w-4 h-4 group-hover:text-primary transition-colors" />
-          <span className="font-medium">Checkout</span>
-          {totalCartItems > 0 && (
-            <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-accent text-white text-xs font-black flex items-center justify-center shadow-[0_0_10px_rgba(139,92,246,0.5)]">
-              {totalCartItems}
-            </span>
-          )}
-        </button>
+          <div className="w-12 h-12 rounded-full overflow-hidden border border-white/20 group-hover:border-gold transition-colors duration-500">
+            <img src="/logo.jpg" alt="Logo" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+          </div>
+          <div className="flex flex-col">
+            <span className="font-syne font-black text-2xl tracking-tighter leading-none">Sovereign</span>
+            <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-white/50">Collection</span>
+          </div>
+        </motion.div>
+
+        <div className="flex items-center gap-8">
+          <button onClick={() => router.push("/checkout")} className="relative group cursor-pointer">
+            <div className="flex items-center gap-4 bg-white/5 backdrop-blur-xl border border-white/10 px-6 py-3 rounded-full group-hover:bg-white/10 transition-all duration-500">
+              <ShoppingCart className="w-5 h-5" />
+              <span className="text-sm font-bold uppercase tracking-widest">Vault</span>
+              {totalCartItems > 0 && (
+                <span className="bg-gold text-charcoal w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black">
+                  {totalCartItems}
+                </span>
+              )}
+            </div>
+          </button>
+        </div>
       </nav>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 py-16">
-        {/* Hero / Product Detail */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-24">
-          {/* Left — Images */}
-          <div className="space-y-4">
-            <motion.div
-              key={selectedImage}
-              initial={{ opacity: 0, scale: 0.97 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
-              className="rounded-2xl overflow-hidden aspect-square bg-white/5 border border-white/10 glass-panel p-4"
-            >
-              <img
-                src={product.images[selectedImage]}
-                alt={product.title}
-                className="w-full h-full object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
-              />
-            </motion.div>
-            <div className="flex gap-3">
+      {/* Hero Spotlight Section */}
+      <section className="relative h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <motion.div style={{ y: titleY }} className="absolute z-10 text-center pointer-events-none">
+          <h2 className="text-[12vw] font-black tracking-tighter leading-[0.8] text-outline opacity-20 whitespace-nowrap">
+            Future Proofing
+          </h2>
+        </motion.div>
+        
+        <div className="container mx-auto px-10 grid lg:grid-cols-2 gap-20 items-center relative z-20">
+          <motion.div 
+            style={{ scale: imageScale }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="relative"
+          >
+            <div className="aspect-[4/5] rounded-[2rem] overflow-hidden vault-card p-10 flex items-center justify-center">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={selectedImage}
+                  initial={{ opacity: 0, y: 50, rotate: -5 }}
+                  animate={{ opacity: 1, y: 0, rotate: 0 }}
+                  exit={{ opacity: 0, y: -50, rotate: 5 }}
+                  transition={{ duration: 0.6 }}
+                  src={product.images[selectedImage]}
+                  alt={product.title}
+                  className="w-full h-full object-contain drop-shadow-[0_40px_100px_rgba(0,0,0,0.8)]"
+                />
+              </AnimatePresence>
+            </div>
+            
+            {/* Image Selector Strip */}
+            <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 flex gap-4 p-2 bg-white/5 backdrop-blur-3xl rounded-2xl border border-white/10">
               {product.images.map((img, i) => (
                 <button
                   key={i}
                   onClick={() => setSelectedImage(i)}
-                  className={`rounded-xl overflow-hidden w-16 h-16 flex-shrink-0 border-2 transition-all duration-200 cursor-pointer ${selectedImage === i ? "border-primary shadow-[0_0_10px_rgba(245,158,11,0.3)]" : "border-white/5 opacity-40 hover:opacity-100 hover:border-white/20"
-                    }`}
+                  className={`w-14 h-14 rounded-xl overflow-hidden border-2 transition-all duration-500 cursor-pointer ${
+                    selectedImage === i ? "border-gold scale-110 shadow-lg shadow-gold/20" : "border-transparent opacity-40 hover:opacity-100"
+                  }`}
                 >
                   <img src={img} alt="" className="w-full h-full object-cover" />
                 </button>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right — Product Info */}
-          <div className="space-y-6">
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-              <div className="flex items-center gap-2 text-primary text-sm font-orbitron mb-3 tracking-widest uppercase">
-                Premium Cardano Gear
-              </div>
-              <h1 className="text-5xl font-extrabold leading-tight mb-3 font-orbitron text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-primary/50 tracking-tight">
+          <motion.div 
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="space-y-10"
+          >
+            <div className="space-y-4">
+              <span className="inline-block bg-gold/10 text-gold px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-gold/20">
+                Dropping Now / Series 01
+              </span>
+              <h1 className="text-7xl font-black tracking-tighter font-syne leading-none">
                 {product.title}
               </h1>
-              <div className="flex items-center gap-1.5 mb-6">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-                ))}
-                <span className="text-sm text-fg/60 ml-3 font-medium">Color: <span className="text-fg">{product.color}</span></span>
-              </div>
-
-              <div className="flex items-baseline gap-3 mb-8">
-                <span className="text-5xl font-black text-white font-orbitron">${selectedVariant.recommendPrice}</span>
-                <span className="text-lg text-fg/40 font-orbitron tracking-tighter">USD</span>
-              </div>
-
-              {/* Size Selector */}
-              <div className="mb-8 p-6 rounded-2xl border border-white/5 bg-white/5 glass-panel">
-                <p className="text-sm text-fg/60 mb-4 font-medium uppercase tracking-wider">
-                  Select Talla: <span className="text-white font-bold ml-1">{selectedVariant.size}</span>
-                  <span className="text-fg/30 text-xs ml-4 font-mono">SKU: {selectedVariant.sku}</span>
-                </p>
-                <div className="flex gap-3 flex-wrap">
-                  {product.variants.map((v) => (
-                    <button
-                      key={v.sku}
-                      onClick={() => { setSelectedVariant(v); setQuantity(1); }}
-                      className={`w-14 h-14 rounded-xl font-orbitron font-bold text-sm transition-all duration-300 border-2 cursor-pointer ${selectedVariant.sku === v.sku
-                        ? "border-primary bg-primary/20 text-primary shadow-[0_0_15px_rgba(245,158,11,0.2)]"
-                        : "border-white/10 hover:border-white/30 text-fg/60 hover:text-fg"
-                        }`}
-                    >
-                      {v.size}
-                    </button>
-                  ))}
+              <div className="flex items-center gap-6">
+                <div className="flex text-gold">
+                  {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-gold" />)}
                 </div>
+                <span className="text-white/40 text-sm uppercase tracking-widest">Verified Authenticity</span>
               </div>
+            </div>
 
-              {/* Quantity */}
-              <div className="flex items-center gap-6 mb-10">
-                <p className="text-sm text-fg/60 font-medium uppercase tracking-wider">Quantity:</p>
-                <div className="flex items-center gap-5 bg-white/5 border border-white/10 rounded-2xl px-5 py-2.5 glass-panel">
-                  <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="text-fg/40 hover:text-primary w-6 h-6 flex items-center justify-center text-xl font-bold cursor-pointer transition-colors">−</button>
-                  <span className="w-8 text-center font-orbitron font-bold text-lg">{quantity}</span>
-                  <button onClick={() => setQuantity(quantity + 1)} className="text-fg/40 hover:text-primary w-6 h-6 flex items-center justify-center text-xl font-bold cursor-pointer transition-colors">+</button>
-                </div>
-              </div>
+            <div className="flex items-baseline gap-4">
+              <span className="text-6xl font-syne font-black">${selectedVariant.recommendPrice}</span>
+              <span className="text-xl text-white/30 font-light tracking-tighter">ADA COMPATIBLE</span>
+            </div>
 
-              {/* Add to Cart Button */}
-              <motion.button
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handleAddToCart}
-                className="w-full py-5 rounded-2xl font-orbitron font-bold text-xl flex items-center justify-center gap-4 transition-all duration-300 cursor-pointer shadow-[0_15px_35px_rgba(245,158,11,0.2)] group relative overflow-hidden"
-                style={{ background: "linear-gradient(135deg, #F59E0B, #D97706)" }}
-              >
-                <div className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out skew-x-[-20deg]" />
-                <ShoppingCart className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
-                <span className="text-white">ADD TO CART — ${(selectedVariant.recommendPrice * quantity).toFixed(2)}</span>
-              </motion.button>
-
-              {/* Status Message */}
-              <AnimatePresence>
-                {orderStatus && (
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className={`mt-4 text-sm font-orbitron font-bold text-center p-3 rounded-xl glass-panel ${orderStatus.ok ? "text-primary border-primary/20" : "text-red-400 border-red-400/20"}`}
+            {/* Sizes: The Chip Vault */}
+            <div className="space-y-6">
+              <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40">Select Specification</h4>
+              <div className="flex flex-wrap gap-4">
+                {product.variants.map((v) => (
+                  <button
+                    key={v.sku}
+                    onClick={() => { setSelectedVariant(v); setQuantity(1); }}
+                    className={`min-w-[70px] h-14 rounded-2xl font-syne font-bold text-lg transition-all duration-500 border-2 cursor-pointer flex items-center justify-center ${
+                      selectedVariant.sku === v.sku
+                        ? "bg-gold text-charcoal border-gold shadow-2xl shadow-gold/30"
+                        : "bg-white/5 border-white/10 hover:border-gold/50 text-white/60"
+                    }`}
                   >
-                    {orderStatus.msg}
-                  </motion.p>
-                )}
-              </AnimatePresence>
-
-              {/* Description */}
-              <div className="mt-10 pt-8 border-t border-white/10">
-                <div className="flex items-center gap-2 mb-4 text-primary/80 font-orbitron text-xs tracking-widest uppercase">
-                  Product Details
-                </div>
-                <p className="text-fg/60 text-base leading-relaxed font-exo italic border-l-2 border-primary/20 pl-6">
-                  {product.description}
-                </p>
+                    {v.size}
+                  </button>
+                ))}
               </div>
-            </motion.div>
-          </div>
+            </div>
+
+            {/* Quantity Control */}
+            <div className="flex items-center gap-10">
+              <div className="flex items-center bg-white/5 rounded-2xl border border-white/10 p-2">
+                <button 
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="w-10 h-10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 rounded-xl transition-all cursor-pointer"
+                >
+                  <Minus className="w-5 h-5" />
+                </button>
+                <span className="w-12 text-center font-syne font-black text-xl">{quantity}</span>
+                <button 
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="w-10 h-10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 rounded-xl transition-all cursor-pointer"
+                >
+                  <Plus className="w-5 h-5" />
+                </button>
+              </div>
+              
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleAddToCart}
+                className="flex-1 h-20 bg-white text-charcoal rounded-3xl font-syne font-black text-xl flex items-center justify-center gap-4 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(255,255,255,0.2)] cursor-pointer group"
+              >
+                <span>INITIATE PROTOCOL</span>
+                <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+              </motion.button>
+            </div>
+
+            <AnimatePresence>
+              {orderStatus && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="bg-gold/10 border border-gold/30 p-4 rounded-2xl flex items-center gap-4 justify-center"
+                >
+                  <Command className="w-4 h-4 text-gold animate-pulse" />
+                  <span className="text-gold font-syne font-bold text-xs tracking-widest">{orderStatus.msg}</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
         </div>
+      </section>
 
-        {/* Features Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-          {[
-            { icon: Shield, title: "Secure Checkout", desc: "Enterprise-grade encryption for all transactions" },
-            { icon: Zap, title: "Fast Delivery", desc: "Global shipping powered by our logistics network" },
-            { icon: Star, title: "Premium Quality", desc: "Sourced from the best materials for Cardano fans" }
-          ].map((feat, i) => (
-            <div key={i} className="glass-card p-8 rounded-2xl flex flex-col items-center text-center">
-              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 border border-primary/20">
-                <feat.icon className="w-7 h-7 text-primary" />
-              </div>
-              <h3 className="font-orbitron font-bold text-lg mb-3 text-white">{feat.title}</h3>
-              <p className="text-fg/40 text-sm leading-relaxed">{feat.desc}</p>
+      {/* Marquee Section */}
+      <div className="py-20 border-y border-white/5 bg-obsidian overflow-hidden">
+        <div className="animate-marquee">
+          {[...Array(10)].map((_, i) => (
+            <div key={i} className="flex items-center gap-10 px-10">
+              <span className="text-4xl font-syne font-black tracking-tighter opacity-10">SECURE BLOCKCHAIN COMMERCE</span>
+              <div className="w-2 h-2 bg-gold rounded-full" />
+              <span className="text-4xl font-syne font-black tracking-tighter opacity-10">GLOBAL SOVEREIGN SHIPPING</span>
+              <div className="w-2 h-2 bg-purple-neon rounded-full" />
             </div>
           ))}
         </div>
+      </div>
 
-        {/* Footer */}
-        <div className="text-center py-12 border-t border-white/10">
-          <p className="text-xs text-fg/30 font-orbitron tracking-widest uppercase mb-4">
-            Powered by <span className="text-primary font-black">Cardano Merch</span>
-          </p>
-          <div className="flex justify-center gap-6">
-            <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:border-primary/40 transition-colors cursor-pointer opacity-50">
-              <div className="w-3 h-3 bg-white/40 rounded-sm" />
-            </div>
-            <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:border-primary/40 transition-colors cursor-pointer opacity-50">
-              <div className="w-3 h-3 bg-white/40 rounded-sm" />
+      {/* Description / Tech Specs */}
+      <section className="py-40 container mx-auto px-10">
+        <div className="grid lg:grid-cols-3 gap-20">
+          <div className="lg:col-span-2 space-y-10">
+            <h3 className="text-4xl font-black font-syne">Material Integrity</h3>
+            <p className="text-2xl text-white/50 leading-relaxed font-light italic border-l-4 border-gold pl-10">
+              {product.description}
+            </p>
+          </div>
+          <div className="vault-card p-10 rounded-[2rem] space-y-8">
+            <h4 className="font-syne font-black text-xl border-b border-white/10 pb-4">Specifications</h4>
+            <div className="space-y-4">
+              {["100% Combed Organic Cotton", "220 GSM Heavyweight Fabric", "Digital Proof of Purchase", "Global Decentralized Logistics"].map((spec, i) => (
+                <div key={i} className="flex items-center gap-4 text-sm text-white/40">
+                  <div className="w-1.5 h-1.5 bg-gold rounded-full" />
+                  {spec}
+                </div>
+              ))}
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Modern Footer */}
+      <footer className="py-20 border-t border-white/5 bg-obsidian text-center">
+        <div className="flex flex-col items-center gap-10">
+          <div className="flex flex-col">
+            <span className="font-syne font-black text-5xl tracking-tighter text-outline opacity-20">SOVEREIGN</span>
+            <span className="text-xs font-bold tracking-[1em] uppercase text-white/40 mt-[-10px]">Collection</span>
+          </div>
+          <p className="text-[10px] text-white/20 tracking-[0.5em] uppercase">Powered by Cardano Merch / Estate 2026</p>
+        </div>
+      </footer>
     </main>
   );
 }
