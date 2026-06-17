@@ -58,9 +58,9 @@ export default function Home() {
       <nav className="relative z-20 flex items-center justify-between px-8 py-5 border-b border-white/5">
         <div className="flex items-center gap-4">
           <img src="/logo.jpg" alt="Logo" className="w-10 h-10 rounded-full object-cover border border-white/10" />
-          <div className="flex flex-col">
-            <span className="text-xl font-black tracking-tighter text-white">CARDANO</span>
-            <span className="text-xs font-bold tracking-widest text-[#00E5FF] uppercase">Merch</span>
+          <div className="flex flex-col -space-y-0.5">
+            <span className="text-xl font-bold tracking-tight text-white">CARDANO</span>
+            <span className="text-[10px] font-medium tracking-[0.2em] text-[#00E5FF] uppercase">Merch</span>
           </div>
         </div>
         <button
