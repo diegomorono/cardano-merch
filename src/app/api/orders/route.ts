@@ -101,14 +101,14 @@ export async function POST(req: Request) {
         {
           message: "POPCustoms rejected the order",
           status: popCustomsResponse.status,
-          details: popCustomsData,
+          details: popCustomsData, // This will now be returned to the client
           debug: {
             endpoint: popCustomsUrl,
             order_number: orderNumber,
             line_items: popCustomsPayload.line_items,
           },
         },
-        { status: popCustomsResponse.status }
+        { status: 422 } // Forcing 422 for frontend to catch and show details
       );
     }
 
