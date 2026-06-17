@@ -45,7 +45,7 @@ export async function POST(req: Request) {
     const orderNumber = `ADA-${Date.now()}`;
 
     const popCustomsPayload = {
-      platform_name: "POPStandard",
+      platform: "POPStandard",
       order_number: orderNumber,
       line_items: body.cart.map((item: { sku: string; quantity: number }) => ({
         sku: item.sku,
