@@ -65,6 +65,7 @@ export async function POST(req: Request) {
     };
 
     const payloadString = JSON.stringify(popCustomsPayload);
+    console.log("Submitting payload to POPCustoms:", payloadString);
 
     // Generate HMAC-SHA256 signature
     const hmac = crypto.createHmac("sha256", apiKey);
