@@ -26,6 +26,7 @@ export default function Home() {
         title: product.title 
     });
     setOrderStatus({ ok: true, msg: `Talla ${selectedVariant.size} añadida al carrito ✓` });
+    setQuantity(1);
     setTimeout(() => setOrderStatus(null), 2000);
   };
 
@@ -57,7 +58,7 @@ export default function Home() {
       <nav className="relative z-20 flex items-center justify-between px-8 py-5 border-b border-white/5">
         <div className="flex items-center gap-3">
           <img src="/logo.jpg" alt="Logo" className="w-10 h-10 rounded-full object-cover" />
-          <img src="/logo-name.png" alt="Cardano Merch" className="h-10 object-contain" />
+          <img src="/logo-name.png" alt="Cardano Merch" className="h-16 object-contain" />
         </div>
         <button
           onClick={handleCheckout}
