@@ -165,9 +165,9 @@ export default function CheckoutPage() {
     <main className="min-h-screen bg-[#0A0B10] text-white">
       <nav className="relative z-20 flex items-center gap-4 px-8 py-5 border-b border-white/5">
         <Link href="/" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm"><ArrowLeft className="w-4 h-4" /><span>Volver</span></Link>
-        <div className="flex items-center gap-2 ml-4">
-          <img src="/logo.jpg" alt="Logo" className="w-8 h-8 rounded-full object-cover" />
-          <img src="/logo-name.png" alt="Cardano Merch" className="h-6" />
+        <div className="flex items-center gap-3 ml-4">
+          <img src="/logo.jpg" alt="Logo" className="w-10 h-10 rounded-full object-cover" />
+          <img src="/logo-name.png" alt="Cardano Merch" className="h-8 object-contain" />
         </div>
       </nav>
       <Suspense fallback={<div className="text-center py-32">Cargando...</div>}>

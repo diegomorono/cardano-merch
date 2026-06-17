@@ -55,9 +55,9 @@ export default function Home() {
 
       {/* Navbar */}
       <nav className="relative z-20 flex items-center justify-between px-8 py-5 border-b border-white/5">
-        <div className="flex items-center gap-2">
-          <img src="/logo.jpg" alt="Logo" className="w-8 h-8 rounded-full object-cover" />
-          <img src="/logo-name.png" alt="Cardano Merch" className="h-6" />
+        <div className="flex items-center gap-3">
+          <img src="/logo.jpg" alt="Logo" className="w-10 h-10 rounded-full object-cover" />
+          <img src="/logo-name.png" alt="Cardano Merch" className="h-8 object-contain" />
         </div>
         <button
           onClick={handleCheckout}
@@ -166,27 +166,6 @@ export default function Home() {
                 <ShoppingCart className="w-5 h-5" />
                 <span>Añadir al Carrito — ${(selectedVariant.recommendPrice * quantity).toFixed(2)}</span>
               </motion.button>
-
-              {/* Cart Items display */}
-              {items.length > 0 && (
-                <div className="mt-4 p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
-                  <p className="text-xs text-gray-400 font-mono uppercase tracking-wider mb-2">Carrito</p>
-                  {items.map((c) => (
-                    <div key={c.sku} className="flex justify-between text-sm">
-                      <span className="text-gray-300">Talla {c.size} × {c.quantity}</span>
-                      <span className="text-gray-400 font-mono text-xs">{c.sku}</span>
-                    </div>
-                  ))}
-                  <motion.button
-                    whileHover={{ scale: 1.01 }}
-                    onClick={handleCheckout}
-                    className="w-full mt-3 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 border border-[#00E5FF]/40 text-[#00E5FF] hover:bg-[#00E5FF]/10 transition-all duration-200"
-                  >
-                    Ir al Checkout →
-                    <ChevronRight className="w-4 h-4" />
-                  </motion.button>
-                </div>
-              )}
 
               {/* Status Message */}
               <AnimatePresence>
