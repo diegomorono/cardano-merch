@@ -5,6 +5,7 @@ import { ShoppingCart, ChevronRight, Star, Shield, Zap } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { products } from "@/lib/products";
+import { useCart } from "@/context/CartContext";
 
 export default function Home() {
   const product = products[0];
@@ -12,30 +13,27 @@ export default function Home() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [orderStatus, setOrderStatus] = useState<{ ok: boolean; msg: string } | null>(null);
-  const [cart, setCart] = useState<{ sku: string; quantity: number; size: string; price: number }[]>([]);
+  
+  const { items, addToCart } = useCart();
   const router = useRouter();
 
   const handleAddToCart = () => {
-    const existing = cart.find((c) => c.sku === selectedVariant.sku);
-    if (existing) {
-      setCart(cart.map((c) => c.sku === selectedVariant.sku ? { ...c, quantity: c.quantity + quantity } : c));
-    } else {
-      setCart([...cart, { sku: selectedVariant.sku, quantity, size: selectedVariant.size, price: selectedVariant.recommendPrice }]);
-    }
+    addToCart({ 
+        sku: selectedVariant.sku, 
+        quantity, 
+        size: selectedVariant.size, 
+        price: selectedVariant.recommendPrice,
+        title: product.title 
+    });
     setOrderStatus({ ok: true, msg: `Talla ${selectedVariant.size} añadida al carrito ✓` });
     setTimeout(() => setOrderStatus(null), 2000);
   };
 
   const handleCheckout = () => {
-    // Navigate to /checkout, passing the first cart item via query params
-    // For a full cart, a proper state manager or server session would be used
-    const item = cart[0] || { sku: selectedVariant.sku, quantity, size: selectedVariant.size, price: selectedVariant.recommendPrice };
-    router.push(
-      `/checkout?sku=${item.sku}&qty=${item.quantity}&size=${item.size}&price=${item.price}`
-    );
+    router.push("/checkout");
   };
 
-  const totalCartItems = cart.reduce((acc, c) => acc + c.quantity, 0);
+  const totalCartItems = items.reduce((acc, c) => acc + c.quantity, 0);
 
   return (
     <main className="min-h-screen bg-[#0A0B10] text-white overflow-x-hidden">
@@ -170,10 +168,10 @@ export default function Home() {
               </motion.button>
 
               {/* Cart Items display */}
-              {cart.length > 0 && (
+              {items.length > 0 && (
                 <div className="mt-4 p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
                   <p className="text-xs text-gray-400 font-mono uppercase tracking-wider mb-2">Carrito</p>
-                  {cart.map((c) => (
+                  {items.map((c) => (
                     <div key={c.sku} className="flex justify-between text-sm">
                       <span className="text-gray-300">Talla {c.size} × {c.quantity}</span>
                       <span className="text-gray-400 font-mono text-xs">{c.sku}</span>
@@ -207,18 +205,6 @@ export default function Home() {
               {/* Description */}
               <div className="mt-6 pt-6 border-t border-white/5">
                 <p className="text-gray-400 text-sm leading-relaxed">{product.description}</p>
-              </div>
-
-              {/* Trust badges */}
-              <div className="flex items-center gap-4 mt-6 text-xs text-gray-500">
-                <div className="flex items-center gap-1.5">
-                  <Shield className="w-3.5 h-3.5 text-[#0033AD]" />
-                  <span>Print-on-Demand seguro</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <Zap className="w-3.5 h-3.5 text-[#00E5FF]" />
-                  <span>Envío mundial</span>
-                </div>
               </div>
             </motion.div>
           </div>
