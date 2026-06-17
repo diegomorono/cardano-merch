@@ -13,24 +13,35 @@ export async function POST(req: Request) {
 
     const apiKey = process.env.POPCUSTOMS_API_KEY;
     const storeId = process.env.POPCUSTOMS_STORE_ID;
+    const account = process.env.POPCUSTOMS_ACCOUNT;
+    const password = process.env.POPCUSTOMS_PASSWORD;
 
-    if (!apiKey) {
+    if (!apiKey || !storeId || !account || !password) {
       return NextResponse.json(
-        { message: "POPCUSTOMS_API_KEY is not set in .env.local" },
+        { message: "Missing POPCustoms credentials in .env.local" },
         { status: 500 }
       );
     }
 
-    if (!storeId) {
+    // Step 1: Login to get Bearer Token
+    const loginRes = await fetch("https://i.popcustoms.com/api/v1/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ account, password }),
+    });
+
+    const loginData = await loginRes.json();
+    if (!loginRes.ok || !loginData.data?.token) {
       return NextResponse.json(
-        { message: "POPCUSTOMS_STORE_ID is not set in .env.local" },
-        { status: 500 }
+        { message: "POPCustoms login failed", details: loginData },
+        { status: 401 }
       );
     }
+
+    const token = loginData.data.token;
 
     // Build POPCustoms-compatible payload
-    // line_items: [{ sku: string, quantity: number }]
-    // shipping_address matches the POPCustoms schema from API docs
+    // ... rest of the payload logic ...
     const orderNumber = `ADA-${Date.now()}`;
 
     const popCustomsPayload = {
@@ -51,16 +62,12 @@ export async function POST(req: Request) {
 
     const payloadString = JSON.stringify(popCustomsPayload);
 
-    // Generate HMAC-SHA256 signature (base64 encoded)
-    // POPCustoms PHP reference:
-    // base64_encode(hash_hmac('sha256', trim($body_string), $api_key, true))
+    // Generate HMAC-SHA256 signature
     const hmac = crypto.createHmac("sha256", apiKey);
     hmac.update(payloadString.trim());
     const signature = hmac.digest("base64");
 
-    // Confirmed endpoint from POPCustoms API Docs (Apidog):
-    // POST https://i.popcustoms.com/api/v1/stores/{store_id}/orders
-    // Headers: x-hmac-sha256, x-topic: orders/paid, Authorization: Bearer <token>
+    // Step 2: Submit Order
     const popCustomsUrl = `https://i.popcustoms.com/api/v1/stores/${storeId}/orders`;
 
     const popCustomsResponse = await fetch(popCustomsUrl, {
@@ -68,6 +75,7 @@ export async function POST(req: Request) {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${token}`,
         "x-hmac-sha256": signature,
         "x-topic": "orders/paid",
       },
