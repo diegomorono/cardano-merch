@@ -57,7 +57,7 @@ export default function Home() {
       <nav className="relative z-20 flex items-center justify-between px-8 py-5 border-b border-white/5">
         <div className="flex items-center gap-3">
           <img src="/logo.jpg" alt="Logo" className="w-10 h-10 rounded-full object-cover" />
-          <img src="/logo-name.png" alt="Cardano Merch" className="h-8 object-contain" />
+          <img src="/logo-name.png" alt="Cardano Merch" className="h-10 object-contain" />
         </div>
         <button
           onClick={handleCheckout}
@@ -120,7 +120,7 @@ export default function Home() {
 
               <div className="flex items-baseline gap-3 mb-6">
                 <span className="text-4xl font-black text-white">${selectedVariant.recommendPrice}</span>
-                <span className="text-sm text-gray-500">USD (precio sugerido)</span>
+                <span className="text-sm text-gray-500">USD</span>
               </div>
 
               {/* Size Selector */}
@@ -133,7 +133,7 @@ export default function Home() {
                   {product.variants.map((v) => (
                     <button
                       key={v.sku}
-                      onClick={() => setSelectedVariant(v)}
+                      onClick={() => { setSelectedVariant(v); setQuantity(1); }}
                       className={`w-12 h-12 rounded-xl font-bold text-sm transition-all duration-200 border-2 ${selectedVariant.sku === v.sku
                         ? "border-[#00E5FF] bg-[#00E5FF]/10 text-[#00E5FF]"
                         : "border-white/10 hover:border-white/30 text-gray-300"
