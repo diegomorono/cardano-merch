@@ -1,42 +1,6 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import { ShoppingCart, ArrowLeft, Shield, Package } from "lucide-react";
-import Link from "next/link";
-
-interface CartItem {
-  sku: string;
-  quantity: number;
-  size: string;
-  price: number;
-}
-
-interface ShippingForm {
-  name: string;
-  email: string;
-  address: string;
-  city: string;
-  state: string;
-  country_code: string;
-  zip_code: string;
-  phone_number: string;
-}
-
-const INITIAL_SHIPPING: ShippingForm = {
-  name: "",
-  email: "",
-  address: "",
-  city: "",
-  state: "",
-  country_code: "US",
-  zip_code: "",
-  phone_number: "",
-};
-
-"use client";
-
-import { motion, AnimatePresence } from "framer-motion";
 import { useState, Suspense } from "react";
 import { ShoppingCart, ArrowLeft, Shield, Package } from "lucide-react";
 import Link from "next/link";
