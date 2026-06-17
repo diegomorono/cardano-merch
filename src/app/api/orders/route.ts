@@ -64,7 +64,7 @@ export async function POST(req: Request) {
     const popCustomsUrl = `https://i.popcustoms.com/api/v1/stores/${storeId}/orders`;
 
     const popCustomsResponse = await fetch(popCustomsUrl, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
