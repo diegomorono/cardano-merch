@@ -58,10 +58,8 @@ export default function Home() {
       {/* Navbar */}
       <nav className="relative z-20 flex items-center justify-between px-8 py-5 border-b border-white/5">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#0033AD] to-[#00E5FF] flex items-center justify-center">
-            <span className="text-xs font-black">₳</span>
-          </div>
-          <span className="font-bold text-lg tracking-tight">Cardano Merch</span>
+          <img src="/logo.jpg" alt="Logo" className="w-8 h-8 rounded-full object-cover" />
+          <img src="/logo-name.png" alt="Cardano Merch" className="h-6" />
         </div>
         <button
           onClick={handleCheckout}
@@ -113,8 +111,6 @@ export default function Home() {
           <div className="space-y-6">
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
               <div className="flex items-center gap-2 text-[#00E5FF] text-sm font-mono mb-3">
-                <Zap className="w-3.5 h-3.5" />
-                <span>Producto oficial Cardano</span>
               </div>
               <h1 className="text-4xl font-extrabold leading-tight mb-2">{product.title}</h1>
               <div className="flex items-center gap-1 mb-4">

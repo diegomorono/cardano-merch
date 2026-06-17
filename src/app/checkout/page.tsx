@@ -242,10 +242,8 @@ export default function CheckoutPage() {
           <span>Volver</span>
         </Link>
         <div className="flex items-center gap-2 ml-4">
-          <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#0033AD] to-[#00E5FF] flex items-center justify-center">
-            <span className="text-xs font-black">₳</span>
-          </div>
-          <span className="font-bold">Cardano Merch — Checkout</span>
+          <img src="/logo.jpg" alt="Logo" className="w-8 h-8 rounded-full object-cover" />
+          <img src="/logo-name.png" alt="Cardano Merch" className="h-6" />
         </div>
       </nav>
 
