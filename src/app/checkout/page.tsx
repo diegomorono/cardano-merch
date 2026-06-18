@@ -77,7 +77,7 @@ function CheckoutContent() {
       {/* Left: Summary Vault */}
       <div className="lg:col-span-5 space-y-10 order-2 lg:order-1">
         <div className="space-y-2">
-          <h2 className="text-4xl font-black font-syne tracking-tighter uppercase">Order Vault</h2>
+          <h2 className="text-4xl font-black font-heading tracking-tighter uppercase">Order Vault</h2>
           <p className="text-white/40 text-sm font-light uppercase tracking-widest">Verify your selection</p>
         </div>
 
@@ -97,7 +97,7 @@ function CheckoutContent() {
                     className="flex justify-between items-start gap-6 pb-6 border-b border-white/5 last:border-0"
                   >
                     <div className="flex-1 space-y-2">
-                      <p className="font-syne font-black text-lg uppercase tracking-tighter leading-tight">{c.title}</p>
+                      <p className="font-heading font-black text-lg uppercase tracking-tighter leading-tight">{c.title}</p>
                       <div className="flex gap-3 text-[10px] font-bold text-cardano-blue uppercase tracking-widest bg-cardano-blue/10 px-3 py-1 rounded-full w-fit">
                         <span>Size: {c.size}</span>
                         <span className="opacity-30">|</span>
@@ -106,7 +106,7 @@ function CheckoutContent() {
                       <div className="flex items-center gap-4 pt-2">
                         <div className="flex items-center bg-white/5 rounded-lg border border-white/10 px-2 py-1">
                           <button onClick={() => updateQuantity(c.sku, c.quantity - 1)} className="p-1 hover:text-white text-white/30 border-none bg-transparent cursor-pointer"><Minus size={12} /></button>
-                          <span className="text-xs font-black font-syne w-6 text-center">{c.quantity}</span>
+                          <span className="text-xs font-black font-heading w-6 text-center">{c.quantity}</span>
                           <button onClick={() => updateQuantity(c.sku, c.quantity + 1)} className="p-1 hover:text-white text-white/30 border-none bg-transparent cursor-pointer"><Plus size={12} /></button>
                         </div>
                         <button onClick={() => removeFromCart(c.sku)} className="text-white/20 hover:text-red-500 transition-colors border-none bg-transparent cursor-pointer flex items-center gap-1">
@@ -115,7 +115,7 @@ function CheckoutContent() {
                         </button>
                       </div>
                     </div>
-                    <p className="font-syne font-black text-xl text-white/90">${(c.price * c.quantity).toFixed(2)}</p>
+                    <p className="font-heading font-black text-xl text-white/90">${(c.price * c.quantity).toFixed(2)}</p>
                   </motion.div>
                 ))
               )}
@@ -132,9 +132,9 @@ function CheckoutContent() {
               <span>Calculated at Entry</span>
             </div>
             <div className="border-t border-white/10 pt-6 flex justify-between items-baseline">
-              <span className="font-syne font-black text-2xl uppercase tracking-tighter italic">Total Amount</span>
+              <span className="font-heading font-black text-2xl uppercase tracking-tighter italic">Total Amount</span>
               <div className="text-right">
-                <span className="block text-4xl font-syne font-black text-cardano-blue italic tracking-tighter">${total.toFixed(2)}</span>
+                <span className="block text-4xl font-heading font-black text-cardano-blue italic tracking-tighter">${total.toFixed(2)}</span>
                 <span className="text-[10px] font-bold text-white/20 uppercase tracking-widest">USD Only</span>
               </div>
             </div>
@@ -150,7 +150,7 @@ function CheckoutContent() {
       {/* Right: Data Entry Manifest */}
       <div className="lg:col-span-7 order-1 lg:order-2 space-y-10">
         <div className="space-y-2">
-          <h1 className="text-5xl font-black font-syne tracking-tighter uppercase leading-none italic">Shipping Manifest</h1>
+          <h1 className="text-5xl font-black font-heading tracking-tighter uppercase leading-none italic">Shipping Manifest</h1>
           <p className="text-white/40 text-sm font-light uppercase tracking-widest">Initialize delivery coordinates</p>
         </div>
 
@@ -163,15 +163,15 @@ function CheckoutContent() {
             <div className="w-24 h-24 bg-cardano-blue/20 rounded-full flex items-center justify-center mx-auto mb-8 border border-cardano-blue/40">
               <Command className="w-10 h-10 text-cardano-blue animate-pulse" />
             </div>
-            <h2 className="text-4xl font-black font-syne uppercase tracking-tighter mb-4 italic">Protocol Confirmed</h2>
+            <h2 className="text-4xl font-black font-heading uppercase tracking-tighter mb-4 italic">Protocol Confirmed</h2>
             <p className="text-white/50 text-lg font-light mb-10 leading-relaxed max-w-md mx-auto">
               Your order has been authenticated and entered into the production queue.
             </p>
             <div className="bg-white/5 border border-white/10 rounded-2xl p-6 mb-12 inline-block">
               <span className="block text-[10px] font-black text-white/30 uppercase tracking-[0.4em] mb-2">Manifest ID</span>
-              <span className="text-xl font-syne font-black text-cardano-blue tracking-[0.2em]">{orderNumber}</span>
+              <span className="text-xl font-heading font-black text-cardano-blue tracking-[0.2em]">{orderNumber}</span>
             </div>
-            <Link href="/" className="block w-full py-5 rounded-3xl bg-white text-charcoal font-syne font-black text-xl uppercase tracking-widest hover:scale-[1.02] transition-transform duration-500">
+            <Link href="/" className="block w-full py-5 rounded-3xl bg-white text-charcoal font-heading font-black text-xl uppercase tracking-widest hover:scale-[1.02] transition-transform duration-500">
               Return to Catalog
             </Link>
           </motion.div>
@@ -245,7 +245,7 @@ function CheckoutContent() {
                 whileHover={{ scale: 1.02 }} 
                 whileTap={{ scale: 0.98 }} 
                 disabled={loading || items.length === 0} 
-                className="w-full h-24 rounded-[2rem] font-syne font-black text-2xl flex items-center justify-center gap-6 transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed border-none bg-cardano-blue text-white shadow-[0_20px_60px_rgba(0,51,173,0.3)] relative overflow-hidden group cursor-pointer"
+                className="w-full h-24 rounded-[2rem] font-heading font-black text-2xl flex items-center justify-center gap-6 transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed border-none bg-cardano-blue text-white shadow-[0_20px_60px_rgba(0,51,173,0.3)] relative overflow-hidden group cursor-pointer"
               >
                 <div className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out skew-x-[-20deg]" />
                 <CreditCard className="w-8 h-8 group-hover:scale-110 transition-transform" />
@@ -263,7 +263,7 @@ export default function CheckoutPage() {
   const router = useRouter();
   
   return (
-    <main className="min-h-screen bg-charcoal text-white font-inter selection:bg-cardano-blue selection:text-white">
+    <main className="min-h-screen bg-charcoal text-white font-body selection:bg-cardano-blue selection:text-white">
       {/* Dynamic Grid Background */}
       <div className="fixed inset-0 z-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '60px 60px' }}></div>
       
@@ -275,14 +275,14 @@ export default function CheckoutPage() {
         <div className="flex items-center gap-6 h-12">
           <img src="/logo.jpg" alt="Logo" className="h-full rounded-full object-cover border border-white/10" />
           <div className="flex flex-col text-white">
-            <span className="font-syne font-black text-xl tracking-tighter leading-none uppercase">Cardano</span>
+            <span className="font-heading font-black text-xl tracking-tighter leading-none uppercase">Cardano</span>
             <span className="text-[8px] font-bold tracking-[0.4em] uppercase text-white/50">Merch</span>
           </div>
         </div>
         <div className="w-[100px]" /> {/* Spacer for balance */}
       </nav>
 
-      <Suspense fallback={<div className="text-center py-32 font-syne font-black uppercase tracking-[0.5em] opacity-20 animate-pulse">Initializing Data Stream...</div>}>
+      <Suspense fallback={<div className="text-center py-32 font-heading font-black uppercase tracking-[0.5em] opacity-20 animate-pulse">Initializing Data Stream...</div>}>
         <CheckoutContent />
       </Suspense>
 

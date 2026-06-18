@@ -38,7 +38,7 @@ export default function Home() {
   const totalCartItems = items.reduce((acc, c) => acc + c.quantity, 0);
 
   return (
-    <main ref={containerRef} className="min-h-screen bg-charcoal text-white font-inter selection:bg-cardano-blue selection:text-white">
+    <main ref={containerRef} className="min-h-screen bg-charcoal text-white font-body selection:bg-cardano-blue selection:text-white">
       {/* Cinematic Background */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <motion.div 
@@ -64,7 +64,7 @@ export default function Home() {
             <img src="/logo.jpg" alt="Logo" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
           </div>
           <div className="flex flex-col text-white">
-            <span className="font-syne font-black text-2xl tracking-tighter leading-none">Cardano</span>
+            <span className="font-heading font-black text-2xl tracking-tighter leading-none">Cardano</span>
             <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-white/50">Merch</span>
           </div>
         </motion.div>
@@ -141,7 +141,7 @@ export default function Home() {
               <span className="inline-block bg-cardano-blue/10 text-cardano-blue px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-cardano-blue/20">
                 Official Merch / 2026
               </span>
-              <h1 className="text-7xl font-black tracking-tighter font-syne leading-none">
+              <h1 className="text-7xl font-black tracking-tighter font-heading leading-none">
                 {product.title}
               </h1>
               <div className="flex items-center gap-6 text-white/40">
@@ -153,7 +153,7 @@ export default function Home() {
             </div>
 
             <div className="flex items-baseline gap-4">
-              <span className="text-6xl font-syne font-black text-white">${selectedVariant.recommendPrice}</span>
+              <span className="text-6xl font-heading font-black text-white">${selectedVariant.recommendPrice}</span>
               <span className="text-xl text-white/30 font-light tracking-tighter">USD ONLY</span>
             </div>
 
@@ -165,7 +165,7 @@ export default function Home() {
                   <button
                     key={v.sku}
                     onClick={() => { setSelectedVariant(v); setQuantity(1); }}
-                    className={`min-w-[70px] h-14 rounded-2xl font-syne font-bold text-lg transition-all duration-500 border-2 cursor-pointer flex items-center justify-center ${
+                    className={`min-w-[70px] h-14 rounded-2xl font-heading font-bold text-lg transition-all duration-500 border-2 cursor-pointer flex items-center justify-center ${
                       selectedVariant.sku === v.sku
                         ? "bg-cardano-blue text-white border-cardano-blue shadow-2xl shadow-cardano-blue/30"
                         : "bg-white/5 border-white/10 hover:border-cardano-blue/50 text-white/60"
@@ -186,7 +186,7 @@ export default function Home() {
                 >
                   <Minus className="w-5 h-5" />
                 </button>
-                <span className="w-12 text-center font-syne font-black text-xl">{quantity}</span>
+                <span className="w-12 text-center font-heading font-black text-xl">{quantity}</span>
                 <button 
                   onClick={() => setQuantity(quantity + 1)}
                   className="w-10 h-10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 rounded-xl transition-all cursor-pointer border-none bg-transparent"
@@ -199,7 +199,7 @@ export default function Home() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleAddToCart}
-                className="flex-1 h-20 bg-white text-charcoal rounded-3xl font-syne font-black text-xl flex items-center justify-center gap-4 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(255,255,255,0.2)] cursor-pointer group border-none"
+                className="flex-1 h-20 bg-white text-charcoal rounded-3xl font-heading font-black text-xl flex items-center justify-center gap-4 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(255,255,255,0.2)] cursor-pointer group border-none"
               >
                 <span>ADD TO CART</span>
                 <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
@@ -215,7 +215,7 @@ export default function Home() {
                   className="bg-cardano-blue/10 border border-cardano-blue/30 p-4 rounded-2xl flex items-center gap-4 justify-center"
                 >
                   <Command className="w-4 h-4 text-cardano-blue animate-pulse" />
-                  <span className="text-cardano-blue font-syne font-bold text-xs tracking-widest">{orderStatus.msg}</span>
+                  <span className="text-cardano-blue font-heading font-bold text-xs tracking-widest">{orderStatus.msg}</span>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -228,9 +228,9 @@ export default function Home() {
         <div className="animate-marquee">
           {[...Array(10)].map((_, i) => (
             <div key={i} className="flex items-center gap-10 px-10">
-              <span className="text-4xl font-syne font-black tracking-tighter opacity-10 uppercase">Global Cardano Commerce</span>
+              <span className="text-4xl font-heading font-black tracking-tighter opacity-10 uppercase">Global Cardano Commerce</span>
               <div className="w-2 h-2 bg-cardano-blue rounded-full" />
-              <span className="text-4xl font-syne font-black tracking-tighter opacity-10 uppercase">Secure Digital Logistics</span>
+              <span className="text-4xl font-heading font-black tracking-tighter opacity-10 uppercase">Secure Digital Logistics</span>
               <div className="w-2 h-2 bg-cardano-light rounded-full" />
             </div>
           ))}
@@ -241,13 +241,13 @@ export default function Home() {
       <section className="py-40 container mx-auto px-10">
         <div className="grid lg:grid-cols-3 gap-20">
           <div className="lg:col-span-2 space-y-10">
-            <h3 className="text-4xl font-black font-syne">Material Integrity</h3>
+            <h3 className="text-4xl font-black font-heading">Material Integrity</h3>
             <p className="text-2xl text-white/50 leading-relaxed font-light italic border-l-4 border-cardano-blue pl-10">
               {product.description}
             </p>
           </div>
           <div className="vault-card p-10 rounded-[2.5rem] space-y-8">
-            <h4 className="font-syne font-black text-xl border-b border-white/10 pb-4">Specifications</h4>
+            <h4 className="font-heading font-black text-xl border-b border-white/10 pb-4">Specifications</h4>
             <div className="space-y-4">
               {["Premium Organic Cotton", "Heavyweight 220 GSM", "Eco-Friendly Print", "Ethical Production"].map((spec, i) => (
                 <div key={i} className="flex items-center gap-4 text-sm text-white/40">
@@ -264,7 +264,7 @@ export default function Home() {
       <footer className="py-20 border-t border-white/5 bg-obsidian text-center">
         <div className="flex flex-col items-center gap-10">
           <div className="flex flex-col">
-            <span className="font-syne font-black text-5xl tracking-tighter text-outline opacity-10">CARDANO MERCH</span>
+            <span className="font-heading font-black text-5xl tracking-tighter text-outline opacity-10">CARDANO MERCH</span>
             <span className="text-xs font-bold tracking-[1em] uppercase text-white/40 mt-[-10px]">EST. 2026</span>
           </div>
           <p className="text-[10px] text-white/20 tracking-[0.5em] uppercase">Built for the Ecosystem</p>
