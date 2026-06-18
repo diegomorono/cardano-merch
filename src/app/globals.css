@@ -2,11 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
 
 @theme {
-  --color-gold: #FFD700;
-  --color-purple-neon: #9D50BB;
+  --color-cardano-blue: #0033AD;
+  --color-cardano-light: #0055FF;
   --color-charcoal: #050505;
   --color-obsidian: #0A0A0A;
-  --color-vapor: #6E48AA;
   
   --font-syne: "Syne", sans-serif;
   --font-inter: "Inter", sans-serif;
@@ -15,7 +14,7 @@
 :root {
   --background: #050505;
   --foreground: #FFFFFF;
-  --accent: #FFD700;
+  --accent: #0033AD;
 }
 
 body {
@@ -39,7 +38,7 @@ h1, h2, h3, .heading-xl {
   mix-blend-mode: screen;
 }
 
-/* Sovereign Vault Card */
+/* Merch Card / Vault */
 .vault-card {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -50,8 +49,8 @@ h1, h2, h3, .heading-xl {
 
 .vault-card:hover {
   background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 215, 0, 0.2);
-  transform: translateY(-10px) scale(1.01);
+  border-color: rgba(0, 51, 173, 0.4);
+  transform: translateY(-5px) scale(1.005);
 }
 
 /* Animated Marquee */
@@ -91,5 +90,28 @@ h1, h2, h3, .heading-xl {
 }
 
 .glow-text {
-  text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  text-shadow: 0 0 20px rgba(0, 51, 173, 0.3);
+}
+
+/* Form Styling */
+.merch-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  padding: 1.1rem 1.5rem;
+  color: white;
+  font-family: var(--font-inter);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.merch-input:focus {
+  border-color: var(--color-cardano-blue);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 30px rgba(0, 51, 173, 0.15);
+}
+
+.merch-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
 }
