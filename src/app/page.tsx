@@ -54,28 +54,28 @@ export default function Home() {
       </div>
 
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-10 py-8 flex justify-between items-center mix-blend-difference">
+      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-6 md:px-10 md:py-8 flex justify-between items-center mix-blend-difference">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           className="flex items-center gap-3 cursor-pointer group"
         >
-          <div className="w-12 h-12 rounded-full overflow-hidden border border-white/20 group-hover:border-cardano-blue transition-colors duration-500">
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border border-white/20 group-hover:border-cardano-blue transition-colors duration-500">
             <img src="/logo.jpg" alt="Logo" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
           </div>
           <div className="flex flex-col text-white">
-            <span className="font-heading font-black text-2xl tracking-tighter leading-none">Cardano</span>
-            <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-white/50">Merch</span>
+            <span className="font-heading font-black text-xl md:text-2xl tracking-tighter leading-none">Cardano</span>
+            <span className="text-[8px] md:text-[9px] font-bold tracking-[0.4em] uppercase text-white/50">Merch</span>
           </div>
         </motion.div>
 
         <div className="flex items-center gap-8">
           <button onClick={() => router.push("/checkout")} className="relative group cursor-pointer border-none bg-transparent">
-            <div className="flex items-center gap-4 bg-white/5 backdrop-blur-xl border border-white/10 px-6 py-3 rounded-full group-hover:bg-white/10 transition-all duration-500">
-              <ShoppingCart className="w-5 h-5 text-white" />
-              <span className="text-sm font-bold uppercase tracking-widest text-white">Cart</span>
+            <div className="flex items-center gap-3 md:gap-4 bg-white/5 backdrop-blur-xl border border-white/10 px-4 py-2.5 md:px-6 md:py-3 rounded-full group-hover:bg-white/10 transition-all duration-500">
+              <ShoppingCart className="w-4 h-4 md:w-5 md:h-5 text-white" />
+              <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-white">Cart</span>
               {totalCartItems > 0 && (
-                <span className="bg-cardano-blue text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black">
+                <span className="bg-cardano-blue text-white w-4 h-4 md:w-5 md:h-5 rounded-full flex items-center justify-center text-[9px] md:text-[10px] font-black">
                   {totalCartItems}
                 </span>
               )}
@@ -85,22 +85,22 @@ export default function Home() {
       </nav>
 
       {/* Hero Spotlight Section */}
-      <section className="relative h-screen flex items-center justify-center pt-20 overflow-hidden">
+      <section className="relative min-h-screen lg:h-screen flex items-center justify-center pt-28 pb-16 lg:py-0 overflow-hidden">
         <motion.div style={{ y: titleY }} className="absolute z-10 text-center pointer-events-none">
           <h2 className="text-[12vw] font-black tracking-tighter leading-[0.8] text-outline opacity-10 whitespace-nowrap">
             Decentralized Wear
           </h2>
         </motion.div>
         
-        <div className="container mx-auto px-10 grid lg:grid-cols-2 gap-20 items-center relative z-20">
+        <div className="container mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-16 lg:gap-20 items-center relative z-20">
           <motion.div 
             style={{ scale: imageScale }}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="relative"
+            className="relative pb-16 lg:pb-0"
           >
-            <div className="aspect-[4/5] rounded-[2.5rem] overflow-hidden vault-card p-12 flex items-center justify-center">
+            <div className="aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden vault-card p-6 md:p-12 flex items-center justify-center">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={selectedImage}
@@ -110,18 +110,18 @@ export default function Home() {
                   transition={{ duration: 0.6 }}
                   src={product.images[selectedImage]}
                   alt={product.title}
-                  className="w-full h-full object-contain drop-shadow-[0_40px_100px_rgba(0,0,0,0.8)]"
+                  className="w-full h-full object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] md:drop-shadow-[0_40px_100px_rgba(0,0,0,0.8)]"
                 />
               </AnimatePresence>
             </div>
             
             {/* Image Selector Strip */}
-            <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 flex gap-4 p-2 bg-white/5 backdrop-blur-3xl rounded-2xl border border-white/10">
+            <div className="absolute -bottom-6 lg:-bottom-10 left-1/2 -translate-x-1/2 flex gap-3 md:gap-4 p-2 bg-white/5 backdrop-blur-3xl rounded-2xl border border-white/10">
               {product.images.map((img, i) => (
                 <button
                   key={i}
                   onClick={() => setSelectedImage(i)}
-                  className={`w-14 h-14 rounded-xl overflow-hidden border-2 transition-all duration-500 cursor-pointer ${
+                  className={`w-10 h-10 md:w-14 md:h-14 rounded-xl overflow-hidden border-2 transition-all duration-500 cursor-pointer ${
                     selectedImage === i ? "border-cardano-blue scale-110 shadow-lg shadow-cardano-blue/20" : "border-transparent opacity-40 hover:opacity-100"
                   }`}
                 >
@@ -135,37 +135,37 @@ export default function Home() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
-            className="space-y-10"
+            className="space-y-8 lg:space-y-10"
           >
             <div className="space-y-4">
               <span className="inline-block bg-cardano-blue/10 text-cardano-blue px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-cardano-blue/20">
                 Official Merch / 2026
               </span>
-              <h1 className="text-7xl font-black tracking-tighter font-heading leading-none">
+              <h1 className="text-4xl md:text-7xl font-black tracking-tighter font-heading leading-none">
                 {product.title}
               </h1>
               <div className="flex items-center gap-6 text-white/40">
                 <div className="flex text-cardano-blue">
                   {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-cardano-blue" />)}
                 </div>
-                <span className="text-sm uppercase tracking-widest">Verified Quality</span>
+                <span className="text-xs md:text-sm uppercase tracking-widest">Verified Quality</span>
               </div>
             </div>
 
             <div className="flex items-baseline gap-4">
-              <span className="text-6xl font-heading font-black text-white">${selectedVariant.recommendPrice}</span>
-              <span className="text-xl text-white/30 font-light tracking-tighter">USD ONLY</span>
+              <span className="text-5xl md:text-6xl font-heading font-black text-white">${selectedVariant.recommendPrice}</span>
+              <span className="text-base md:text-xl text-white/30 font-light tracking-tighter">USD ONLY</span>
             </div>
 
             {/* Sizes */}
-            <div className="space-y-6">
+            <div className="space-y-4">
               <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40">Select Specification</h4>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-3 md:gap-4">
                 {product.variants.map((v) => (
                   <button
                     key={v.sku}
                     onClick={() => { setSelectedVariant(v); setQuantity(1); }}
-                    className={`min-w-[70px] h-14 rounded-2xl font-heading font-bold text-lg transition-all duration-500 border-2 cursor-pointer flex items-center justify-center ${
+                    className={`min-w-[60px] md:min-w-[70px] h-12 md:h-14 rounded-xl md:rounded-2xl font-heading font-bold text-base md:text-lg transition-all duration-500 border-2 cursor-pointer flex items-center justify-center ${
                       selectedVariant.sku === v.sku
                         ? "bg-cardano-blue text-white border-cardano-blue shadow-2xl shadow-cardano-blue/30"
                         : "bg-white/5 border-white/10 hover:border-cardano-blue/50 text-white/60"
@@ -177,9 +177,9 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Quantity Control */}
-            <div className="flex items-center gap-10">
-              <div className="flex items-center bg-white/5 rounded-2xl border border-white/10 p-2">
+            {/* Quantity Control & Checkout Button */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-10">
+              <div className="flex items-center justify-between bg-white/5 rounded-2xl border border-white/10 p-2 sm:w-auto">
                 <button 
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   className="w-10 h-10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 rounded-xl transition-all cursor-pointer border-none bg-transparent"
@@ -196,13 +196,13 @@ export default function Home() {
               </div>
               
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={handleAddToCart}
-                className="flex-1 h-20 bg-white text-charcoal rounded-3xl font-heading font-black text-xl flex items-center justify-center gap-4 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(255,255,255,0.2)] cursor-pointer group border-none"
+                className="flex-1 h-16 md:h-20 bg-white text-charcoal rounded-2xl md:rounded-3xl font-heading font-black text-lg md:text-xl flex items-center justify-center gap-4 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(255,255,255,0.2)] cursor-pointer group border-none"
               >
                 <span>ADD TO CART</span>
-                <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+                <ArrowRight className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-2 transition-transform" />
               </motion.button>
             </div>
 

@@ -72,7 +72,7 @@ function CheckoutContent() {
   const labelClass = "block text-[10px] font-black uppercase tracking-[0.2em] text-white/40 mb-3 ml-1";
 
   return (
-    <div className="relative z-10 max-w-7xl mx-auto px-10 py-20 grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+    <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
       
       {/* Left: Summary Vault */}
       <div className="lg:col-span-5 space-y-10 order-2 lg:order-1">
@@ -267,19 +267,19 @@ export default function CheckoutPage() {
       {/* Dynamic Grid Background */}
       <div className="fixed inset-0 z-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '60px 60px' }}></div>
       
-      <nav className="relative z-20 flex items-center justify-between px-10 py-8 border-b border-white/5 mix-blend-difference">
-        <button onClick={() => router.back()} className="flex items-center gap-4 text-white/40 hover:text-white transition-all uppercase text-[10px] font-black tracking-[0.3em] group border-none bg-transparent cursor-pointer">
+      <nav className="relative z-20 flex items-center justify-between px-6 py-6 md:px-10 md:py-8 border-b border-white/5 mix-blend-difference">
+        <button onClick={() => router.back()} className="flex items-center gap-3 md:gap-4 text-white/40 hover:text-white transition-all uppercase text-[10px] font-black tracking-[0.3em] group border-none bg-transparent cursor-pointer">
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           <span>Exit Vault</span>
         </button>
-        <div className="flex items-center gap-6 h-12">
+        <div className="flex items-center gap-4 md:gap-6 h-10 md:h-12">
           <img src="/logo.jpg" alt="Logo" className="h-full rounded-full object-cover border border-white/10" />
           <div className="flex flex-col text-white">
-            <span className="font-heading font-black text-xl tracking-tighter leading-none uppercase">Cardano</span>
+            <span className="font-heading font-black text-lg md:text-xl tracking-tighter leading-none uppercase">Cardano</span>
             <span className="text-[8px] font-bold tracking-[0.4em] uppercase text-white/50">Merch</span>
           </div>
         </div>
-        <div className="w-[100px]" /> {/* Spacer for balance */}
+        <div className="hidden sm:block w-[100px]" /> {/* Spacer for balance */}
       </nav>
 
       <Suspense fallback={<div className="text-center py-32 font-heading font-black uppercase tracking-[0.5em] opacity-20 animate-pulse">Initializing Data Stream...</div>}>
