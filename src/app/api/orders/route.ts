@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 
-// POPCustoms order POST handler
-// Auth flow based on API docs:
-// 1. The webhook endpoint uses x-hmac-sha256 signing with the store API key
-// 2. The x-topic header must be "orders/paid" to signal a completed payment
-// 3. The store_id is taken from POPCUSTOMS_STORE_ID env var
+// POPCustoms webhook order creation handler
+// Auth flow:
+// 1. The endpoint is https://i.popcustoms.com/api/v1/stores/[store_id]/webhooks/orders?platform=general
+// 2. The webhook endpoint uses x-hmac-sha256 signing with the store API key
+// 3. The x-topic header must be "orders/paid" to signal a completed payment
+// 4. The store_id is taken from POPCUSTOMS_STORE_ID env var
 
 export async function POST(req: Request) {
   try {
@@ -13,35 +14,14 @@ export async function POST(req: Request) {
 
     const apiKey = process.env.POPCUSTOMS_API_KEY;
     const storeId = process.env.POPCUSTOMS_STORE_ID;
-    const account = process.env.POPCUSTOMS_ACCOUNT;
-    const password = process.env.POPCUSTOMS_PASSWORD;
 
-    if (!apiKey || !storeId || !account || !password) {
+    if (!apiKey || !storeId) {
       return NextResponse.json(
         { message: "Missing POPCustoms credentials in .env.local" },
         { status: 500 }
       );
     }
 
-    // Step 1: Login to get Bearer Token
-    const loginRes = await fetch("https://i.popcustoms.com/api/v1/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ account, password }),
-    });
-
-    const loginData = await loginRes.json();
-    if (!loginRes.ok || !loginData.data?.token) {
-      return NextResponse.json(
-        { message: "POPCustoms login failed", details: loginData },
-        { status: 401 }
-      );
-    }
-
-    const token = loginData.data.token;
-
-    // Build POPCustoms-compatible payload
-    // ... rest of the payload logic ...
     const orderNumber = `ADA-${Date.now()}`;
 
     const popCustomsPayload = {
@@ -50,7 +30,6 @@ export async function POST(req: Request) {
         sku: item.sku,
         quantity: item.quantity
       })),
-
       shipping_method: "Standard",
       shipping_address: {
         name: body.shipping.name,
@@ -72,15 +51,14 @@ export async function POST(req: Request) {
     hmac.update(payloadString.trim());
     const signature = hmac.digest("base64");
 
-    // Step 2: Submit Order
-    const popCustomsUrl = `https://i.popcustoms.com/api/v1/stores/${storeId}/orders`;
+    // Submit Order
+    const popCustomsUrl = `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/orders?platform=general`;
 
     const popCustomsResponse = await fetch(popCustomsUrl, {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: `Bearer ${token}`,
         "x-hmac-sha256": signature,
         "x-topic": "orders/paid",
       },
@@ -101,14 +79,14 @@ export async function POST(req: Request) {
         {
           message: "POPCustoms rejected the order",
           status: popCustomsResponse.status,
-          details: popCustomsData, // This will now be returned to the client
+          details: popCustomsData,
           debug: {
             endpoint: popCustomsUrl,
             order_number: orderNumber,
             line_items: popCustomsPayload.line_items,
           },
         },
-        { status: 422 } // Forcing 422 for frontend to catch and show details
+        { status: 422 }
       );
     }
 
