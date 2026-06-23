@@ -98,7 +98,7 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="relative pb-16 lg:pb-0"
+            className="relative pb-20"
           >
             <div className="aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden vault-card p-6 md:p-12 flex items-center justify-center">
               <AnimatePresence mode="wait">
@@ -116,7 +116,7 @@ export default function Home() {
             </div>
             
             {/* Image Selector Strip */}
-            <div className="absolute -bottom-6 lg:-bottom-10 left-1/2 -translate-x-1/2 flex gap-3 md:gap-4 p-2 bg-white/5 backdrop-blur-3xl rounded-2xl border border-white/10">
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-3 md:gap-4 p-2 bg-white/5 backdrop-blur-3xl rounded-2xl border border-white/10">
               {product.images.map((img, i) => (
                 <button
                   key={i}
