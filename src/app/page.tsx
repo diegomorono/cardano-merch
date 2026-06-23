@@ -13,22 +13,22 @@ export default function Home() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [orderStatus, setOrderStatus] = useState<{ ok: boolean; msg: string } | null>(null);
-  
+
   const { items, addToCart } = useCart();
   const router = useRouter();
-  
+
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: containerRef });
   const titleY = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
   const imageScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.1]);
 
   const handleAddToCart = () => {
-    addToCart({ 
-        sku: selectedVariant.sku, 
-        quantity, 
-        size: selectedVariant.size, 
-        price: selectedVariant.recommendPrice,
-        title: product.title 
+    addToCart({
+      sku: selectedVariant.sku,
+      quantity,
+      size: selectedVariant.size,
+      price: selectedVariant.recommendPrice,
+      title: product.title
     });
     setOrderStatus({ ok: true, msg: "ENTRY LOGGED & ADDED TO CART" });
     setQuantity(1);
@@ -41,21 +41,21 @@ export default function Home() {
     <main ref={containerRef} className="min-h-screen bg-charcoal text-white font-body selection:bg-cardano-blue selection:text-white">
       {/* Cinematic Background */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <motion.div 
+        <motion.div
           animate={{ x: [0, 100, 0], y: [0, -50, 0] }}
           transition={{ duration: 25, repeat: Infinity }}
-          className="absolute -top-[10%] -left-[10%] w-[80vw] h-[80vh] bg-cardano-blue liquid-blur rounded-full opacity-10" 
+          className="absolute -top-[10%] -left-[10%] w-[80vw] h-[80vh] bg-cardano-blue liquid-blur rounded-full opacity-10"
         />
-        <motion.div 
+        <motion.div
           animate={{ x: [0, -100, 0], y: [0, 50, 0] }}
           transition={{ duration: 20, repeat: Infinity }}
-          className="absolute -bottom-[10%] -right-[10%] w-[70vw] h-[70vh] bg-cardano-light liquid-blur rounded-full opacity-10" 
+          className="absolute -bottom-[10%] -right-[10%] w-[70vw] h-[70vh] bg-cardano-light liquid-blur rounded-full opacity-10"
         />
       </div>
 
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-6 md:px-10 md:py-8 flex justify-between items-center mix-blend-difference">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           className="flex items-center gap-3 cursor-pointer group"
@@ -85,15 +85,15 @@ export default function Home() {
       </nav>
 
       {/* Hero Spotlight Section */}
-      <section className="relative min-h-screen lg:h-screen flex items-center justify-center pt-28 pb-16 lg:py-0 overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center pt-28 lg:pt-36 pb-16 lg:pb-24">
         <motion.div style={{ y: titleY }} className="absolute z-10 text-center pointer-events-none">
           <h2 className="text-[12vw] font-black tracking-tighter leading-[0.8] text-outline opacity-10 whitespace-nowrap">
             Decentralized Wear
           </h2>
         </motion.div>
-        
+
         <div className="container mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-16 lg:gap-20 items-center relative z-20">
-          <motion.div 
+          <motion.div
             style={{ scale: imageScale }}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -114,16 +114,15 @@ export default function Home() {
                 />
               </AnimatePresence>
             </div>
-            
+
             {/* Image Selector Strip */}
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-3 md:gap-4 p-2 bg-white/5 backdrop-blur-3xl rounded-2xl border border-white/10">
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-30 flex gap-3 md:gap-4 p-2 bg-white/5 backdrop-blur-3xl rounded-2xl border border-white/10">
               {product.images.map((img, i) => (
                 <button
                   key={i}
                   onClick={() => setSelectedImage(i)}
-                  className={`w-10 h-10 md:w-14 md:h-14 rounded-xl overflow-hidden border-2 transition-all duration-500 cursor-pointer ${
-                    selectedImage === i ? "border-cardano-blue scale-110 shadow-lg shadow-cardano-blue/20" : "border-transparent opacity-40 hover:opacity-100"
-                  }`}
+                  className={`w-10 h-10 md:w-14 md:h-14 rounded-xl overflow-hidden border-2 transition-all duration-500 cursor-pointer ${selectedImage === i ? "border-cardano-blue scale-110 shadow-lg shadow-cardano-blue/20" : "border-transparent opacity-40 hover:opacity-100"
+                    }`}
                 >
                   <img src={img} alt="" className="w-full h-full object-cover" />
                 </button>
@@ -131,7 +130,7 @@ export default function Home() {
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
@@ -165,11 +164,10 @@ export default function Home() {
                   <button
                     key={v.sku}
                     onClick={() => { setSelectedVariant(v); setQuantity(1); }}
-                    className={`min-w-[60px] md:min-w-[70px] h-12 md:h-14 rounded-xl md:rounded-2xl font-heading font-bold text-base md:text-lg transition-all duration-500 border-2 cursor-pointer flex items-center justify-center ${
-                      selectedVariant.sku === v.sku
+                    className={`min-w-[60px] md:min-w-[70px] h-12 md:h-14 rounded-xl md:rounded-2xl font-heading font-bold text-base md:text-lg transition-all duration-500 border-2 cursor-pointer flex items-center justify-center ${selectedVariant.sku === v.sku
                         ? "bg-cardano-blue text-white border-cardano-blue shadow-2xl shadow-cardano-blue/30"
                         : "bg-white/5 border-white/10 hover:border-cardano-blue/50 text-white/60"
-                    }`}
+                      }`}
                   >
                     {v.size}
                   </button>
@@ -180,21 +178,21 @@ export default function Home() {
             {/* Quantity Control & Checkout Button */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-10">
               <div className="flex items-center justify-between bg-white/5 rounded-2xl border border-white/10 p-2 sm:w-auto">
-                <button 
+                <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   className="w-10 h-10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 rounded-xl transition-all cursor-pointer border-none bg-transparent"
                 >
                   <Minus className="w-5 h-5" />
                 </button>
                 <span className="w-12 text-center font-heading font-black text-xl">{quantity}</span>
-                <button 
+                <button
                   onClick={() => setQuantity(quantity + 1)}
                   className="w-10 h-10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 rounded-xl transition-all cursor-pointer border-none bg-transparent"
                 >
                   <Plus className="w-5 h-5" />
                 </button>
               </div>
-              
+
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
