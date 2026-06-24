@@ -92,7 +92,7 @@ export default function Home() {
           </h2>
         </motion.div>
 
-        <div className="container mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center relative z-20">
+        <div className="container mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-16 lg:gap-20 items-center relative z-20">
           <motion.div
             style={{ scale: imageScale }}
             initial={{ opacity: 0, scale: 0.8 }}
@@ -100,13 +100,14 @@ export default function Home() {
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="relative pb-20"
           >
-            <div className="aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden vault-card p-6 md:p-12 flex items-center justify-center">
+            {/* Vault Card - Realigned to top with minimized upper padding */}
+            <div className="aspect-square md:aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden vault-card pt-3 pb-6 px-6 md:pt-4 md:pb-12 md:px-12 flex items-start justify-center">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={selectedImage}
-                  initial={{ opacity: 0, y: 50, rotate: -5 }}
+                  initial={{ opacity: 0, y: 30, rotate: -5 }} // Reduced initial Y offset to prevent clipping on entry
                   animate={{ opacity: 1, y: 0, rotate: 0 }}
-                  exit={{ opacity: 0, y: -50, rotate: 5 }}
+                  exit={{ opacity: 0, y: -30, rotate: 5 }}
                   transition={{ duration: 0.6 }}
                   src={product.images[selectedImage]}
                   alt={product.title}
