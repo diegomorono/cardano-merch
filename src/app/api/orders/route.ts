@@ -3,7 +3,7 @@ import crypto from "crypto";
 
 // POPCustoms webhook order creation handler
 // Auth flow:
-// 1. The endpoint is https://i.popcustoms.com/api/v1/stores/[store_id]/webhooks/orders?platform=general
+// 1. The endpoint is https://i.popcustoms.com/api/v1/stores/[store_id]/webhooks/orders?platform=General
 // 2. The webhook endpoint uses x-hmac-sha256 signing with the store API key
 // 3. The x-topic header must be "orders/paid" to signal a completed payment
 // 4. The store_id is taken from POPCUSTOMS_STORE_ID env var
@@ -52,7 +52,7 @@ export async function POST(req: Request) {
     const signature = hmac.digest("base64");
 
     // Submit Order
-    const popCustomsUrl = `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/orders?platform=general`;
+    const popCustomsUrl = `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/orders?platform=General`;
 
     const popCustomsResponse = await fetch(popCustomsUrl, {
       method: "POST",
