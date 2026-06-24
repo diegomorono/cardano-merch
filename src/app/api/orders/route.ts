@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import crypto from "crypto";
 
 interface CartItem {
   sku: string;
@@ -22,106 +21,165 @@ interface IncomingRequestBody {
   shipping: ShippingData;
 }
 
+interface DiagnosticRun {
+  strategyName: string;
+  status: number;
+  cleared401: boolean;
+  responseData: string;
+}
+
 export async function POST(req: Request) {
   try {
     const body: IncomingRequestBody = await req.json();
 
-    // 1. Ingest and sanitize environmental credentials
+    // 1. Sanitize system environment parameters
     const rawApiKey = process.env.POPCUSTOMS_API_KEY || "";
     const rawStoreId = process.env.POPCUSTOMS_STORE_ID || "";
 
+    // Clear string pollution from environment injections
     const apiKey = rawApiKey.replace(/['"\s\n\r]/g, "").trim();
     const storeId = rawStoreId.replace(/['"\s\n\r]/g, "").trim();
 
     if (!apiKey || !storeId) {
       return NextResponse.json(
-        { message: "CONFIGURATION ERROR: Missing or corrupted POPCustoms credentials in server environment variables." },
+        {
+          success: false,
+          message: "CONFIGURATION FAULT: Environment keys are missing or unreadable within the hosting compute container.",
+          diagnostics: { apiKeyLength: apiKey.length, storeIdLength: storeId.length }
+        },
         { status: 500 }
       );
     }
 
-    const orderNumber = `ADA-${Date.now()}`;
+    const orderNumber = `ADA-DIAG-${Date.now()}`;
 
-    // 2. Build structured webhook payload matching vendor data expectations
+    // 2. Build minimum valid schema payload footprint
     const popCustomsPayload = {
       order_number: orderNumber,
       line_items: body.cart.map((item) => ({
         sku: item.sku.trim(),
-        quantity: Number(item.quantity)
+        quantity: Number(item.quantity),
       })),
       shipping_method: "Standard",
       shipping_address: {
         name: body.shipping.name.trim(),
-        address1: body.shipping.address.trim(),
-        address2: "",
+        address: body.shipping.address.trim(),
+        phone_number: body.shipping.phone_number.replace(/[^\d+]/g, ""),
         city: body.shipping.city.trim(),
-        province: body.shipping.state.trim(),
-        country_code: body.shipping.country_code.toUpperCase().trim(), // Enforce ISO 2-letter uppercase constraint
-        zip: body.shipping.zip_code.trim(),
-        phone: body.shipping.phone_number.replace(/[^\d+]/g, ""), // Sanitize phone format
-        email: body.shipping.email.trim()
-      }
+        state: body.shipping.state.trim(),
+        country_code: body.shipping.country_code.toUpperCase().trim(),
+        zip_code: body.shipping.zip_code.trim(),
+        email: body.shipping.email.trim(),
+      },
     };
 
-    // 3. Serialize and cryptographically sign the payload string using HMAC-SHA256
-    const payloadString = JSON.stringify(popCustomsPayload);
-    const signature = crypto
-      .createHmac("sha256", apiKey)
-      .update(payloadString)
-      .digest("base64");
+    const basePayloadString = JSON.stringify(popCustomsPayload);
+    const diagnosticLedger: DiagnosticRun[] = [];
 
-    const popCustomsUrl = `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/orders?platform=General`;
-
-    // 4. Dispatch the signed payload to the webhook endpoint
-    const popCustomsResponse = await fetch(popCustomsUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "x-hmac-sha256": signature, // Clears the 401 gate
-        "x-topic": "orders/paid"    // Required to signal completed payment status
-      },
-      body: payloadString
-    });
-
-    const responseText = await popCustomsResponse.text();
-    let popCustomsData: any;
-    try {
-      popCustomsData = JSON.parse(responseText);
-    } catch {
-      popCustomsData = responseText;
-    }
-
-    // 5. Catch and intercept validation errors
-    if (!popCustomsResponse.ok) {
-      console.error(`[POPCustoms Gateway Rejected Payload] Status ${popCustomsResponse.status}:`, popCustomsData);
-      return NextResponse.json(
-        {
-          message: "PROTOCOL ERROR: POPCustoms rejected the transaction payload rules (Validation Gate)",
-          status: popCustomsResponse.status,
-          details: popCustomsData, // Displays specific field validation errors on your frontend screen
-          debug: {
-            endpoint: popCustomsUrl,
-            sentPayload: popCustomsPayload
-          }
-        },
-        { status: popCustomsResponse.status }
-      );
-    }
-
-    // 6. Return success confirmation state
-    return NextResponse.json(
+    // 3. Define all five common authentication permutations
+    const testingStrategies = [
       {
-        success: true,
-        order_number: orderNumber,
-        data: popCustomsData
+        id: "Strategy_A: Bearer Prefix Header",
+        url: `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/orders?platform=General`,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": `Bearer ${apiKey}`
+        }
       },
-      { status: 200 }
-    );
+      {
+        id: "Strategy_B: Naked Key Authorization Header",
+        url: `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/orders?platform=General`,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": apiKey
+        }
+      },
+      {
+        id: "Strategy_C: Custom X-API-Key Header",
+        url: `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/orders?platform=General`,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "X-API-Key": apiKey
+        }
+      },
+      {
+        id: "Strategy_D: Custom Token Header Field",
+        url: `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/orders?platform=General`,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "token": apiKey
+        }
+      },
+      {
+        id: "Strategy_E: URL Query Parameter Assignment",
+        url: `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/orders?platform=General&token=${apiKey}`,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
+      }
+    ];
+
+    // 4. Run authentication probes
+    for (const strategy of testingStrategies) {
+      try {
+        const response = await fetch(strategy.url, {
+          method: "POST",
+          headers: strategy.headers,
+          body: basePayloadString,
+        });
+
+        const textResponse = await response.text();
+
+        diagnosticLedger.push({
+          strategyName: strategy.id,
+          status: response.status,
+          cleared401: response.status !== 401,
+          responseData: textResponse.substring(0, 200) // Truncate response length
+        });
+      } catch (error: any) {
+        diagnosticLedger.push({
+          strategyName: strategy.id,
+          status: 0,
+          cleared401: false,
+          responseData: `Network Dispatch Failure: ${error.message}`
+        });
+      }
+    }
+
+    // 5. Check if any configuration successfully cleared the 401 gate
+    const matchingStrategy = diagnosticLedger.find((run) => run.cleared401);
+
+    if (matchingStrategy) {
+      return NextResponse.json({
+        success: true,
+        message: "AUTHENTICATION MOAT CLEARED: A verification matrix successfully cleared the 401 gate.",
+        optimalStrategy: matchingStrategy.strategyName,
+        targetResponseStatus: matchingStrategy.status,
+        fullDiagnosticMatrix: diagnosticLedger
+      }, { status: 200 });
+    }
+
+    // If all test configurations returned a 401, log the diagnostic matrix for inspection
+    return NextResponse.json({
+      success: false,
+      message: "CRITICAL FAILURE: Every tested authentication strategy returned a 401 Unauthorized error.",
+      environmentCheck: {
+        apiKeyLength: apiKey.length,
+        storeIdLength: storeId.length,
+        apiKeyPrefixLook: apiKey.substring(0, 8)
+      },
+      fullDiagnosticMatrix: diagnosticLedger
+    }, { status: 401 });
+
   } catch (error: any) {
-    console.error("[Fatal Webhook Execution Exception]:", error);
+    console.error("[Diagnostic Suite Runtime Error]:", error);
     return NextResponse.json(
-      { message: "Internal Processing Failure", error: error.message },
+      { success: false, message: "Internal Server Error during execution", error: error.message },
       { status: 500 }
     );
   }
