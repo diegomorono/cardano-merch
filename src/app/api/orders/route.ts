@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import crypto from "crypto";
 
 interface CartItem {
   sku: string;
@@ -34,49 +35,53 @@ export async function POST(req: Request) {
 
     if (!apiKey || !storeId) {
       return NextResponse.json(
-        {
-          message: "CONFIGURATION FAULT: Application credentials are blank or unreadable within the hosting substrate environment.",
-          api_key_present: apiKey.length > 0,
-          store_id_present: storeId.length > 0
-        },
+        { message: "CONFIGURATION ERROR: Missing or corrupted POPCustoms credentials in server environment variables." },
         { status: 500 }
       );
     }
 
     const orderNumber = `ADA-${Date.now()}`;
 
-    // 2. Build structured payload following vendor schema metrics
+    // 2. Build structured webhook payload matching vendor data expectations
     const popCustomsPayload = {
       order_number: orderNumber,
       line_items: body.cart.map((item) => ({
         sku: item.sku.trim(),
-        quantity: Number(item.quantity),
+        quantity: Number(item.quantity)
       })),
       shipping_method: "Standard",
       shipping_address: {
         name: body.shipping.name.trim(),
-        address: body.shipping.address.trim(),
-        phone_number: body.shipping.phone_number.replace(/[^\d+]/g, ""),
+        address1: body.shipping.address.trim(),
+        address2: "",
         city: body.shipping.city.trim(),
-        state: body.shipping.state.trim(),
-        country_code: body.shipping.country_code.toUpperCase().trim(),
-        zip_code: body.shipping.zip_code.trim(),
-        email: body.shipping.email.trim(),
-      },
+        province: body.shipping.state.trim(),
+        country_code: body.shipping.country_code.toUpperCase().trim(), // Enforce ISO 2-letter uppercase constraint
+        zip: body.shipping.zip_code.trim(),
+        phone: body.shipping.phone_number.replace(/[^\d+]/g, ""), // Sanitize phone format
+        email: body.shipping.email.trim()
+      }
     };
 
-    // 3. Establish targeted endpoint reference
+    // 3. Serialize and cryptographically sign the payload string using HMAC-SHA256
+    const payloadString = JSON.stringify(popCustomsPayload);
+    const signature = crypto
+      .createHmac("sha256", apiKey)
+      .update(payloadString)
+      .digest("base64");
+
     const popCustomsUrl = `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/orders?platform=General`;
 
-    // 4. Dispatch transaction payload
+    // 4. Dispatch the signed payload to the webhook endpoint
     const popCustomsResponse = await fetch(popCustomsUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Authorization": `Bearer ${apiKey}` // Using standard Bearer formatting
+        "x-hmac-sha256": signature, // Clears the 401 gate
+        "x-topic": "orders/paid"    // Required to signal completed payment status
       },
-      body: JSON.stringify(popCustomsPayload),
+      body: payloadString
     });
 
     const responseText = await popCustomsResponse.text();
@@ -87,37 +92,36 @@ export async function POST(req: Request) {
       popCustomsData = responseText;
     }
 
-    // 5. Catch and log authentication or validation gateway blocks
+    // 5. Catch and intercept validation errors
     if (!popCustomsResponse.ok) {
-      console.error(`[POPCustoms Connection Gateway Fault] Status: ${popCustomsResponse.status}`);
+      console.error(`[POPCustoms Gateway Rejected Payload] Status ${popCustomsResponse.status}:`, popCustomsData);
       return NextResponse.json(
         {
-          message: `PROTOCOL BLOCK: Remote server rejected credentials with status code ${popCustomsResponse.status}`,
+          message: "PROTOCOL ERROR: POPCustoms rejected the transaction payload rules (Validation Gate)",
           status: popCustomsResponse.status,
-          details: popCustomsData,
+          details: popCustomsData, // Displays specific field validation errors on your frontend screen
           debug: {
             endpoint: popCustomsUrl,
-            apiKeyLength: apiKey.length,
-            apiKeyPrefixLook: apiKey.substring(0, 8),
-          },
+            sentPayload: popCustomsPayload
+          }
         },
-        { status: popCustomsResponse.status } // Bubbles the 401 back out cleanly for analysis
+        { status: popCustomsResponse.status }
       );
     }
 
-    // 6. Return verified success confirmation state
+    // 6. Return success confirmation state
     return NextResponse.json(
       {
         success: true,
         order_number: orderNumber,
-        data: popCustomsData,
+        data: popCustomsData
       },
       { status: 200 }
     );
   } catch (error: any) {
-    console.error("[Fatal Processing Exception Encountered]:", error);
+    console.error("[Fatal Webhook Execution Exception]:", error);
     return NextResponse.json(
-      { message: "Internal System Execution Failure", error: error.message },
+      { message: "Internal Processing Failure", error: error.message },
       { status: 500 }
     );
   }
