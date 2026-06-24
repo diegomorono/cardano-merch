@@ -111,7 +111,7 @@ export default function Home() {
                   transition={{ duration: 0.6 }}
                   src={product.images[selectedImage]}
                   alt={product.title}
-                  {/* Changed to h-auto block to snap the container directly to the image asset's top/bottom edges */}
+                  /* Changed to h-auto block to snap the container directly to the image asset's top/bottom edges */
                   className="w-full h-auto block drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] md:drop-shadow-[0_40px_100px_rgba(0,0,0,0.8)]"
                 />
               </AnimatePresence>
