@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 
 interface CartItem {
-  sku?: string;      // e.g., "N79G24RY-3" (Direct Complete SKU)
-  baseSku?: string;  // e.g., "N79G24RY" (Decoupled Sku)
-  size?: string;     // e.g., "L"
+  sku?: string;      // Direct Complete SKU (e.g., "N79G24RY-3")
+  baseSku?: string;  // Decoupled base code string
+  size?: string;     // Decoupled size value string
   quantity: number;
 }
 
@@ -29,7 +29,7 @@ interface ProductDetails {
   price: string;
 }
 
-// Immutable inventory matrix compiled directly from cardano-black-shirt.xlsx
+// Immutable inventory matrix compiled directly from verified asset rows
 const SKU_MASTER_DATABASE: Record<string, ProductDetails> = {
   "N79G24RY-3": { size: "S", weight: 160, price: "12.39" },
   "N79G24RY-4": { size: "M", weight: 180, price: "12.39" },
@@ -41,7 +41,6 @@ const SKU_MASTER_DATABASE: Record<string, ProductDetails> = {
   "N79G24RY-8": { size: "5XL", weight: 300, price: "13.39" }
 };
 
-// Fallback lookup dictionary if the frontend only passes base SKU and Size strings
 const SIZE_TO_SUFFIX_MAP: Record<string, string> = {
   "S": "-3", "SMALL": "-3",
   "M": "-4", "MEDIUM": "-4",
@@ -53,11 +52,42 @@ const SIZE_TO_SUFFIX_MAP: Record<string, string> = {
   "5XL": "-8", "XXXXXL": "-8"
 };
 
+/**
+ * Computes an environment-agnostic HMAC-SHA256 signature encoded in Base64
+ * relying strictly on standard Web Crypto APIs to ensure zero-cold start edge compatibility.
+ */
+async function generateHmacSha256Base64(secretKey: string, payloadMessage: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const keyData = encoder.encode(secretKey);
+  const messageData = encoder.encode(payloadMessage);
+
+  const cryptoKey = await crypto.subtle.importKey(
+    "raw",
+    keyData,
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+
+  const signatureBuffer = await crypto.subtle.sign(
+    "HMAC",
+    cryptoKey,
+    messageData
+  );
+
+  // Safe Edge-Runtime alternative to Node's Buffer.from().toString('base64')
+  const binaryString = Array.from(new Uint8Array(signatureBuffer))
+    .map((byte) => String.fromCharCode(byte))
+    .join("");
+
+  return btoa(binaryString);
+}
+
 export async function POST(req: Request) {
   try {
     const body: IncomingRequestBody = await req.json() || {};
 
-    // 1. Ingest and sanitize server credentials
+    // 1. Ingest and sanitize access credentials
     const rawApiKey = process.env.POPCUSTOMS_API_KEY || "";
     const rawStoreId = process.env.POPCUSTOMS_STORE_ID || "";
 
@@ -71,7 +101,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // 2. Validate structural initialization of incoming arrays
+    // 2. Validate structural integrity of structural bounds
     if (!body.cart || !Array.isArray(body.cart) || body.cart.length === 0) {
       return NextResponse.json(
         { success: false, message: "VALIDATION ERROR: Cart collection payload is missing, empty, or structurally corrupted." },
@@ -82,7 +112,7 @@ export async function POST(req: Request) {
     const timestampId = Date.now();
     const orderNumber = `ADA-${timestampId}`;
 
-    // 3. Defensive sanitization of customer parameters
+    // 3. Clean and isolate customer shipment vectors
     const rawName = (body.shipping?.name || "Customer Receiver").trim();
     const nameParts = rawName.split(/\s+/);
     const firstName = nameParts[0] || "Customer";
@@ -96,19 +126,17 @@ export async function POST(req: Request) {
     const cleanZip = (body.shipping?.zip_code || "82001").trim();
     const cleanCountry = (body.shipping?.country_code || "US").toUpperCase().trim();
 
-    // 4. Dynamic line-item mapping engine compatible with multiple frontend cart variants
+    // 4. Transform internal shopping basket states to explicit API line-items
     const resolvedLineItems = body.cart.map((item, index) => {
       let finalSku = "";
       let productMeta: ProductDetails = { size: "Unknown", weight: 200, price: "12.39" };
 
       if (item.sku) {
-        // Path A: Frontend passed a complete direct SKU string
         finalSku = item.sku.trim();
         if (SKU_MASTER_DATABASE[finalSku]) {
           productMeta = SKU_MASTER_DATABASE[finalSku];
         }
       } else if (item.baseSku && item.size) {
-        // Path B: Frontend passed decoupled base and size fields
         const base = item.baseSku.trim().split("-")[0];
         const sizeToken = item.size.trim().toUpperCase();
         const suffix = SIZE_TO_SUFFIX_MAP[sizeToken] || "-3";
@@ -120,7 +148,6 @@ export async function POST(req: Request) {
           productMeta.size = sizeToken;
         }
       } else {
-        // Path C: Emergency fallback case to prevent item processing failures
         finalSku = "N79G24RY-3";
         productMeta = SKU_MASTER_DATABASE[finalSku];
       }
@@ -138,7 +165,7 @@ export async function POST(req: Request) {
       };
     });
 
-    // 5. Build vendor-compliant request payload payload mapping
+    // 5. Structure the standard vendor request payload
     const popCustomsPayload = {
       id: timestampId,
       id_str: String(timestampId),
@@ -187,18 +214,26 @@ export async function POST(req: Request) {
       }
     };
 
+    // 6. Cryptographic preparation: stringify and trim the request body
+    const rawSerializedPayload = JSON.stringify(popCustomsPayload);
+    const trimmedPayloadString = rawSerializedPayload.trim();
+
+    // Generate the required signature using the cleansed API key secret token
+    const generatedHmacSignature = await generateHmacSha256Base64(apiKey, trimmedPayloadString);
+
     const popCustomsUrl = `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/orders?platform=General`;
 
-    // 6. Dispatch transaction request with clean Bearer Authorization tokens
+    // 7. Secure execution dispatch with full header profiles
     const popCustomsResponse = await fetch(popCustomsUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
         "Authorization": `Bearer ${apiKey}`,
-        "x-topic": "orders/paid"
+        "x-topic": "orders/paid",
+        "x-hmac-sha256": generatedHmacSignature // Explicitly mapped authentication header from image_c21f56.jpg
       },
-      body: JSON.stringify(popCustomsPayload)
+      body: trimmedPayloadString
     });
 
     const responseText = await popCustomsResponse.text();
