@@ -100,18 +100,19 @@ export default function Home() {
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="relative pb-20"
           >
-            {/* Vault Card - Realigned to top with minimized upper padding */}
-            <div className="aspect-square md:aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden vault-card pt-3 pb-6 px-6 md:pt-4 md:pb-12 md:px-12 flex items-start justify-center">
+            {/* Vault Card Container - Aspect ratio removed, padding brought to absolute minimum */}
+            <div className="w-full rounded-[2rem] md:rounded-[2.5rem] overflow-hidden vault-card p-2 flex items-center justify-center">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={selectedImage}
-                  initial={{ opacity: 0, y: 30, rotate: -5 }} // Reduced initial Y offset to prevent clipping on entry
+                  initial={{ opacity: 0, y: 20, rotate: -3 }}
                   animate={{ opacity: 1, y: 0, rotate: 0 }}
-                  exit={{ opacity: 0, y: -30, rotate: 5 }}
+                  exit={{ opacity: 0, y: -20, rotate: 3 }}
                   transition={{ duration: 0.6 }}
                   src={product.images[selectedImage]}
                   alt={product.title}
-                  className="w-full h-full object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] md:drop-shadow-[0_40px_100px_rgba(0,0,0,0.8)]"
+                  {/* Changed to h-auto block to snap the container directly to the image asset's top/bottom edges */}
+                  className="w-full h-auto block drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] md:drop-shadow-[0_40px_100px_rgba(0,0,0,0.8)]"
                 />
               </AnimatePresence>
             </div>
@@ -266,7 +267,7 @@ export default function Home() {
             <span className="font-heading font-black text-5xl tracking-tighter text-outline opacity-10">CARDANO MERCH</span>
             <span className="text-xs font-bold tracking-[1em] uppercase text-white/40 mt-[-10px]">EST. 2026</span>
           </div>
-          <p className="text-[10px] text-white/20 tracking-[0.5em] uppercase">Built for the Ecosystem</p>
+          <p className="text-[10px] text-white/20 tracking-[0.5em] uppercase">Built for the most badass, truly decentralized community alive.</p>
         </div>
       </footer>
     </main>
