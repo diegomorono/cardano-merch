@@ -100,8 +100,8 @@ export default function Home() {
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="relative pb-20"
           >
-            {/* Vault Card Container - Aspect ratio removed, padding brought to absolute minimum */}
-            <div className="w-full rounded-[2rem] md:rounded-[2.5rem] overflow-hidden vault-card p-4 flex items-center justify-center">
+            {/* Vault Card Container - Updated to aspect-square configuration */}
+            <div className="w-full aspect-square rounded-[2rem] md:rounded-[2.5rem] overflow-hidden vault-card p-2 flex items-center justify-center">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={selectedImage}
@@ -111,8 +111,8 @@ export default function Home() {
                   transition={{ duration: 0.6 }}
                   src={product.images[selectedImage]}
                   alt={product.title}
-                  /* Changed to h-auto block to snap the container directly to the image asset's top/bottom edges */
-                  className="w-full h-auto block drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] md:drop-shadow-[0_40px_100px_rgba(0,0,0,0.8)]"
+                  /* Enforced perfect rounded square geometry using aspect-square, object-cover, and matching radii rules */
+                  className="w-full h-full aspect-square object-cover block rounded-[1.75rem] md:rounded-[2.25rem] drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] md:drop-shadow-[0_40px_100px_rgba(0,0,0,0.8)]"
                 />
               </AnimatePresence>
             </div>
