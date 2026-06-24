@@ -21,6 +21,12 @@ interface IncomingRequestBody {
   shipping: ShippingData;
 }
 
+interface TestingStrategy {
+  id: string;
+  url: string;
+  headers: Record<string, string>;
+}
+
 interface DiagnosticRun {
   strategyName: string;
   status: number;
@@ -32,11 +38,10 @@ export async function POST(req: Request) {
   try {
     const body: IncomingRequestBody = await req.json();
 
-    // 1. Sanitize system environment parameters
+    // 1. Ingest and clean environment configuration blocks
     const rawApiKey = process.env.POPCUSTOMS_API_KEY || "";
     const rawStoreId = process.env.POPCUSTOMS_STORE_ID || "";
 
-    // Clear string pollution from environment injections
     const apiKey = rawApiKey.replace(/['"\s\n\r]/g, "").trim();
     const storeId = rawStoreId.replace(/['"\s\n\r]/g, "").trim();
 
@@ -53,7 +58,7 @@ export async function POST(req: Request) {
 
     const orderNumber = `ADA-DIAG-${Date.now()}`;
 
-    // 2. Build minimum valid schema payload footprint
+    // 2. Map standard transaction data structures
     const popCustomsPayload = {
       order_number: orderNumber,
       line_items: body.cart.map((item) => ({
@@ -76,8 +81,8 @@ export async function POST(req: Request) {
     const basePayloadString = JSON.stringify(popCustomsPayload);
     const diagnosticLedger: DiagnosticRun[] = [];
 
-    // 3. Define all five common authentication permutations
-    const testingStrategies = [
+    // 3. Define testing permutations using strict type definitions to prevent union type errors
+    const testingStrategies: TestingStrategy[] = [
       {
         id: "Strategy_A: Bearer Prefix Header",
         url: `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/orders?platform=General`,
@@ -129,7 +134,7 @@ export async function POST(req: Request) {
       try {
         const response = await fetch(strategy.url, {
           method: "POST",
-          headers: strategy.headers,
+          headers: strategy.headers, // Compiles successfully because type is strictly validated as Record<string, string>
           body: basePayloadString,
         });
 
@@ -139,7 +144,7 @@ export async function POST(req: Request) {
           strategyName: strategy.id,
           status: response.status,
           cleared401: response.status !== 401,
-          responseData: textResponse.substring(0, 200) // Truncate response length
+          responseData: textResponse.substring(0, 200)
         });
       } catch (error: any) {
         diagnosticLedger.push({
@@ -164,7 +169,6 @@ export async function POST(req: Request) {
       }, { status: 200 });
     }
 
-    // If all test configurations returned a 401, log the diagnostic matrix for inspection
     return NextResponse.json({
       success: false,
       message: "CRITICAL FAILURE: Every tested authentication strategy returned a 401 Unauthorized error.",
