@@ -92,7 +92,7 @@ export default function Home() {
           </h2>
         </motion.div>
 
-        <div className="container mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-16 lg:gap-20 items-center relative z-20">
+        <div className="container mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center relative z-20">
           <motion.div
             style={{ scale: imageScale }}
             initial={{ opacity: 0, scale: 0.8 }}
@@ -153,7 +153,7 @@ export default function Home() {
 
             <div className="flex items-baseline gap-4">
               <span className="text-5xl md:text-6xl font-heading font-black text-white">${selectedVariant.recommendPrice}</span>
-              <span className="text-base md:text-xl text-white/30 font-light tracking-tighter">USD ONLY</span>
+              <span className="text-base md:text-xl text-white/30 font-light tracking-tighter">USD</span>
             </div>
 
             {/* Sizes */}
@@ -165,8 +165,8 @@ export default function Home() {
                     key={v.sku}
                     onClick={() => { setSelectedVariant(v); setQuantity(1); }}
                     className={`min-w-[60px] md:min-w-[70px] h-12 md:h-14 rounded-xl md:rounded-2xl font-heading font-bold text-base md:text-lg transition-all duration-500 border-2 cursor-pointer flex items-center justify-center ${selectedVariant.sku === v.sku
-                        ? "bg-cardano-blue text-white border-cardano-blue shadow-2xl shadow-cardano-blue/30"
-                        : "bg-white/5 border-white/10 hover:border-cardano-blue/50 text-white/60"
+                      ? "bg-cardano-blue text-white border-cardano-blue shadow-2xl shadow-cardano-blue/30"
+                      : "bg-white/5 border-white/10 hover:border-cardano-blue/50 text-white/60"
                       }`}
                   >
                     {v.size}
