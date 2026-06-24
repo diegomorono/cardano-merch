@@ -101,7 +101,7 @@ export default function Home() {
             className="relative pb-20"
           >
             {/* Vault Card Container - Aspect ratio removed, padding brought to absolute minimum */}
-            <div className="w-full rounded-[2rem] md:rounded-[2.5rem] overflow-hidden vault-card p-2 flex items-center justify-center">
+            <div className="w-full rounded-[2rem] md:rounded-[2.5rem] overflow-hidden vault-card p-4 flex items-center justify-center">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={selectedImage}
