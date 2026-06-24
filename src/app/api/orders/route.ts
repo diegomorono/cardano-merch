@@ -25,7 +25,7 @@ export async function POST(req: Request) {
   try {
     const body: IncomingRequestBody = await req.json();
 
-    // 1. Sanitize system environment parameters
+    // 1. Ingest and sanitize environmental credentials
     const rawApiKey = process.env.POPCUSTOMS_API_KEY || "";
     const rawStoreId = process.env.POPCUSTOMS_STORE_ID || "";
 
@@ -34,14 +34,18 @@ export async function POST(req: Request) {
 
     if (!apiKey || !storeId) {
       return NextResponse.json(
-        { message: "Configuration Error: API key or Store ID resolves to an empty string." },
+        {
+          message: "CONFIGURATION FAULT: Application credentials are blank or unreadable within the hosting substrate environment.",
+          api_key_present: apiKey.length > 0,
+          store_id_present: storeId.length > 0
+        },
         { status: 500 }
       );
     }
 
     const orderNumber = `ADA-${Date.now()}`;
 
-    // 2. Map payload cleanly matching the POPCustoms data model
+    // 2. Build structured payload following vendor schema metrics
     const popCustomsPayload = {
       order_number: orderNumber,
       line_items: body.cart.map((item) => ({
@@ -55,21 +59,22 @@ export async function POST(req: Request) {
         phone_number: body.shipping.phone_number.replace(/[^\d+]/g, ""),
         city: body.shipping.city.trim(),
         state: body.shipping.state.trim(),
-        country_code: body.shipping.country_code.toUpperCase().trim(), // ISO Alpha-2 code
+        country_code: body.shipping.country_code.toUpperCase().trim(),
         zip_code: body.shipping.zip_code.trim(),
         email: body.shipping.email.trim(),
       },
     };
 
-    // 3. Target the correct custom webhook endpoint with a Bearer Token
+    // 3. Establish targeted endpoint reference
     const popCustomsUrl = `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/orders?platform=General`;
 
+    // 4. Dispatch transaction payload
     const popCustomsResponse = await fetch(popCustomsUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Authorization": `Bearer ${apiKey}` // Injected per tech-support guidelines
+        "Authorization": `Bearer ${apiKey}` // Using standard Bearer formatting
       },
       body: JSON.stringify(popCustomsPayload),
     });
@@ -82,23 +87,25 @@ export async function POST(req: Request) {
       popCustomsData = responseText;
     }
 
-    // 4. Handle structural validation errors or edge rejections
+    // 5. Catch and log authentication or validation gateway blocks
     if (!popCustomsResponse.ok) {
-      console.error(`[POPCustoms Gateway Feedback] ${popCustomsResponse.status}:`, popCustomsData);
+      console.error(`[POPCustoms Connection Gateway Fault] Status: ${popCustomsResponse.status}`);
       return NextResponse.json(
         {
-          message: "PROTOCOL ERROR: POPCustoms rejected the transaction payload rules (Validation Gate)",
+          message: `PROTOCOL BLOCK: Remote server rejected credentials with status code ${popCustomsResponse.status}`,
           status: popCustomsResponse.status,
           details: popCustomsData,
           debug: {
             endpoint: popCustomsUrl,
-            payloadSent: popCustomsPayload,
+            apiKeyLength: apiKey.length,
+            apiKeyPrefixLook: apiKey.substring(0, 8),
           },
         },
-        { status: popCustomsResponse.status }
+        { status: popCustomsResponse.status } // Bubbles the 401 back out cleanly for analysis
       );
     }
 
+    // 6. Return verified success confirmation state
     return NextResponse.json(
       {
         success: true,
@@ -108,9 +115,9 @@ export async function POST(req: Request) {
       { status: 200 }
     );
   } catch (error: any) {
-    console.error("[Order Sync Route Exception Handler Triggered]:", error);
+    console.error("[Fatal Processing Exception Encountered]:", error);
     return NextResponse.json(
-      { message: "Internal Processing Failure", error: error.message },
+      { message: "Internal System Execution Failure", error: error.message },
       { status: 500 }
     );
   }
