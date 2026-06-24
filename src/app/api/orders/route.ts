@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 
 interface CartItem {
-  sku: string;
+  baseSku: string;   // e.g., "N79G24RY"
+  size: string;      // e.g., "S", "M", "L", "XL", "2XL", "5XL"
   quantity: number;
 }
 
@@ -21,11 +22,26 @@ interface IncomingRequestBody {
   shipping: ShippingData;
 }
 
+// Deterministic translation dictionary mapping catalog sizes to factory SKU suffixes
+const SIZE_SUFFIX_MAP: Record<string, string> = {
+  "S": "-3",
+  "SMALL": "-3",
+  "M": "-4",
+  "MEDIUM": "-4",
+  "L": "-5",
+  "LARGE": "-5",
+  "XL": "-6",
+  "EXTRA LARGE": "-6",
+  "2XL": "-7",
+  "XXL": "-7",
+  "5XL": "-8"
+};
+
 export async function POST(req: Request) {
   try {
     const body: IncomingRequestBody = await req.json();
 
-    // 1. Ingest and sanitize environmental variables
+    // 1. Ingest and sanitize fulfillment environment variables
     const rawApiKey = process.env.POPCUSTOMS_API_KEY || "";
     const rawStoreId = process.env.POPCUSTOMS_STORE_ID || "";
 
@@ -42,15 +58,33 @@ export async function POST(req: Request) {
     const timestampId = Date.now();
     const orderNumber = `ADA-${timestampId}`;
 
-    // Split descriptive name strings into distinct parts for strict profile mappings
     const nameParts = body.shipping.name.trim().split(/\s+/);
     const firstName = nameParts[0] || "Customer";
     const lastName = nameParts.slice(1).join(" ") || "Receiver";
-
-    // Clean phone variables to conform with standard numeric processing layouts
     const cleanPhone = body.shipping.phone_number.replace(/[^\d+]/g, "") || "+10000000000";
 
-    // 2. Map standard webhook compliant data model (platform=General structural requirements)
+    // 2. Map and resolve dynamic SKU variations for factory consumption
+    const resolvedLineItems = body.cart.map((item, index) => {
+      const cleanBase = item.baseSku.trim().split("-")[0]; // Strip existing suffix if accidentally passed
+      const normalizedSize = item.size.trim().toUpperCase();
+      const suffix = SIZE_SUFFIX_MAP[normalizedSize] || "-3"; // Default to Small if size token is unmapped
+
+      const absoluteSku = `${cleanBase}${suffix}`;
+
+      return {
+        id: timestampId + index,
+        variant_id: null,
+        product_id: null,
+        sku: absoluteSku,
+        quantity: Number(item.quantity),
+        price: "0.00",
+        title: `Cardano Merchandise Item - Size ${normalizedSize}`,
+        grams: 0,
+        requires_shipping: true
+      };
+    });
+
+    // 3. Construct unified webhook compliant payload data matrix
     const popCustomsPayload = {
       id: timestampId,
       id_str: String(timestampId),
@@ -64,18 +98,7 @@ export async function POST(req: Request) {
       shipping_method: "Standard",
       created_at: new Date().toISOString(),
       processed_at: new Date().toISOString(),
-
-      line_items: body.cart.map((item, index) => ({
-        id: timestampId + index,
-        variant_id: null,
-        product_id: null,
-        sku: item.sku.trim(),
-        quantity: Number(item.quantity),
-        price: "0.00",
-        title: "Merchandise Item",
-        grams: 0,
-        requires_shipping: true
-      })),
+      line_items: resolvedLineItems,
 
       shipping_address: {
         name: body.shipping.name.trim(),
@@ -112,7 +135,7 @@ export async function POST(req: Request) {
 
     const popCustomsUrl = `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/orders?platform=General`;
 
-    // 3. Execute request using direct Bearer Authorization tokens
+    // 4. Dispatch transaction request with clean Bearer Authorization tokens
     const popCustomsResponse = await fetch(popCustomsUrl, {
       method: "POST",
       headers: {
@@ -132,9 +155,9 @@ export async function POST(req: Request) {
       popCustomsData = responseText;
     }
 
-    // 4. Handle errors and map upstream validation metrics transparently
+    // 5. Intercept failures and reflect structured execution variables
     if (!popCustomsResponse.ok) {
-      console.error(`[POPCustoms Gateway Error Response - Code ${popCustomsResponse.status}]:`, popCustomsData);
+      console.error(`[POPCustoms Gateway Rejection - Code ${popCustomsResponse.status}]:`, popCustomsData);
 
       const errorString = typeof popCustomsData === "object" && popCustomsData !== null
         ? JSON.stringify(popCustomsData)
@@ -155,7 +178,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // 5. Order successfully parsed and ingested by the remote manufacturer
+    // 6. Return successful manufacturing confirmation
     return NextResponse.json(
       {
         success: true,
