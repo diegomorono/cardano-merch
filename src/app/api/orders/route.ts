@@ -26,7 +26,7 @@ export async function POST(req: Request) {
   try {
     const body: IncomingRequestBody = await req.json();
 
-    // 1. Fetch and clean environmental variables to remove whitespace pollution
+    // 1. Fetch and sanitize environmental credential variables
     const rawApiKey = process.env.POPCUSTOMS_API_KEY || "";
     const rawStoreId = process.env.POPCUSTOMS_STORE_ID || "";
 
@@ -43,15 +43,12 @@ export async function POST(req: Request) {
     const timestampId = Date.now();
     const orderNumber = `ADA-${timestampId}`;
 
-    // Structural mapping for names across third-party fulfillment databases
     const nameParts = body.shipping.name.trim().split(/\s+/);
     const firstName = nameParts[0] || "Customer";
     const lastName = nameParts.slice(1).join(" ") || "Receiver";
-
-    // Clean phone input to preserve numbers and standard character compliance
     const cleanPhone = body.shipping.phone_number.replace(/[^\d+]/g, "") || "+10000000000";
 
-    // 2. Generate polyfilled payload matrix matching generic Shopify/WooCommerce webhook structures
+    // 2. Generate polyfilled payload matrix matching Shopify/WooCommerce webhook structures
     const popCustomsPayload = {
       id: timestampId,
       id_str: String(timestampId),
@@ -111,22 +108,31 @@ export async function POST(req: Request) {
       }
     };
 
-    // 3. Perform cryptographic signing over the structured payload string
+    // 3. Perform dual-track cryptographic signing over the exact payload payload string
     const payloadString = JSON.stringify(popCustomsPayload);
-    const signature = crypto
+
+    const signatureBase64 = crypto
       .createHmac("sha256", apiKey)
       .update(payloadString)
       .digest("base64");
 
+    const signatureHex = crypto
+      .createHmac("sha256", apiKey)
+      .update(payloadString)
+      .digest("hex");
+
     const popCustomsUrl = `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/orders?platform=General`;
 
-    // 4. Dispatch transaction payload directly to the fulfillment gate
+    // 4. Dispatch payload using fallback authentication targets
     const popCustomsResponse = await fetch(popCustomsUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "x-hmac-sha256": signature,
+        "X-API-KEY": apiKey,
+        "Authorization": `Bearer ${apiKey}`,
+        "x-hmac-sha256": signatureBase64,
+        "X-HMAC-SHA256": signatureHex,
         "x-topic": "orders/paid"
       },
       body: payloadString
@@ -140,9 +146,9 @@ export async function POST(req: Request) {
       popCustomsData = responseText;
     }
 
-    // 5. Catch validation failures and surface the exact error payload on your screen
+    // 5. Forward correct upstream status code and structural errors
     if (!popCustomsResponse.ok) {
-      console.error(`[POPCustoms Gateway 422 Field Error Log]:`, popCustomsData);
+      console.error(`[POPCustoms Gateway Critical Error Log - Status ${popCustomsResponse.status}]:`, popCustomsData);
 
       const parsedDetails = typeof popCustomsData === "object" && popCustomsData !== null
         ? JSON.stringify(popCustomsData)
@@ -155,14 +161,19 @@ export async function POST(req: Request) {
           status: popCustomsResponse.status,
           gatewayDetails: popCustomsData,
           debug: {
-            sentPayload: popCustomsPayload
+            sentPayload: popCustomsPayload,
+            headersSent: {
+              hasBase64Sig: !!signatureBase64,
+              hasHexSig: !!signatureHex,
+              storeIdUsed: storeId
+            }
           }
         },
-        { status: 422 }
+        { status: popCustomsResponse.status } // Dynamic pass-through of the real HTTP error status (401, 400, etc.)
       );
     }
 
-    // 6. Return verified operational order payload confirmation
+    // 6. Return verified order payload confirmation
     return NextResponse.json(
       {
         success: true,
