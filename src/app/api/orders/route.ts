@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import crypto from "crypto";
 
 interface CartItem {
   sku: string;
@@ -26,7 +25,7 @@ export async function POST(req: Request) {
   try {
     const body: IncomingRequestBody = await req.json();
 
-    // 1. Fetch and sanitize environmental credential variables
+    // 1. Ingest and sanitize environmental variables
     const rawApiKey = process.env.POPCUSTOMS_API_KEY || "";
     const rawStoreId = process.env.POPCUSTOMS_STORE_ID || "";
 
@@ -35,7 +34,7 @@ export async function POST(req: Request) {
 
     if (!apiKey || !storeId) {
       return NextResponse.json(
-        { success: false, message: "CONFIGURATION TRACKING EXCEPTION: Credentials missing from environment runtime variables." },
+        { success: false, message: "CONFIGURATION EXCEPTION: Core fulfillment API keys or Store IDs are missing from the server environment." },
         { status: 500 }
       );
     }
@@ -43,12 +42,15 @@ export async function POST(req: Request) {
     const timestampId = Date.now();
     const orderNumber = `ADA-${timestampId}`;
 
+    // Split descriptive name strings into distinct parts for strict profile mappings
     const nameParts = body.shipping.name.trim().split(/\s+/);
     const firstName = nameParts[0] || "Customer";
     const lastName = nameParts.slice(1).join(" ") || "Receiver";
+
+    // Clean phone variables to conform with standard numeric processing layouts
     const cleanPhone = body.shipping.phone_number.replace(/[^\d+]/g, "") || "+10000000000";
 
-    // 2. Generate polyfilled payload matrix matching Shopify/WooCommerce webhook structures
+    // 2. Map standard webhook compliant data model (platform=General structural requirements)
     const popCustomsPayload = {
       id: timestampId,
       id_str: String(timestampId),
@@ -108,34 +110,18 @@ export async function POST(req: Request) {
       }
     };
 
-    // 3. Perform dual-track cryptographic signing over the exact payload payload string
-    const payloadString = JSON.stringify(popCustomsPayload);
-
-    const signatureBase64 = crypto
-      .createHmac("sha256", apiKey)
-      .update(payloadString)
-      .digest("base64");
-
-    const signatureHex = crypto
-      .createHmac("sha256", apiKey)
-      .update(payloadString)
-      .digest("hex");
-
     const popCustomsUrl = `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/orders?platform=General`;
 
-    // 4. Dispatch payload using fallback authentication targets
+    // 3. Execute request using direct Bearer Authorization tokens
     const popCustomsResponse = await fetch(popCustomsUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "X-API-KEY": apiKey,
         "Authorization": `Bearer ${apiKey}`,
-        "x-hmac-sha256": signatureBase64,
-        "X-HMAC-SHA256": signatureHex,
         "x-topic": "orders/paid"
       },
-      body: payloadString
+      body: JSON.stringify(popCustomsPayload)
     });
 
     const responseText = await popCustomsResponse.text();
@@ -146,34 +132,30 @@ export async function POST(req: Request) {
       popCustomsData = responseText;
     }
 
-    // 5. Forward correct upstream status code and structural errors
+    // 4. Handle errors and map upstream validation metrics transparently
     if (!popCustomsResponse.ok) {
-      console.error(`[POPCustoms Gateway Critical Error Log - Status ${popCustomsResponse.status}]:`, popCustomsData);
+      console.error(`[POPCustoms Gateway Error Response - Code ${popCustomsResponse.status}]:`, popCustomsData);
 
-      const parsedDetails = typeof popCustomsData === "object" && popCustomsData !== null
+      const errorString = typeof popCustomsData === "object" && popCustomsData !== null
         ? JSON.stringify(popCustomsData)
         : String(popCustomsData);
 
       return NextResponse.json(
         {
           success: false,
-          message: `PROTOCOL ERROR: DATA VALIDATION FAILURE. Upstream Details: ${parsedDetails}`,
+          message: `PROTOCOL ERROR: TRANSIT SECTOR REJECTION. Upstream Details: ${errorString}`,
           status: popCustomsResponse.status,
           gatewayDetails: popCustomsData,
           debug: {
-            sentPayload: popCustomsPayload,
-            headersSent: {
-              hasBase64Sig: !!signatureBase64,
-              hasHexSig: !!signatureHex,
-              storeIdUsed: storeId
-            }
+            targetEndpoint: popCustomsUrl,
+            sentPayload: popCustomsPayload
           }
         },
-        { status: popCustomsResponse.status } // Dynamic pass-through of the real HTTP error status (401, 400, etc.)
+        { status: popCustomsResponse.status }
       );
     }
 
-    // 6. Return verified order payload confirmation
+    // 5. Order successfully parsed and ingested by the remote manufacturer
     return NextResponse.json(
       {
         success: true,
@@ -183,7 +165,7 @@ export async function POST(req: Request) {
       { status: 200 }
     );
   } catch (error: any) {
-    console.error("[Fatal Processing Context Crash]:", error);
+    console.error("[Fatal Processing Loop Exception Caught]:", error);
     return NextResponse.json(
       { success: false, message: "Internal application handler collapse", error: error.message },
       { status: 500 }
