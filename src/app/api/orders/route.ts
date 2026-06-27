@@ -129,7 +129,7 @@ export async function POST(req: Request) {
     const hmacSignature = await generateHmacSha256Base64(apiKey, trimmedPayloadString);
 
     // Formatted strictly to match singular path syntax: /api/v1/stores/{store_id}/webhooks/order
-    const orderSubmissionUrl = `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/order?platform=General`;
+    const orderSubmissionUrl = `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/orders?platform=General`;
 
     // 5. Submit transaction matching both Bearer Token and HMAC validation criteria
     const popCustomsResponse = await fetch(orderSubmissionUrl, {
