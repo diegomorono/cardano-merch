@@ -76,7 +76,7 @@ function CheckoutContent() {
     <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
       
       {/* Left: Summary Vault */}
-      <div className="lg:col-span-5 space-y-10 order-2 lg:order-1">
+      <div className="lg:col-span-5 space-y-10 order-1 lg:order-1">
         <div className="space-y-2">
           <h2 className="text-4xl font-black font-heading tracking-tighter uppercase">Order Vault</h2>
           <p className="text-white/40 text-sm font-light uppercase tracking-widest">Verify your selection</p>
@@ -149,7 +149,7 @@ function CheckoutContent() {
       </div>
 
       {/* Right: Data Entry Manifest */}
-      <div className="lg:col-span-7 order-1 lg:order-2 space-y-10">
+      <div className="lg:col-span-7 order-2 lg:order-2 space-y-10">
         <div className="space-y-2">
           <h1 className="text-5xl font-black font-heading tracking-tighter uppercase leading-none italic">Shipping Manifest</h1>
           <p className="text-white/40 text-sm font-light uppercase tracking-widest">Initialize delivery coordinates</p>
