@@ -170,8 +170,8 @@ export default function ProductDetailPage() {
                     key={v.sku}
                     onClick={() => { setSelectedVariant(v); setQuantity(1); }}
                     className={`w-full md:w-auto md:min-w-[70px] h-12 md:h-14 rounded-xl md:rounded-2xl font-heading font-bold text-base md:text-lg transition-all duration-500 border-2 cursor-pointer flex items-center justify-center quantity-panel-shadow ${selectedVariant.sku === v.sku
-                      ? "bg-cardano-blue text-white border-cardano-blue size-active-shadow"
-                      : "bg-[#121212] border-white/10 hover:border-cardano-blue/50 text-white/60"
+                      ? "bg-white/5 text-white border-white/10 size-active-shadow hover:bg-white/5"
+                      : "bg-white/5 border-white/10 hover:bg-white/5 text-white/60"
                       }`}
                   >
                     {v.size}
@@ -203,7 +203,7 @@ export default function ProductDetailPage() {
                 whileTap={{ scale: 0.98 }}
                 onClick={handleAddToCart}
                 style={{ backgroundColor: "#ffffff", color: "#050505" }}
-                className="flex-1 w-full bg-white text-black btn-add-to-cart font-bold rounded-2xl py-4 px-6 flex items-center justify-center gap-2 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(255,255,255,0.2)] cursor-pointer group border-none"
+                className="flex-1 w-full bg-white sm:bg-white md:bg-white lg:bg-white text-black btn-add-to-cart font-bold rounded-2xl py-4 px-6 flex items-center justify-center gap-2 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(255,255,255,0.2)] cursor-pointer group border-none"
               >
                 <span>ADD TO CART</span>
                 <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-2 transition-transform" />
