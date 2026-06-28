@@ -47,7 +47,7 @@ function CheckoutContent() {
     setLoading(true);
     setOrderStatus(null);
     try {
-      const res = await fetch("/api/orders", {
+      const res = await fetch("/api/checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -56,12 +56,11 @@ function CheckoutContent() {
         }),
       });
       const data = await res.json();
-      if (res.ok) {
-        setOrderNumber(data.order_number);
-        setOrderStatus({ ok: true, msg: "TRANSACTION SECURED" });
-        clearCart();
+      if (res.ok && data.url) {
+        setOrderStatus({ ok: true, msg: "REDIRECTING TO SECURE GATEWAY..." });
+        window.location.href = data.url;
       } else {
-        setOrderStatus({ ok: false, msg: `PROTOCOL ERROR: ${data.message || 'Unknown'}` });
+        setOrderStatus({ ok: false, msg: `GATEWAY ERROR: ${data.message || 'Unknown'}` });
       }
     } catch {
       setOrderStatus({ ok: false, msg: "CONNECTION TIMEOUT: RETRY" });
