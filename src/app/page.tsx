@@ -198,10 +198,10 @@ export default function Home() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleAddToCart}
-                className="flex-1 h-14 bg-white text-charcoal rounded-2xl font-heading font-black text-base flex items-center justify-center gap-4 transition-all duration-500 shadow-[0_10px_30px_rgba(255,255,255,0.15)] hover:shadow-[0_10px_30px_rgba(255,255,255,0.25)] cursor-pointer group border-none appearance-none"
+                className="flex-1 h-14 md:h-20 bg-white text-charcoal rounded-2xl md:rounded-3xl font-heading font-black text-base md:text-xl flex items-center justify-center gap-4 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(255,255,255,0.2)] cursor-pointer group border-none"
               >
                 <span>ADD TO CART</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                <ArrowRight className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-2 transition-transform" />
               </motion.button>
             </div>
 
