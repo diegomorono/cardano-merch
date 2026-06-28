@@ -123,3 +123,12 @@ h1, h2, h3, .heading-xl {
 .merch-input::placeholder {
   color: rgba(255, 255, 255, 0.2);
 }
+
+/* Custom shadows for mobile/desktop parity */
+.size-active-shadow {
+  box-shadow: 0 10px 25px rgba(0, 51, 173, 0.45);
+}
+
+.quantity-panel-shadow {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
