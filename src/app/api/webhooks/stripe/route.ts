@@ -13,9 +13,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Secret key missing" }, { status: 500 });
     }
 
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2025-01-27.accredited" as any,
-    });
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
     if (!webhookSecret) {
       console.error("[Stripe Webhook]: Webhook secret is not configured.");

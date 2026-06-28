@@ -15,9 +15,7 @@ export async function GET(req: Request) {
       return NextResponse.json({ message: "Stripe key is not configured." }, { status: 500 });
     }
 
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2025-01-27.accredited" as any,
-    });
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
     // Retrieve the session from Stripe
     const session = await stripe.checkout.sessions.retrieve(sessionId);
