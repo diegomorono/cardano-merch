@@ -165,7 +165,7 @@ export default function Home() {
                   <button
                     key={v.sku}
                     onClick={() => { setSelectedVariant(v); setQuantity(1); }}
-                    className={`w-full md:w-auto md:min-w-[70px] h-12 md:h-14 rounded-xl md:rounded-2xl font-heading font-bold text-base md:text-lg transition-all duration-500 border-2 cursor-pointer flex items-center justify-center ${selectedVariant.sku === v.sku
+                    className={`w-full md:w-auto md:min-w-[70px] h-12 md:h-14 rounded-xl md:rounded-2xl font-heading font-bold text-base md:text-lg transition-all duration-500 border-2 cursor-pointer flex items-center justify-center quantity-panel-shadow ${selectedVariant.sku === v.sku
                       ? "bg-cardano-blue text-white border-cardano-blue size-active-shadow"
                       : "bg-white/5 border-white/10 hover:border-cardano-blue/50 text-white/60"
                       }`}
