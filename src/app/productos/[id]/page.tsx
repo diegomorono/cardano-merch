@@ -182,7 +182,7 @@ export default function ProductDetailPage() {
 
             {/* Quantity Control & Checkout Button */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-10 overflow-visible">
-              <div className="flex items-center justify-between bg-[#121212] rounded-2xl border border-white/10 p-2 w-full sm:w-auto quantity-panel-shadow">
+              <div className="flex items-center justify-between bg-white/5 rounded-2xl border border-white/10 p-2 w-full sm:w-auto quantity-panel-shadow">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   className="w-10 h-10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 rounded-xl transition-all cursor-pointer border-none bg-transparent"
@@ -203,7 +203,7 @@ export default function ProductDetailPage() {
                 whileTap={{ scale: 0.98 }}
                 onClick={handleAddToCart}
                 style={{ backgroundColor: "#ffffff", color: "#050505" }}
-                className="flex-1 w-full bg-white text-black font-bold rounded-2xl py-4 px-6 flex items-center justify-center gap-2 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(255,255,255,0.2)] cursor-pointer group border-none"
+                className="flex-1 w-full bg-white text-black btn-add-to-cart font-bold rounded-2xl py-4 px-6 flex items-center justify-center gap-2 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(255,255,255,0.2)] cursor-pointer group border-none"
               >
                 <span>ADD TO CART</span>
                 <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-2 transition-transform" />

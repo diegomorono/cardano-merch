@@ -139,8 +139,7 @@ input[type="button"].bg-white,
 input[type="submit"].bg-white,
 .bg-white.text-black,
 main button.bg-white,
-main button.bg-white.text-black,
-[class*="bg-white"] {
+main button.bg-white.text-black {
   background-color: #ffffff !important;
   background: #ffffff !important;
   color: #050505 !important;
@@ -153,11 +152,17 @@ main button.bg-white.text-black,
   button.bg-white,
   .bg-white.text-black,
   main button.bg-white,
-  main button.bg-white.text-black {
+  main button.bg-white.text-black,
+  .btn-add-to-cart {
     background-color: #ffffff !important;
     background: #ffffff !important;
     color: #050505 !important;
   }
 }
 
+.btn-add-to-cart {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  color: #050505 !important;
+}
 
