@@ -16,17 +16,25 @@ jest.mock('next/navigation', () => ({
 }))
 
 // Mock framer-motion for simpler testing
-jest.mock('framer-motion', () => ({
-  motion: {
-    div: ({ children, ...props }) => <div {...props}>{children}</div>,
-    button: ({ children, ...props }) => <button {...props}>{children}</button>,
-    img: ({ children, ...props }) => <img {...props}>{children}</img>,
-    span: ({ children, ...props }) => <span {...props}>{children}</span>,
-  },
-  AnimatePresence: ({ children }) => children,
-  useScroll: () => ({ scrollYProgress: { get: () => 0 } }),
-  useTransform: (value, inputRange, outputRange) => {
-    // Simple mock that returns first output value
-    return outputRange[0]
-  },
-}))
+jest.mock('framer-motion', () => {
+  const motion = new Proxy({}, {
+    get: (target, tag) => {
+      return ({ children, ...props }) => {
+        // Remove framer-motion specific props that might cause react console warnings
+        const { initial, animate, exit, transition, whileHover, whileTap, ...cleanProps } = props;
+        const Tag = tag;
+        const originalClassName = cleanProps.className || "";
+        const className = originalClassName ? `motion-${tag} ${originalClassName}` : `motion-${tag}`;
+        return <Tag {...cleanProps} className={className}>{children}</Tag>;
+      };
+    }
+  });
+  return {
+    motion,
+    AnimatePresence: ({ children }) => children,
+    useScroll: () => ({ scrollYProgress: { get: () => 0 } }),
+    useTransform: (value, inputRange, outputRange) => {
+      return outputRange[0];
+    },
+  };
+})

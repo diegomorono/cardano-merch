@@ -101,7 +101,7 @@ export default function Home() {
             className="relative pb-20"
           >
             {/* Vault Card Container - Updated to aspect-square configuration */}
-            <div className="w-full aspect-square rounded-[2rem] md:rounded-[2.5rem] overflow-hidden vault-card p-2 flex items-center justify-center">
+            <div className="w-full aspect-square rounded-[2rem] md:rounded-[2.5rem] overflow-hidden vault-card p-4 md:p-8 flex items-center justify-center">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={selectedImage}
@@ -118,12 +118,12 @@ export default function Home() {
             </div>
 
             {/* Image Selector Strip */}
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-30 flex gap-3 md:gap-4 p-2 bg-white/5 backdrop-blur-3xl rounded-2xl border border-white/10">
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-30 flex gap-2 md:gap-3 p-2 bg-white/5 backdrop-blur-3xl rounded-2xl border border-white/10 max-w-[95vw] overflow-x-auto">
               {product.images.map((img, i) => (
                 <button
                   key={i}
                   onClick={() => setSelectedImage(i)}
-                  className={`w-10 h-10 md:w-14 md:h-14 rounded-xl overflow-hidden border-2 transition-all duration-500 cursor-pointer ${selectedImage === i ? "border-cardano-blue scale-110 shadow-lg shadow-cardano-blue/20" : "border-transparent opacity-40 hover:opacity-100"
+                  className={`w-10 h-10 md:w-14 md:h-14 rounded-xl overflow-hidden border-2 transition-all duration-500 cursor-pointer flex-shrink-0 ${selectedImage === i ? "border-cardano-blue scale-110 shadow-lg shadow-cardano-blue/20" : "border-transparent opacity-40 hover:opacity-100"
                     }`}
                 >
                   <img src={img} alt="" className="w-full h-full object-cover" />
@@ -139,9 +139,6 @@ export default function Home() {
             className="space-y-8 lg:space-y-10"
           >
             <div className="space-y-4">
-              <span className="inline-block bg-cardano-blue/10 text-cardano-blue px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-cardano-blue/20">
-                Official Merch / 2026
-              </span>
               <h1 className="text-4xl md:text-7xl font-black tracking-tighter font-heading leading-none">
                 {product.title}
               </h1>

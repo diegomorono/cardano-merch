@@ -74,6 +74,7 @@ IF order fulfills successfully OR new product is published to catalog:
     THEN trigger Serverless marketing worker (/api/post-tweet).
     THEN construct and authorize request to X API v2.
     THEN tweet status update containing product image and link (omitting customer PII).
+    
 ## 5. SERIALIZATION PROTOCOL
 When outputting code, documentation, or results, the output must comply with the following structural layout:
 

@@ -30,7 +30,7 @@ const INITIAL_SHIPPING: ShippingForm = {
 };
 
 function CheckoutContent() {
-  const { items, updateQuantity, removeFromCart, total } = useCart();
+  const { items, updateQuantity, removeFromCart, clearCart, total } = useCart();
   const [shipping, setShipping] = useState<ShippingForm>(INITIAL_SHIPPING);
   const [loading, setLoading] = useState(false);
   const [orderStatus, setOrderStatus] = useState<{ ok: boolean; msg: string } | null>(null);
@@ -59,6 +59,7 @@ function CheckoutContent() {
       if (res.ok) {
         setOrderNumber(data.order_number);
         setOrderStatus({ ok: true, msg: "TRANSACTION SECURED" });
+        clearCart();
       } else {
         setOrderStatus({ ok: false, msg: `PROTOCOL ERROR: ${data.message || 'Unknown'}` });
       }
@@ -191,8 +192,7 @@ function CheckoutContent() {
             <div>
               <label className={labelClass}>Delivery Address</label>
               <div className="relative group">
-                <Globe className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-white/10 group-focus-within:text-cardano-blue transition-colors" />
-                <input required name="address" value={shipping.address} onChange={handleChange} placeholder="BLOCKCHAIN AVE 256, FLOOR 64" className="merch-input pl-16" />
+                <input required name="address" value={shipping.address} onChange={handleChange} placeholder="BLOCKCHAIN AVE 256, FLOOR 64" className="merch-input" />
               </div>
             </div>
 
@@ -272,13 +272,19 @@ export default function CheckoutPage() {
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           <span>Exit Vault</span>
         </button>
-        <div className="flex items-center gap-4 md:gap-6 h-10 md:h-12">
-          <img src="/logo.jpg" alt="Logo" className="h-full rounded-full object-cover border border-white/10" />
-          <div className="flex flex-col text-white">
-            <span className="font-heading font-black text-lg md:text-xl tracking-tighter leading-none uppercase">Cardano</span>
-            <span className="text-[8px] font-bold tracking-[0.4em] uppercase text-white/50">Merch</span>
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="flex items-center gap-3 cursor-pointer group"
+        >
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border border-white/20 group-hover:border-cardano-blue transition-colors duration-500">
+            <img src="/logo.jpg" alt="Logo" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
           </div>
-        </div>
+          <div className="flex flex-col text-white">
+            <span className="font-heading font-black text-xl md:text-2xl tracking-tighter leading-none">Cardano</span>
+            <span className="text-[8px] md:text-[9px] font-bold tracking-[0.4em] uppercase text-white/50">Merch</span>
+          </div>
+        </motion.div>
         <div className="hidden sm:block w-[100px]" /> {/* Spacer for balance */}
       </nav>
 

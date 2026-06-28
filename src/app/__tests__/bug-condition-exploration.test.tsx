@@ -35,7 +35,7 @@ jest.mock('@/context/CartContext', () => ({
 
 describe('Bug Condition Exploration - Visual Inconsistencies', () => {
   // Helper function to render components
-  const renderComponent = (component: React.ReactElement) => {
+  const renderWithProviders = (component: React.ReactElement) => {
     return render(component)
   }
 
