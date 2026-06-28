@@ -101,20 +101,22 @@ export default function Home() {
             className="relative pb-20"
           >
             {/* Vault Card Container - Updated to aspect-square configuration */}
-            <div className="w-full aspect-square rounded-[2rem] md:rounded-[2.5rem] overflow-hidden vault-card p-4 md:p-8 flex items-center justify-center">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={selectedImage}
-                  initial={{ opacity: 0, y: 20, rotate: -3 }}
-                  animate={{ opacity: 1, y: 0, rotate: 0 }}
-                  exit={{ opacity: 0, y: -20, rotate: 3 }}
-                  transition={{ duration: 0.6 }}
-                  src={product.images[selectedImage]}
-                  alt={product.title}
-                  /* Enforced perfect rounded square geometry using aspect-square, object-cover, and matching radii rules */
-                  className="w-full h-full aspect-square object-cover block rounded-[1.75rem] md:rounded-[2.25rem] drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] md:drop-shadow-[0_40px_100px_rgba(0,0,0,0.8)]"
-                />
-              </AnimatePresence>
+            <div className="relative w-full aspect-square rounded-[2rem] md:rounded-[2.5rem] overflow-hidden vault-card">
+              <div className="absolute inset-4 md:inset-8">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={selectedImage}
+                    initial={{ opacity: 0, y: 20, rotate: -3 }}
+                    animate={{ opacity: 1, y: 0, rotate: 0 }}
+                    exit={{ opacity: 0, y: -20, rotate: 3 }}
+                    transition={{ duration: 0.6 }}
+                    src={product.images[selectedImage]}
+                    alt={product.title}
+                    /* Enforced perfect rounded square geometry using aspect-square, object-cover, and matching radii rules */
+                    className="w-full h-full aspect-square object-cover block rounded-[1.75rem] md:rounded-[2.25rem] drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] md:drop-shadow-[0_40px_100px_rgba(0,0,0,0.8)]"
+                  />
+                </AnimatePresence>
+              </div>
             </div>
 
             {/* Image Selector Strip */}
@@ -196,10 +198,10 @@ export default function Home() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleAddToCart}
-                className="flex-1 h-20 bg-white text-charcoal rounded-3xl font-heading font-black text-xl flex items-center justify-center gap-4 transition-all duration-500 shadow-[0_20px_50px_rgba(255,255,255,0.15)] hover:shadow-[0_20px_50px_rgba(255,255,255,0.25)] cursor-pointer group border-none"
+                className="flex-1 h-14 bg-white text-charcoal rounded-2xl font-heading font-black text-base flex items-center justify-center gap-4 transition-all duration-500 shadow-[0_10px_30px_rgba(255,255,255,0.15)] hover:shadow-[0_10px_30px_rgba(255,255,255,0.25)] cursor-pointer group border-none"
               >
                 <span>ADD TO CART</span>
-                <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
               </motion.button>
             </div>
 
