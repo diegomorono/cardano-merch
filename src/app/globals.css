@@ -137,10 +137,27 @@ h1, h2, h3, .heading-xl {
 button.bg-white,
 input[type="button"].bg-white,
 input[type="submit"].bg-white,
-.bg-white.text-black {
+.bg-white.text-black,
+main button.bg-white,
+main button.bg-white.text-black,
+[class*="bg-white"] {
   background-color: #ffffff !important;
+  background: #ffffff !important;
   color: #050505 !important;
   -webkit-appearance: none;
   appearance: none;
 }
+
+/* Specific overrides for mobile resolutions to ensure the Add to Cart button is absolutely white */
+@media (max-width: 639px) {
+  button.bg-white,
+  .bg-white.text-black,
+  main button.bg-white,
+  main button.bg-white.text-black {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    color: #050505 !important;
+  }
+}
+
 

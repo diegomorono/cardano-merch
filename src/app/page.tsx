@@ -167,7 +167,7 @@ export default function Home() {
                     onClick={() => { setSelectedVariant(v); setQuantity(1); }}
                     className={`w-full md:w-auto md:min-w-[70px] h-12 md:h-14 rounded-xl md:rounded-2xl font-heading font-bold text-base md:text-lg transition-all duration-500 border-2 cursor-pointer flex items-center justify-center quantity-panel-shadow ${selectedVariant.sku === v.sku
                       ? "bg-cardano-blue text-white border-cardano-blue size-active-shadow"
-                      : "bg-white/5 border-white/10 hover:border-cardano-blue/50 text-white/60"
+                      : "bg-[#121212] border-white/10 hover:border-cardano-blue/50 text-white/60"
                       }`}
                   >
                     {v.size}
@@ -178,7 +178,7 @@ export default function Home() {
 
             {/* Quantity Control & Checkout Button */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-10 overflow-visible">
-              <div className="flex items-center justify-between bg-white/5 rounded-2xl border border-white/10 p-2 w-full sm:w-auto quantity-panel-shadow">
+              <div className="flex items-center justify-between bg-[#121212] rounded-2xl border border-white/10 p-2 w-full sm:w-auto quantity-panel-shadow">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   className="w-10 h-10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 rounded-xl transition-all cursor-pointer border-none bg-transparent"
@@ -199,7 +199,7 @@ export default function Home() {
                 whileTap={{ scale: 0.98 }}
                 onClick={handleAddToCart}
                 style={{ backgroundColor: "#ffffff", color: "#050505" }}
-                className="flex-1 w-full !bg-white !text-black bg-white text-black font-bold rounded-2xl py-4 px-6 flex items-center justify-center gap-2 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(255,255,255,0.2)] cursor-pointer group border-none"
+                className="flex-1 w-full bg-white text-black font-bold rounded-2xl py-4 px-6 flex items-center justify-center gap-2 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(255,255,255,0.2)] cursor-pointer group border-none"
               >
                 <span>ADD TO CART</span>
                 <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-2 transition-transform" />
