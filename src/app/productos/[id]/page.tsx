@@ -169,7 +169,7 @@ export default function ProductDetailPage() {
                   <button
                     key={v.sku}
                     onClick={() => { setSelectedVariant(v); setQuantity(1); }}
-                    className={`w-full md:min-w-[70px] h-12 md:h-14 rounded-xl md:rounded-2xl font-heading font-bold text-base md:text-lg transition-all duration-500 border-2 cursor-pointer flex items-center justify-center ${selectedVariant.sku === v.sku
+                    className={`w-full md:w-auto md:min-w-[70px] h-12 md:h-14 rounded-xl md:rounded-2xl font-heading font-bold text-base md:text-lg transition-all duration-500 border-2 cursor-pointer flex items-center justify-center ${selectedVariant.sku === v.sku
                       ? "bg-cardano-blue text-white border-cardano-blue shadow-2xl shadow-cardano-blue/30"
                       : "bg-white/5 border-white/10 hover:border-cardano-blue/50 text-white/60"
                       }`}
@@ -202,7 +202,7 @@ export default function ProductDetailPage() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleAddToCart}
-                className="flex-1 h-14 bg-white text-charcoal rounded-2xl font-heading font-black text-base flex items-center justify-center gap-4 transition-all duration-500 shadow-[0_10px_30px_rgba(255,255,255,0.15)] hover:shadow-[0_10px_30px_rgba(255,255,255,0.25)] cursor-pointer group border-none"
+                className="flex-1 h-14 bg-white text-charcoal rounded-2xl font-heading font-black text-base flex items-center justify-center gap-4 transition-all duration-500 shadow-[0_10px_30px_rgba(255,255,255,0.15)] hover:shadow-[0_10px_30px_rgba(255,255,255,0.25)] cursor-pointer group border-none appearance-none"
               >
                 <span>ADD TO CART</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
