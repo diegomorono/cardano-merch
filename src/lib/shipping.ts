@@ -37,7 +37,7 @@ const ZONE_OVERRIDES: Record<string, ZoneRateConfig> = {
     standardFirst: 0,
     standardNext: 0,
     expressAvailable: true,
-    expressFirst: 25.00,
+    expressFirst: 35.00,
     expressNext: 0
   },
   "Europe": {
@@ -45,7 +45,7 @@ const ZONE_OVERRIDES: Record<string, ZoneRateConfig> = {
     standardFirst: 0,
     standardNext: 0,
     expressAvailable: true,
-    expressFirst: 25.00,
+    expressFirst: 35.00,
     expressNext: 0
   },
   "Rest of Europe": {
@@ -53,7 +53,7 @@ const ZONE_OVERRIDES: Record<string, ZoneRateConfig> = {
     standardFirst: 0,
     standardNext: 0,
     expressAvailable: true,
-    expressFirst: 25.00,
+    expressFirst: 35.00,
     expressNext: 0
   },
   "JP": {
@@ -73,7 +73,7 @@ const ZONE_OVERRIDES: Record<string, ZoneRateConfig> = {
     expressNext: 0
   },
   "Oceania": {
-    standardAvailable: true, // Standard is available for Oceania (Australia/NZ)
+    standardAvailable: true,
     standardFirst: 6.00,
     standardNext: 0,
     expressAvailable: true,
@@ -81,36 +81,36 @@ const ZONE_OVERRIDES: Record<string, ZoneRateConfig> = {
     expressNext: 0
   },
   "Middle East": {
-    standardAvailable: true, // Standard is available for Middle East
+    standardAvailable: true,
     standardFirst: 5.00,
     standardNext: 0,
     expressAvailable: true,
-    expressFirst: 25.00,
+    expressFirst: 35.00,
     expressNext: 0
   },
   "Mexico": {
-    standardAvailable: true, // Standard is available for Mexico
+    standardAvailable: true,
     standardFirst: 3.00,
-    standardNext: 0,
+    standardNext: 3.00, // Mexico standard increases by $3.00 for each additional item
     expressAvailable: true,
-    expressFirst: 25.00,
+    expressFirst: 35.00, // Mexico express is $35.00
     expressNext: 0
   },
   "Asia": {
-    standardAvailable: true, // Standard is available for Asia
+    standardAvailable: true,
     standardFirst: 3.00,
     standardNext: 0,
     expressAvailable: true,
-    expressFirst: 27.00,
+    expressFirst: 35.00,
     expressNext: 0
   },
   "Rest Of World": {
-    standardAvailable: false, // Standard not supported to ROW (Argentina, Colombia, etc.)
+    standardAvailable: false,
     standardFirst: 0,
     standardNext: 0,
     expressAvailable: true,
     expressFirst: 80.00,
-    expressNext: 60.00 // ROW express increases by $60.00 per extra item
+    expressNext: 60.00
   }
 };
 

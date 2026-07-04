@@ -34,6 +34,7 @@ This index maps the files, routes, and logical directories of the `cardano-merch
 *   [src/app/api/shipping/route.ts](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/src/app/api/shipping/route.ts) — **Shipping API:** Calculates available transit methods and dynamic quotes.
 *   [src/lib/shipping.ts](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/src/lib/shipping.ts) — **Shipping Utility:** Implements zone lookup logic and print-on-demand cost aggregation.
 *   [src/lib/countries-data.json](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/src/lib/countries-data.json) — **Countries Database:** Standard ISO country codes mapped to English names.
+*   [scripts/capture-shipping-api.js](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/scripts/capture-shipping-api.js) — **Developer Shipping API Interceptor:** Scrapes outgoing network requests to discover POPCustoms' private shipping calculator endpoint.
 
 ---
 
