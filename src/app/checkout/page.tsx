@@ -1,11 +1,12 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { useRouter } from "next/navigation";
-import { ShoppingCart, ArrowLeft, Shield, Package, Trash2, Plus, Minus, Command, CreditCard, Lock, X, Check } from "lucide-react";
+import { ShoppingCart, ArrowLeft, Shield, Package, Trash2, Plus, Minus, Command, CreditCard, Lock, X, Check, Search, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
+import countriesData from "@/lib/countries-data.json";
 
 interface ShippingForm {
   name: string;
@@ -28,6 +29,105 @@ const INITIAL_SHIPPING: ShippingForm = {
   zip_code: "",
   phone_number: "",
 };
+
+// Premium Custom Country Selector Component with search filter
+interface CountrySelectProps {
+  value: string;
+  onChange: (code: string) => void;
+}
+
+function CountrySelect({ value, onChange }: CountrySelectProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const selectedCountry = countriesData.find((c) => c.code === value) || { code: value, name: value };
+
+  const filteredCountries = countriesData.filter((c) =>
+    c.name.toLowerCase().includes(search.toLowerCase()) ||
+    c.code.toLowerCase().includes(search.toLowerCase())
+  );
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSelect = (code: string) => {
+    onChange(code);
+    setIsOpen(false);
+    setSearch("");
+  };
+
+  return (
+    <div ref={dropdownRef} className="relative w-full">
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="merch-input flex justify-between items-center w-full bg-obsidian cursor-pointer text-left py-4 px-6 rounded-2xl border border-white/10 hover:border-white/20 transition-all font-heading font-black text-sm uppercase tracking-wider text-white"
+      >
+        <span>{selectedCountry.name}</span>
+        <ChevronDown size={16} className={`text-white/40 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="absolute z-30 mt-3 w-full bg-obsidian border border-white/10 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.9)] max-h-[350px] flex flex-col backdrop-blur-md"
+          >
+            {/* Search Input */}
+            <div className="relative border-b border-white/5 p-4">
+              <Search className="absolute left-7 top-1/2 -translate-y-1/2 text-white/30 w-4 h-4" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="SEARCH REGION..."
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-xs font-black font-heading tracking-widest text-white placeholder-white/20 focus:outline-none focus:border-cardano-blue transition-colors uppercase"
+              />
+            </div>
+
+            {/* Scrollable List */}
+            <div className="overflow-y-auto custom-scrollbar flex-1 py-2">
+              {filteredCountries.length === 0 ? (
+                <div className="text-center py-6 text-[10px] font-black uppercase tracking-[0.2em] text-white/20">
+                  No Matching Regions
+                </div>
+              ) : (
+                filteredCountries.map((c) => {
+                  const isSelected = c.code === value;
+                  return (
+                    <button
+                      key={c.code}
+                      type="button"
+                      onClick={() => handleSelect(c.code)}
+                      className={`w-full text-left py-3.5 px-6 font-heading font-black text-xs uppercase tracking-widest transition-colors flex justify-between items-center ${
+                        isSelected
+                          ? "bg-cardano-blue text-white"
+                          : "text-white/60 hover:bg-white/5 hover:text-white"
+                      }`}
+                    >
+                      <span>{c.name}</span>
+                      {isSelected && <Check size={12} className="text-white" />}
+                    </button>
+                  );
+                })
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 function CheckoutContent() {
   const { items, updateQuantity, removeFromCart, clearCart, total } = useCart();
@@ -354,18 +454,10 @@ function CheckoutContent() {
               </div>
               <div>
                 <label className={labelClass}>Region Code</label>
-                <select required name="country_code" value={shipping.country_code} onChange={handleChange} className="merch-input appearance-none bg-obsidian cursor-pointer">
-                  <option value="US">UNITED STATES</option>
-                  <option value="ES">SPAIN</option>
-                  <option value="MX">MEXICO</option>
-                  <option value="AR">ARGENTINA</option>
-                  <option value="CO">COLOMBIA</option>
-                  <option value="CA">CANADA</option>
-                  <option value="AU">AUSTRALIA</option>
-                  <option value="NZ">NEW ZEALAND</option>
-                  <option value="GB">UNITED KINGDOM</option>
-                  <option value="JP">JAPAN</option>
-                </select>
+                <CountrySelect
+                  value={shipping.country_code}
+                  onChange={(code) => setShipping((prev) => ({ ...prev, country_code: code }))}
+                />
               </div>
             </div>
 
