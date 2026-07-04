@@ -37,24 +37,24 @@ const ZONE_OVERRIDES: Record<string, ZoneRateConfig> = {
     standardFirst: 0,
     standardNext: 0,
     expressAvailable: true,
-    expressFirst: 35.00,
-    expressNext: 0
+    expressFirst: 30.80,
+    expressNext: 11.80
   },
   "Europe": {
     standardAvailable: true,
     standardFirst: 0,
     standardNext: 0,
     expressAvailable: true,
-    expressFirst: 35.00,
-    expressNext: 0
+    expressFirst: 30.30,
+    expressNext: 0.10
   },
   "Rest of Europe": {
     standardAvailable: true,
     standardFirst: 0,
     standardNext: 0,
     expressAvailable: true,
-    expressFirst: 35.00,
-    expressNext: 0
+    expressFirst: 30.30,
+    expressNext: 0.10
   },
   "JP": {
     standardAvailable: true,
