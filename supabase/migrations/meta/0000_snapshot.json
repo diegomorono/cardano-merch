@@ -1,0 +1,128 @@
+{
+  "id": "ad81579b-aa89-46ce-977b-6210d05bd321",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.loyalty_escrow": {
+      "name": "loyalty_escrow",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "stripe_order_id": {
+          "name": "stripe_order_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cart_value_usd": {
+          "name": "cart_value_usd",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "midnight_escrow_status": {
+          "name": "midnight_escrow_status",
+          "type": "midnight_escrow_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'PENDING'"
+        },
+        "premium_nft_eligible": {
+          "name": "premium_nft_eligible",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "customer_email": {
+          "name": "customer_email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "customer_email_idx": {
+          "name": "customer_email_idx",
+          "columns": [
+            {
+              "expression": "customer_email",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "created_at_idx": {
+          "name": "created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "loyalty_escrow_stripe_order_id_unique": {
+          "name": "loyalty_escrow_stripe_order_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "stripe_order_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.midnight_escrow_status": {
+      "name": "midnight_escrow_status",
+      "schema": "public",
+      "values": [
+        "PENDING",
+        "CLAIMED",
+        "FORFEITED"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

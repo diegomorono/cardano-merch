@@ -18,11 +18,23 @@ interface ShippingDataInput {
   phone_number: string;
 }
 
+interface CheckoutSessionRequestBody {
+  cart?: CartItemInput[];
+  shipping?: ShippingDataInput;
+}
+
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const body = (await req.json()) as CheckoutSessionRequestBody;
     const cart: CartItemInput[] = body.cart || [];
-    const shipping: ShippingDataInput = body.shipping;
+    const shipping = body.shipping;
+
+    if (!shipping) {
+      return NextResponse.json(
+        { message: "VALIDATION ERROR: Shipping data is missing." },
+        { status: 400 }
+      );
+    }
 
     if (!process.env.STRIPE_SECRET_KEY) {
       return NextResponse.json(
@@ -93,7 +105,6 @@ export async function POST(req: Request) {
     const orderNumber = `ADA-${Date.now()}`;
 
     // Metadata limit in Stripe is 50 key-value pairs, keys under 40 chars, values under 500 chars.
-    // Serializing cart to fit in metadata.
     const cartMetadataString = JSON.stringify(
       validatedCartDetails.map((item) => ({ sku: item.sku, qty: item.quantity }))
     );
@@ -127,10 +138,11 @@ export async function POST(req: Request) {
       url: session.url,
       order_number: orderNumber,
     });
-  } catch (error: any) {
+  } catch (error) {
+    const errorMsg = error instanceof Error ? error.message : "Session creation failed";
     console.error("[Stripe Session Creation Failed]:", error);
     return NextResponse.json(
-      { message: "Failed to initialize Stripe Checkout Session.", error: error.message },
+      { message: "Failed to initialize Stripe Checkout Session.", error: errorMsg },
       { status: 500 }
     );
   }

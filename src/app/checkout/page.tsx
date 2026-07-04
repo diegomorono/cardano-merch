@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, Suspense } from "react";
 import { useRouter } from "next/navigation";
-import { ShoppingCart, ArrowLeft, Shield, Package, Trash2, Plus, Minus, Command, Globe, CreditCard } from "lucide-react";
+import { ShoppingCart, ArrowLeft, Shield, Package, Trash2, Plus, Minus, Command, CreditCard, Lock, X, Check } from "lucide-react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 
@@ -34,12 +34,27 @@ function CheckoutContent() {
   const [shipping, setShipping] = useState<ShippingForm>(INITIAL_SHIPPING);
   const [loading, setLoading] = useState(false);
   const [orderStatus, setOrderStatus] = useState<{ ok: boolean; msg: string } | null>(null);
+  
+  // E2E Test State
+  const [showStripeOverlay, setShowStripeOverlay] = useState(false);
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [cardName, setCardName] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardExpiry, setCardExpiry] = useState("");
+  const [cardCvc, setCardCvc] = useState("");
+  const [paymentError, setPaymentError] = useState<string | null>(null);
+  const [paymentLoading, setPaymentLoading] = useState(false);
+
+  // Success States
   const [orderNumber, setOrderNumber] = useState<string | null>(null);
+  const [trackingNumber, setTrackingNumber] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setShipping((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  // STEP 1: Triggered when user submits the shipping manifest.
+  // Fetches a payment intent client secret from /api/checkout.
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (items.length === 0) return;
@@ -47,18 +62,18 @@ function CheckoutContent() {
     setLoading(true);
     setOrderStatus(null);
     try {
-      const res = await fetch("/api/checkout-session", {
+      const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           cart: items.map(({ sku, quantity }) => ({ sku, quantity })),
-          shipping,
         }),
       });
       const data = await res.json();
-      if (res.ok && data.url) {
-        setOrderStatus({ ok: true, msg: "REDIRECTING TO SECURE GATEWAY..." });
-        window.location.href = data.url;
+      if (res.ok && data.clientSecret) {
+        setClientSecret(data.clientSecret);
+        // Show payment modal overlay
+        setShowStripeOverlay(true);
       } else {
         setOrderStatus({ ok: false, msg: `GATEWAY ERROR: ${data.message || 'Unknown'}` });
       }
@@ -66,6 +81,65 @@ function CheckoutContent() {
       setOrderStatus({ ok: false, msg: "CONNECTION TIMEOUT: RETRY" });
     } finally {
       setLoading(false);
+    }
+  };
+
+  // STEP 2: Triggered inside the Stripe Payment Overlay modal.
+  // Verifies the card input (simulated Stripe client verification) and places the order via /api/orders.
+  const handlePaymentSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPaymentError(null);
+    setPaymentLoading(true);
+
+    // Simulate Stripe client-side validation
+    const cleanCard = cardNumber.replace(/\s+/g, "");
+    if (cleanCard.length < 16) {
+      setPaymentError("Invalid card number structure.");
+      setPaymentLoading(false);
+      return;
+    }
+    if (cardExpiry.length < 4) {
+      setPaymentError("Invalid card expiration date.");
+      setPaymentLoading(false);
+      return;
+    }
+    if (cardCvc.length < 3) {
+      setPaymentError("Invalid CVC safety code.");
+      setPaymentLoading(false);
+      return;
+    }
+
+    try {
+      // Post transaction details to backend order API
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          cart: items.map(({ sku, quantity }) => ({ sku, quantity })),
+          shipping,
+          clientSecret,
+        }),
+      });
+      
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        // Clear order cart from localStorage via React context
+        clearCart();
+        
+        // Save confirmation parameters
+        setOrderNumber(data.order_number);
+        setTrackingNumber(data.tracking_number || null);
+        
+        // Close Stripe overlay modal
+        setShowStripeOverlay(false);
+      } else {
+        setPaymentError(data.message || "Failed to process fulfillment.");
+      }
+    } catch {
+      setPaymentError("Transaction timeout connection error.");
+    } finally {
+      setPaymentLoading(false);
     }
   };
 
@@ -158,18 +232,28 @@ function CheckoutContent() {
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }} 
             animate={{ opacity: 1, scale: 1 }} 
-            className="vault-card rounded-[3rem] p-16 text-center border-cardano-blue/30"
+            className="vault-card rounded-[3rem] p-16 text-center border-cardano-blue/30 space-y-10"
           >
-            <div className="w-24 h-24 bg-cardano-blue/20 rounded-full flex items-center justify-center mx-auto mb-8 border border-cardano-blue/40">
+            <div className="w-24 h-24 bg-cardano-blue/20 rounded-full flex items-center justify-center mx-auto border border-cardano-blue/40">
               <Command className="w-10 h-10 text-cardano-blue animate-pulse" />
             </div>
-            <h2 className="text-4xl font-black font-heading uppercase tracking-tighter mb-4 italic">Protocol Confirmed</h2>
-            <p className="text-white/50 text-lg font-light mb-10 leading-relaxed max-w-md mx-auto">
-              Your order has been authenticated and entered into the production queue.
-            </p>
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 mb-12 inline-block">
-              <span className="block text-[10px] font-black text-white/30 uppercase tracking-[0.4em] mb-2">Manifest ID</span>
-              <span className="text-xl font-heading font-black text-cardano-blue tracking-[0.2em]">{orderNumber}</span>
+            <div className="space-y-4">
+              <h2 className="text-4xl font-black font-heading uppercase tracking-tighter italic">Protocol Confirmed</h2>
+              <p className="text-white/50 text-base font-light leading-relaxed max-w-md mx-auto">
+                Your payment was authenticated and the order has been submitted into the production pipeline.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 flex-1">
+                <span className="block text-[10px] font-black text-white/30 uppercase tracking-[0.4em] mb-2">Manifest ID</span>
+                <span className="text-lg font-heading font-black text-cardano-blue tracking-[0.2em]">{orderNumber}</span>
+              </div>
+              {trackingNumber && (
+                <div className="bg-white/5 border border-white/10 rounded-2xl p-6 flex-1">
+                  <span className="block text-[10px] font-black text-white/30 uppercase tracking-[0.4em] mb-2">Tracking Code</span>
+                  <span className="text-lg font-heading font-black text-cardano-blue tracking-[0.2em]">{trackingNumber}</span>
+                </div>
+              )}
             </div>
             <Link href="/" className="block w-full py-5 rounded-3xl bg-white text-charcoal font-heading font-black text-xl uppercase tracking-widest hover:scale-[1.02] transition-transform duration-500">
               Return to Catalog
@@ -248,12 +332,167 @@ function CheckoutContent() {
               >
                 <div className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out skew-x-[-20deg]" />
                 <CreditCard className="w-8 h-8 group-hover:scale-110 transition-transform" />
-                <span>{loading ? "AUTHENTICATING..." : `INITIALIZE PAYMENT — $${total.toFixed(2)}`}</span>
+                <span>{loading ? "INITIALIZING ROUTE..." : `INITIALIZE PAYMENT — $${total.toFixed(2)}`}</span>
               </motion.button>
             </div>
           </form>
         )}
       </div>
+
+      {/* STRIPE TEST MODE PAYMENT OVERLAY MODAL */}
+      <AnimatePresence>
+        {showStripeOverlay && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-charcoal/90 backdrop-blur-md">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ type: "spring", duration: 0.5 }}
+              className="vault-card rounded-[2.5rem] p-10 max-w-md w-full border border-white/10 relative space-y-8 shadow-[0_30px_100px_rgba(0,0,0,0.8)]"
+            >
+              <button 
+                onClick={() => setShowStripeOverlay(false)} 
+                className="absolute top-6 right-6 p-2 rounded-full hover:bg-white/5 text-white/40 hover:text-white transition-colors cursor-pointer border-none bg-transparent"
+              >
+                <X size={20} />
+              </button>
+
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-cardano-blue/20 flex items-center justify-center border border-cardano-blue/30 text-cardano-blue">
+                  <Lock size={20} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-heading font-black uppercase tracking-tighter italic">Stripe Secure Gateway</h3>
+                  <span className="text-[9px] font-bold text-cardano-blue uppercase tracking-widest bg-cardano-blue/10 px-2 py-0.5 rounded">TEST MODE ACTIVE</span>
+                </div>
+              </div>
+
+              {/* Mock Credit Card graphic */}
+              <div className="w-full aspect-[1.586/1] bg-gradient-to-br from-cardano-blue to-obsidian border border-white/10 rounded-2xl p-6 flex flex-col justify-between shadow-inner relative overflow-hidden">
+                <div className="absolute right-0 top-0 w-32 h-32 bg-white/5 rounded-full blur-2xl pointer-events-none" />
+                <div className="flex justify-between items-start">
+                  <div className="flex flex-col">
+                    <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/40">Secured Node</span>
+                    <span className="font-heading font-black text-sm uppercase tracking-wider">Cardano Ledger</span>
+                  </div>
+                  <Command className="w-8 h-8 text-white/50" />
+                </div>
+                <div className="space-y-4">
+                  <span className="block font-heading font-bold text-lg sm:text-xl tracking-[0.2em] text-white/95">
+                    {cardNumber || "•••• •••• •••• ••••"}
+                  </span>
+                  <div className="flex justify-between text-[9px] font-bold text-white/40 uppercase tracking-widest">
+                    <div>
+                      <span className="block text-[7px] text-white/20 mb-0.5">Cardholder</span>
+                      <span>{cardName || "SATOSHI NAKAMOTO"}</span>
+                    </div>
+                    <div className="flex gap-4">
+                      <div>
+                        <span className="block text-[7px] text-white/20 mb-0.5">Expires</span>
+                        <span>{cardExpiry || "MM/YY"}</span>
+                      </div>
+                      <div>
+                        <span className="block text-[7px] text-white/20 mb-0.5">CVC</span>
+                        <span>{cardCvc || "•••"}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <form onSubmit={handlePaymentSubmit} className="space-y-6">
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-[9px] font-black text-white/40 uppercase tracking-widest mb-2">Cardholder Name</label>
+                    <input 
+                      required 
+                      value={cardName} 
+                      onChange={(e) => setCardName(e.target.value.toUpperCase())} 
+                      placeholder="SATOSHI NAKAMOTO" 
+                      className="merch-input py-4 rounded-xl text-sm" 
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[9px] font-black text-white/40 uppercase tracking-widest mb-2">Card Number</label>
+                    <input 
+                      required 
+                      maxLength={19} 
+                      value={cardNumber} 
+                      onChange={(e) => {
+                        let val = e.target.value.replace(/\D/g, "");
+                        let formatted = val.match(/.{1,4}/g)?.join(" ") || val;
+                        setCardNumber(formatted);
+                      }} 
+                      placeholder="4242 4242 4242 4242" 
+                      className="merch-input py-4 rounded-xl text-sm" 
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[9px] font-black text-white/40 uppercase tracking-widest mb-2">Expiration</label>
+                      <input 
+                        required 
+                        maxLength={5} 
+                        value={cardExpiry} 
+                        onChange={(e) => {
+                          let val = e.target.value.replace(/\D/g, "");
+                          if (val.length > 2) {
+                            val = `${val.slice(0, 2)}/${val.slice(2, 4)}`;
+                          }
+                          setCardExpiry(val);
+                        }} 
+                        placeholder="MM/YY" 
+                        className="merch-input py-4 rounded-xl text-sm text-center" 
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[9px] font-black text-white/40 uppercase tracking-widest mb-2">CVC Security</label>
+                      <input 
+                        required 
+                        type="password" 
+                        maxLength={4} 
+                        value={cardCvc} 
+                        onChange={(e) => setCardCvc(e.target.value.replace(/\D/g, ""))} 
+                        placeholder="•••" 
+                        className="merch-input py-4 rounded-xl text-sm text-center" 
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-[10px] font-light text-white/50 leading-relaxed uppercase tracking-wider">
+                  ⚠️ <strong className="text-white/80">Test Overlay Rules:</strong> Input <code className="text-cardano-blue font-bold">4242 4242...</code> as card credentials. No real transaction cost will be incurred.
+                </div>
+
+                {paymentError && (
+                  <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-[10px] font-bold uppercase tracking-widest">
+                    {paymentError}
+                  </div>
+                )}
+
+                <button 
+                  type="submit" 
+                  disabled={paymentLoading} 
+                  className="w-full py-5 rounded-2xl bg-cardano-blue text-white font-heading font-black text-lg uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer border-none flex items-center justify-center gap-3 disabled:opacity-50"
+                >
+                  {paymentLoading ? (
+                    <>
+                      <Command className="w-5 h-5 animate-spin" />
+                      <span>AUTHORIZING FUNDS...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Lock size={16} />
+                      <span>PAY NOW — ${total.toFixed(2)}</span>
+                    </>
+                  )}
+                </button>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
     </div>
   );
 }
@@ -284,7 +523,7 @@ export default function CheckoutPage() {
             <span className="text-[8px] md:text-[9px] font-bold tracking-[0.4em] uppercase text-white/50">Merch</span>
           </div>
         </motion.div>
-        <div className="hidden sm:block w-[100px]" /> {/* Spacer for balance */}
+        <div className="hidden sm:block w-[100px]" />
       </nav>
 
       <Suspense fallback={<div className="text-center py-32 font-heading font-black uppercase tracking-[0.5em] opacity-20 animate-pulse">Initializing Data Stream...</div>}>

@@ -2,17 +2,18 @@
 
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { ShoppingCart, ArrowRight, Star, Plus, Minus, Command } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, Suspense } from "react";
 import { useRouter } from "next/navigation";
-import { products } from "@/lib/products";
 import { useCart } from "@/context/CartContext";
 
 export default function Home() {
-  const product = products[0];
-  const [selectedVariant, setSelectedVariant] = useState(product.variants[2]); // Default L
+  const [productsList, setProductsList] = useState<any[]>([]);
+  const [selectedProductIndex, setSelectedProductIndex] = useState(0);
+  const [selectedVariant, setSelectedVariant] = useState<any>(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [orderStatus, setOrderStatus] = useState<{ ok: boolean; msg: string } | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const { items, addToCart } = useCart();
   const router = useRouter();
@@ -22,7 +23,32 @@ export default function Home() {
   const titleY = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
   const imageScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.1]);
 
+  useEffect(() => {
+    async function loadCatalog() {
+      try {
+        const res = await fetch("/api/products");
+        const data = await res.json();
+        if (res.ok && Array.isArray(data) && data.length > 0) {
+          setProductsList(data);
+          // Set initial default variant to L (index 2) if exists, else first variant
+          const defaultProduct = data[0];
+          const defaultVariant = defaultProduct.variants[2] || defaultProduct.variants[0];
+          setSelectedVariant(defaultVariant);
+        } else {
+          console.error("[Catalog Loading Failed]: No products resolved.");
+        }
+      } catch (error) {
+        console.error("[Catalog Loading Exception]:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadCatalog();
+  }, []);
+
   const handleAddToCart = () => {
+    if (!selectedVariant || !productsList[selectedProductIndex]) return;
+    const product = productsList[selectedProductIndex];
     addToCart({
       sku: selectedVariant.sku,
       quantity,
@@ -36,6 +62,44 @@ export default function Home() {
   };
 
   const totalCartItems = items.reduce((acc, c) => acc + c.quantity, 0);
+
+  // Stylized Tailwind v4 Loading Skeleton
+  if (loading || productsList.length === 0 || !selectedVariant) {
+    return (
+      <main className="min-h-screen bg-charcoal text-white font-body flex flex-col justify-center items-center px-6">
+        {/* Cinematic Grid Background */}
+        <div className="fixed inset-0 z-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '60px 60px' }}></div>
+        <div className="w-full max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+          {/* Left Image Box Skeleton */}
+          <div className="w-full aspect-square bg-white/5 border border-white/10 rounded-[2.5rem] animate-pulse flex items-center justify-center">
+            <Command className="w-12 h-12 text-white/10 animate-spin" />
+          </div>
+          {/* Right Product Configurator Skeleton */}
+          <div className="space-y-10 animate-pulse">
+            <div className="space-y-4">
+              <div className="h-16 w-3/4 bg-white/5 border border-white/10 rounded-2xl" />
+              <div className="h-6 w-1/3 bg-white/5 border border-white/10 rounded-full" />
+            </div>
+            <div className="h-12 w-1/4 bg-white/5 border border-white/10 rounded-2xl" />
+            <div className="space-y-4">
+              <div className="h-4 w-1/5 bg-white/5 border border-white/10 rounded" />
+              <div className="flex gap-4">
+                {[...Array(4)].map((_, i) => (
+                  <div key={i} className="h-14 w-14 bg-white/5 border border-white/10 rounded-2xl" />
+                ))}
+              </div>
+            </div>
+            <div className="flex gap-6">
+              <div className="h-14 w-32 bg-white/5 border border-white/10 rounded-2xl" />
+              <div className="h-14 flex-1 bg-white/5 border border-white/10 rounded-2xl" />
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  const product = productsList[selectedProductIndex];
 
   return (
     <main ref={containerRef} className="min-h-screen bg-charcoal text-white font-body selection:bg-cardano-blue selection:text-white">
@@ -100,7 +164,7 @@ export default function Home() {
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="relative pb-20"
           >
-            {/* Vault Card Container - Updated to aspect-square configuration */}
+            {/* Vault Card Container */}
             <div className="relative w-full aspect-square rounded-[2rem] md:rounded-[2.5rem] overflow-hidden vault-card">
               <div className="absolute inset-4 md:inset-8">
                 <AnimatePresence mode="wait">
@@ -112,7 +176,6 @@ export default function Home() {
                     transition={{ duration: 0.6 }}
                     src={product.images[selectedImage]}
                     alt={product.title}
-                    /* Enforced perfect rounded square geometry using aspect-square, object-cover, and matching radii rules */
                     className="w-full h-full aspect-square object-cover block rounded-[1.75rem] md:rounded-[2.25rem] drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] md:drop-shadow-[0_40px_100px_rgba(0,0,0,0.8)]"
                   />
                 </AnimatePresence>
@@ -121,7 +184,7 @@ export default function Home() {
 
             {/* Image Selector Strip */}
             <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-30 flex gap-2 md:gap-3 p-2 bg-white/5 backdrop-blur-3xl rounded-2xl border border-white/10 max-w-[95vw] overflow-x-auto">
-              {product.images.map((img, i) => (
+              {product.images.map((img: string, i: number) => (
                 <button
                   key={i}
                   onClick={() => setSelectedImage(i)}
@@ -161,7 +224,7 @@ export default function Home() {
             <div className="space-y-4 overflow-visible">
               <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40">Select Specification</h4>
               <div className="grid grid-cols-4 md:flex md:flex-wrap gap-3 md:gap-4 overflow-visible">
-                {product.variants.map((v) => (
+                {product.variants.map((v: any) => (
                   <button
                     key={v.sku}
                     onClick={() => { setSelectedVariant(v); setQuantity(1); }}

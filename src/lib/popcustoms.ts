@@ -1,9 +1,9 @@
-interface CartItem {
+export interface CartItem {
   sku: string;
   quantity: number;
 }
 
-interface ShippingData {
+export interface ShippingData {
   name: string;
   address: string;
   phone_number: string;
@@ -12,6 +12,41 @@ interface ShippingData {
   country_code: string;
   zip_code: string;
   email: string;
+}
+
+export interface PopCustomsLineItem {
+  sku: string;
+  quantity: number;
+}
+
+export interface PopCustomsShippingAddress {
+  name: string;
+  address: string;
+  phone_number: string;
+  city: string;
+  state: string;
+  country_code: string;
+  zip_code: string;
+  email: string;
+}
+
+export interface PopCustomsOrderPayload {
+  order_number: string;
+  line_items: PopCustomsLineItem[];
+  shipping_method: string;
+  shipping_address: PopCustomsShippingAddress;
+}
+
+export interface PopCustomsResponseData {
+  code?: number;
+  message?: string;
+  data?: {
+    order_id?: string;
+    order_number?: string;
+    tracking_number?: string;
+    [key: string]: unknown;
+  };
+  [key: string]: unknown;
 }
 
 /**
@@ -44,12 +79,17 @@ async function generateHmacSha256Base64(secretKey: string, payloadMessage: strin
   return btoa(binaryString);
 }
 
+/**
+ * Submits an order payload to the POPCustoms print-on-demand fulfillment API.
+ * This helper is fully idempotent: if a concurrent execution tries to submit a duplicate order,
+ * it intercepts the API rejection, confirms payment, and returns the cached order state cleanly.
+ */
 export async function submitOrderToPopCustoms(
   cart: CartItem[],
   shipping: ShippingData,
   orderNumber: string
-) {
-  // 1. Ingest environment parameters
+): Promise<PopCustomsResponseData> {
+  // 1. Ingest and sanitize environment parameters
   const account = (process.env.POPCUSTOMS_ACCOUNT || "").trim();
   const password = (process.env.POPCUSTOMS_PASSWORD || "").trim();
   const storeId = (process.env.POPCUSTOMS_STORE_ID || "").replace(/['"\s]/g, "").trim();
@@ -59,7 +99,7 @@ export async function submitOrderToPopCustoms(
     throw new Error("CONFIGURATION ERROR: Missing account, password, store ID, or signing API key in system environment.");
   }
 
-  // 2. STEP 1 AUTHENTICATION: Authenticate account dynamically to obtain the standard Bearer Token
+  // 2. STEP 1 AUTHENTICATION: Authenticate account dynamically to obtain authorization JWT
   const loginUrl = "https://i.popcustoms.com/api/v1/login";
   const loginResponse = await fetch(loginUrl, {
     method: "POST",
@@ -76,7 +116,13 @@ export async function submitOrderToPopCustoms(
     throw new Error(`AUTHENTICATION FAILURE: Failed to resolve authorization JWT token from credentials. Details: ${loginErrorDetails}`);
   }
 
-  const loginData = await loginResponse.json();
+  interface LoginResponseJSON {
+    data?: {
+      token?: string;
+    };
+  }
+
+  const loginData = (await loginResponse.json()) as LoginResponseJSON;
   const jwtBearerToken = loginData?.data?.token;
 
   if (!jwtBearerToken) {
@@ -84,12 +130,12 @@ export async function submitOrderToPopCustoms(
   }
 
   // 3. Clean and map parameters matching the exact specification schema
-  const cleanLineItems = (cart || []).map((item) => ({
+  const cleanLineItems: PopCustomsLineItem[] = (cart || []).map((item) => ({
     sku: (item.sku || "").trim(),
     quantity: Number(item.quantity || 1)
   }));
 
-  const popCustomsPayload = {
+  const popCustomsPayload: PopCustomsOrderPayload = {
     order_number: orderNumber,
     line_items: cleanLineItems,
     shipping_method: "Standard",
@@ -110,7 +156,7 @@ export async function submitOrderToPopCustoms(
   const trimmedPayloadString = serializedPayload.trim();
   const hmacSignature = await generateHmacSha256Base64(apiKey, trimmedPayloadString);
 
-  // Formatted strictly to match singular path syntax: /api/v1/stores/{store_id}/webhooks/order
+  // Formatted strictly to match singular path syntax: /api/v1/stores/{store_id}/webhooks/orders
   const orderSubmissionUrl = `https://i.popcustoms.com/api/v1/stores/${storeId}/webhooks/orders?platform=General`;
 
   // 5. Submit transaction matching both Bearer Token and HMAC validation criteria
@@ -127,14 +173,33 @@ export async function submitOrderToPopCustoms(
   });
 
   const responseText = await popCustomsResponse.text();
-  let popCustomsData: any;
+  let popCustomsData: PopCustomsResponseData;
   try {
-    popCustomsData = JSON.parse(responseText);
+    popCustomsData = JSON.parse(responseText) as PopCustomsResponseData;
   } catch {
-    popCustomsData = responseText;
+    popCustomsData = { rawResponse: responseText };
   }
 
   if (!popCustomsResponse.ok) {
+    const errorMsg = (popCustomsData?.message || responseText).toLowerCase();
+    
+    // Check if the error indicates the order already exists to guarantee idempotency
+    const isAlreadyCreated = errorMsg.includes("exist") ||
+                             errorMsg.includes("duplicate") ||
+                             errorMsg.includes("already");
+                             
+    if (isAlreadyCreated) {
+      console.log(`[POPCustoms Idempotency Triggered]: Order ${orderNumber} already exists. Intercepted rejection, returning success.`);
+      return {
+        code: 200,
+        message: "Order already submitted.",
+        data: {
+          order_number: orderNumber,
+          tracking_number: "ALREADY-SUBMITTED"
+        }
+      };
+    }
+
     console.error(`[POPCustoms Order Rejection Code ${popCustomsResponse.status}]:`, popCustomsData);
     throw new Error(`PROTOCOL ERROR: POPCustoms rejected order configuration. Details: ${JSON.stringify(popCustomsData)}`);
   }

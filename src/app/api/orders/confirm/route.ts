@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { submitOrderToPopCustoms } from "@/lib/popcustoms";
+import { submitOrderToPopCustoms, CartItem } from "@/lib/popcustoms";
 
 export async function GET(req: Request) {
   try {
@@ -41,10 +41,15 @@ export async function GET(req: Request) {
       phone_number: metadata.shipping_phone_number || "",
     };
 
-    let cart = [];
+    interface CartItemMetadata {
+      sku: string;
+      qty: number;
+    }
+
+    let cart: CartItem[] = [];
     try {
-      const cartRaw = JSON.parse(metadata.cart_data || "[]");
-      cart = cartRaw.map((item: any) => ({
+      const cartRaw = JSON.parse(metadata.cart_data || "[]") as CartItemMetadata[];
+      cart = cartRaw.map((item) => ({
         sku: item.sku,
         quantity: item.qty,
       }));
@@ -54,30 +59,19 @@ export async function GET(req: Request) {
     }
 
     console.log(`[Confirm Order]: Fulfilling order ${orderNumber} via POPCustoms...`);
-    let result;
-    try {
-      result = await submitOrderToPopCustoms(cart, shipping, orderNumber);
-      console.log(`[Confirm Order]: POPCustoms Fulfillment complete:`, result);
-    } catch (fulfillmentErr: any) {
-      // If the error indicates it's already created, we can ignore it and succeed
-      const isAlreadyCreated = fulfillmentErr.message.toLowerCase().includes("exist") ||
-                               fulfillmentErr.message.toLowerCase().includes("duplicate") ||
-                               fulfillmentErr.message.toLowerCase().includes("already");
-      if (isAlreadyCreated) {
-        console.log(`[Confirm Order]: Order ${orderNumber} was already submitted.`);
-      } else {
-        console.error(`[Confirm Order]: POPCustoms submission failed:`, fulfillmentErr.message);
-        return NextResponse.json({ message: "Fulfillment submission failed.", error: fulfillmentErr.message }, { status: 500 });
-      }
-    }
+    
+    // submitOrderToPopCustoms is fully idempotent and resolves duplication errors internally
+    const result = await submitOrderToPopCustoms(cart, shipping, orderNumber);
+    console.log(`[Confirm Order]: POPCustoms Fulfillment complete:`, result);
 
     return NextResponse.json({
       success: true,
       order_number: orderNumber,
-      details: result || "Already fulfilled",
+      details: result,
     });
-  } catch (error: any) {
+  } catch (error) {
+    const errorMsg = error instanceof Error ? error.message : "Order verification failed";
     console.error("[Confirm Order Fatal Error]:", error);
-    return NextResponse.json({ message: "Order verification failed.", error: error.message }, { status: 500 });
+    return NextResponse.json({ message: "Order verification failed.", error: errorMsg }, { status: 500 });
   }
 }
