@@ -22,7 +22,7 @@ interface ZoneRateConfig {
   expressNext: number;
 }
 
-// Exact shipping quotes configured from the benchmark POPCustoms sheet
+// Exact shipping quotes configured from the benchmark POPCustoms sheet (YF61 / GLD_C5-M cotton shirts)
 const ZONE_OVERRIDES: Record<string, ZoneRateConfig> = {
   "United States": {
     standardAvailable: true,
@@ -73,7 +73,7 @@ const ZONE_OVERRIDES: Record<string, ZoneRateConfig> = {
     expressNext: 0
   },
   "Oceania": {
-    standardAvailable: false,
+    standardAvailable: true, // Standard is available for Oceania (Australia/NZ)
     standardFirst: 6.00,
     standardNext: 0,
     expressAvailable: true,
@@ -81,7 +81,7 @@ const ZONE_OVERRIDES: Record<string, ZoneRateConfig> = {
     expressNext: 0
   },
   "Middle East": {
-    standardAvailable: false,
+    standardAvailable: true, // Standard is available for Middle East
     standardFirst: 5.00,
     standardNext: 0,
     expressAvailable: true,
@@ -89,15 +89,15 @@ const ZONE_OVERRIDES: Record<string, ZoneRateConfig> = {
     expressNext: 0
   },
   "Mexico": {
-    standardAvailable: false,
+    standardAvailable: true, // Standard is available for Mexico
     standardFirst: 3.00,
-    standardNext: 3.00,
+    standardNext: 0,
     expressAvailable: true,
     expressFirst: 25.00,
     expressNext: 0
   },
   "Asia": {
-    standardAvailable: false,
+    standardAvailable: true, // Standard is available for Asia
     standardFirst: 3.00,
     standardNext: 0,
     expressAvailable: true,
@@ -105,12 +105,12 @@ const ZONE_OVERRIDES: Record<string, ZoneRateConfig> = {
     expressNext: 0
   },
   "Rest Of World": {
-    standardAvailable: false,
+    standardAvailable: false, // Standard not supported to ROW (Argentina, Colombia, etc.)
     standardFirst: 0,
     standardNext: 0,
     expressAvailable: true,
     expressFirst: 80.00,
-    expressNext: 60.00
+    expressNext: 60.00 // ROW express increases by $60.00 per extra item
   }
 };
 
@@ -144,17 +144,15 @@ export function getShippingOptions(cart: CartItem[], countryCode: string): Shipp
 
   const { rates } = getShippingZoneAndRates(countryCode);
   
-  // Calculate Standard Cost: Only if available in this region
+  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+  // Calculate Standard Cost: Only if standard is available in this region
   let standardCost = 0;
   if (rates.standardAvailable) {
-    // Standard is free if standardFirst is 0. Otherwise standardFirst + standardNext for other items.
-    let highestStdFirst = rates.standardFirst;
-    let totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
-    standardCost = highestStdFirst + (totalItems - 1) * rates.standardNext;
+    standardCost = rates.standardFirst + (totalItems - 1) * rates.standardNext;
   }
   
   // Calculate Express Cost: Always available
-  let totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
   const expressCost = rates.expressFirst + (totalItems - 1) * rates.expressNext;
 
   const options: ShippingOption[] = [];
@@ -189,7 +187,7 @@ export function calculateShippingCost(
   const matched = options.find((opt) => opt.id === method);
   if (matched) return matched.cost;
   
-  // Fallback to Express if method not available
+  // Fallback to Express if method not available in this region
   const expressOption = options.find((opt) => opt.id === "Express");
   return expressOption ? expressOption.cost : 0;
 }
