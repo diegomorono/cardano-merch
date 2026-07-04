@@ -178,13 +178,13 @@ function CheckoutContent() {
           const options = data.options || [];
           setShippingOptions(options);
 
-          // Auto-select method: if Standard is in options, prefer standard (since it is free),
-          // otherwise select Express.
-          const hasStandard = options.some((o: any) => o.id === "Standard");
-          const defaultMethod = hasStandard ? "Standard" : "Express";
+          // Preserve user intent if the selected method is still available in the new options list.
+          // Otherwise, fallback to Standard if available, or Express.
+          const hasPrev = options.some((o: any) => o.id === selectedMethod);
+          const nextMethod = hasPrev ? selectedMethod : (options.some((o: any) => o.id === "Standard") ? "Standard" : "Express");
 
-          setSelectedMethod(defaultMethod);
-          const matched = options.find((o: any) => o.id === defaultMethod);
+          setSelectedMethod(nextMethod);
+          const matched = options.find((o: any) => o.id === nextMethod);
           setShippingCost(matched ? matched.cost : 0);
         }
       } catch (err) {
