@@ -87,7 +87,8 @@ async function generateHmacSha256Base64(secretKey: string, payloadMessage: strin
 export async function submitOrderToPopCustoms(
   cart: CartItem[],
   shipping: ShippingData,
-  orderNumber: string
+  orderNumber: string,
+  shippingMethod: "Standard" | "Express" = "Standard"
 ): Promise<PopCustomsResponseData> {
   // 1. Ingest and sanitize environment parameters
   const account = (process.env.POPCUSTOMS_ACCOUNT || "").trim();
@@ -138,7 +139,7 @@ export async function submitOrderToPopCustoms(
   const popCustomsPayload: PopCustomsOrderPayload = {
     order_number: orderNumber,
     line_items: cleanLineItems,
-    shipping_method: "Standard",
+    shipping_method: shippingMethod,
     shipping_address: {
       name: (shipping?.name || "").trim(),
       address: (shipping?.address || "").trim(),

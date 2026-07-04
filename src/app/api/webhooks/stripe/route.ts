@@ -109,8 +109,9 @@ export async function POST(req: Request) {
 
       // --- POPCustoms Physical Fulfillment ---
       console.log("[WEBHOOK] POPCustoms triggered: Submitting order", orderNumber);
+      const shippingMethod = (metadata.shipping_method || "Standard") as "Standard" | "Express";
       try {
-        const result = await submitOrderToPopCustoms(cart, shipping, orderNumber);
+        const result = await submitOrderToPopCustoms(cart, shipping, orderNumber, shippingMethod);
         console.log("[WEBHOOK] POPCustoms completed: Order submitted successfully.", result);
       } catch (fulfillmentErr) {
         const errMsg = fulfillmentErr instanceof Error ? fulfillmentErr.message : "Fulfillment error";

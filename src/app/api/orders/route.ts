@@ -1,9 +1,27 @@
+/**
+ * Pseudo-code Logical Map:
+ * 1. Import NextResponse.
+ * 2. Import submitOrderToPopCustoms, CartItem, ShippingData.
+ * 3. Define OrdersRequestBody with optional shippingMethod.
+ * 4. Within the POST handler:
+ *    - Extract cart, shipping, and shippingMethod from the body.
+ *    - Generate a unique ADA order number.
+ *    - Validate presence of shipping data.
+ *    - If POPCUSTOMS_TEST_MODE is true:
+ *      - Construct popCustomsPayload with dynamic shipping_method (Standard/Express).
+ *      - Log the payload and return mock success.
+ *    - If test mode is false:
+ *      - Submit order directly via submitOrderToPopCustoms (we will modify submitOrderToPopCustoms to accept shippingMethod).
+ *      - Return gateway response.
+ */
+
 import { NextResponse } from "next/server";
 import { submitOrderToPopCustoms, CartItem, ShippingData } from "@/lib/popcustoms";
 
 interface OrdersRequestBody {
   cart?: CartItem[];
   shipping?: ShippingData;
+  shippingMethod?: "Standard" | "Express";
 }
 
 export async function POST(req: Request) {
@@ -11,6 +29,7 @@ export async function POST(req: Request) {
     const body = (await req.json()) as OrdersRequestBody;
     const cart = body.cart || [];
     const shipping = body.shipping;
+    const shippingMethod = body.shippingMethod || "Standard";
     const orderNumber = `ADA-${Date.now()}`;
 
     if (!shipping) {
@@ -31,7 +50,7 @@ export async function POST(req: Request) {
       const popCustomsPayload = {
         order_number: orderNumber,
         line_items: cleanLineItems,
-        shipping_method: "Standard",
+        shipping_method: shippingMethod,
         shipping_address: {
           name: (shipping.name || "").trim(),
           address: (shipping.address || "").trim(),
@@ -57,7 +76,8 @@ export async function POST(req: Request) {
       );
     }
 
-    const result = await submitOrderToPopCustoms(cart, shipping, orderNumber);
+    // Call POPCustoms submit wrapper (which we will update to pass shippingMethod)
+    const result = await submitOrderToPopCustoms(cart, shipping, orderNumber, shippingMethod);
 
     return NextResponse.json(
       {

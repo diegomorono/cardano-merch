@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import { ShoppingCart, ArrowLeft, Shield, Package, Trash2, Plus, Minus, Command, CreditCard, Lock, X, Check } from "lucide-react";
 import Link from "next/link";
@@ -35,6 +35,12 @@ function CheckoutContent() {
   const [loading, setLoading] = useState(false);
   const [orderStatus, setOrderStatus] = useState<{ ok: boolean; msg: string } | null>(null);
   
+  // Shipping State Variables
+  const [shippingOptions, setShippingOptions] = useState<any[]>([]);
+  const [selectedMethod, setSelectedMethod] = useState<"Standard" | "Express">("Standard");
+  const [shippingCost, setShippingCost] = useState<number>(0);
+  const [loadingShipping, setLoadingShipping] = useState<boolean>(false);
+
   // E2E Test State
   const [showStripeOverlay, setShowStripeOverlay] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
@@ -48,6 +54,54 @@ function CheckoutContent() {
   // Success States
   const [orderNumber, setOrderNumber] = useState<string | null>(null);
   const [trackingNumber, setTrackingNumber] = useState<string | null>(null);
+
+  // Fetch shipping options whenever country code or cart items change
+  useEffect(() => {
+    const fetchShippingOptions = async () => {
+      if (items.length === 0) {
+        setShippingOptions([]);
+        setShippingCost(0);
+        return;
+      }
+      setLoadingShipping(true);
+      try {
+        const res = await fetch("/api/shipping", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            cart: items.map(({ sku, quantity }) => ({ sku, quantity })),
+            country_code: shipping.country_code,
+          }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const options = data.options || [];
+          setShippingOptions(options);
+
+          // Auto-select method: if Standard is in options, prefer standard (since it is free),
+          // otherwise select Express.
+          const hasStandard = options.some((o: any) => o.id === "Standard");
+          const defaultMethod = hasStandard ? "Standard" : "Express";
+
+          setSelectedMethod(defaultMethod);
+          const matched = options.find((o: any) => o.id === defaultMethod);
+          setShippingCost(matched ? matched.cost : 0);
+        }
+      } catch (err) {
+        console.error("Failed to fetch shipping options", err);
+      } finally {
+        setLoadingShipping(false);
+      }
+    };
+
+    fetchShippingOptions();
+  }, [shipping.country_code, items]);
+
+  const handleMethodChange = (method: "Standard" | "Express") => {
+    setSelectedMethod(method);
+    const matched = shippingOptions.find((o: any) => o.id === method);
+    setShippingCost(matched ? matched.cost : 0);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setShipping((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -67,6 +121,8 @@ function CheckoutContent() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           cart: items.map(({ sku, quantity }) => ({ sku, quantity })),
+          shipping,
+          shippingMethod: selectedMethod,
         }),
       });
       const data = await res.json();
@@ -117,6 +173,7 @@ function CheckoutContent() {
         body: JSON.stringify({
           cart: items.map(({ sku, quantity }) => ({ sku, quantity })),
           shipping,
+          shippingMethod: selectedMethod,
           clientSecret,
         }),
       });
@@ -202,13 +259,13 @@ function CheckoutContent() {
               <span>${total.toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-white/40 text-xs uppercase tracking-[0.2em]">
-              <span>Shipping</span>
-              <span>Calculated at Entry</span>
+              <span>Shipping ({selectedMethod})</span>
+              <span>{shippingCost === 0 ? "FREE" : `$${shippingCost.toFixed(2)}`}</span>
             </div>
             <div className="border-t border-white/10 pt-6 flex justify-between items-baseline">
               <span className="font-heading font-black text-2xl uppercase tracking-tighter italic">Total Amount</span>
               <div className="text-right">
-                <span className="block text-4xl font-heading font-black text-cardano-blue italic tracking-tighter">${total.toFixed(2)}</span>
+                <span className="block text-4xl font-heading font-black text-cardano-blue italic tracking-tighter">${(total + shippingCost).toFixed(2)}</span>
                 <span className="text-[10px] font-bold text-white/20 uppercase tracking-widest">USD Only</span>
               </div>
             </div>
@@ -304,6 +361,10 @@ function CheckoutContent() {
                   <option value="AR">ARGENTINA</option>
                   <option value="CO">COLOMBIA</option>
                   <option value="CA">CANADA</option>
+                  <option value="AU">AUSTRALIA</option>
+                  <option value="NZ">NEW ZEALAND</option>
+                  <option value="GB">UNITED KINGDOM</option>
+                  <option value="JP">JAPAN</option>
                 </select>
               </div>
             </div>
@@ -311,6 +372,59 @@ function CheckoutContent() {
             <div>
               <label className={labelClass}>Contact Signal (Phone)</label>
               <input name="phone_number" value={shipping.phone_number} onChange={handleChange} placeholder="+00 123 456 789" className="merch-input" />
+            </div>
+
+            {/* Dynamic Shipping Selection Strategy Section */}
+            <div className="space-y-4">
+              <label className={labelClass}>Delivery Strategy</label>
+              {loadingShipping ? (
+                <div className="text-white/30 text-xs font-heading font-black uppercase tracking-widest py-6 border border-white/5 bg-white/5 rounded-2xl text-center animate-pulse">
+                  Recalculating Transit Options...
+                </div>
+              ) : shippingOptions.length === 0 ? (
+                <div className="text-white/20 text-xs font-heading font-black uppercase tracking-widest py-6 border border-white/5 bg-white/5 rounded-2xl text-center">
+                  Awaiting Coordinates
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {shippingOptions.map((option) => {
+                    const isSelected = selectedMethod === option.id;
+                    return (
+                      <button
+                        key={option.id}
+                        type="button"
+                        onClick={() => handleMethodChange(option.id)}
+                        className={`flex flex-col justify-between p-6 rounded-2xl border text-left cursor-pointer transition-all duration-300 ${
+                          isSelected
+                            ? "border-cardano-blue bg-cardano-blue/10 shadow-[0_0_30px_rgba(0,51,173,0.15)]"
+                            : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10"
+                        }`}
+                      >
+                        <div className="flex justify-between items-center w-full mb-3">
+                          <span className="font-heading font-black uppercase tracking-tighter text-sm">
+                            {option.name}
+                          </span>
+                          {isSelected ? (
+                            <span className="w-5 h-5 rounded-full bg-cardano-blue flex items-center justify-center border border-cardano-blue">
+                              <Check size={12} className="text-white" />
+                            </span>
+                          ) : (
+                            <span className="w-5 h-5 rounded-full border border-white/20" />
+                          )}
+                        </div>
+                        <div className="space-y-1">
+                          <span className="block text-[10px] font-black uppercase tracking-widest text-cardano-blue">
+                            {option.cost === 0 ? "FREE" : `$${option.cost.toFixed(2)}`}
+                          </span>
+                          <span className="block text-[9px] font-bold text-white/40 uppercase tracking-widest">
+                            {option.estimated}
+                          </span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
             <div className="pt-6 space-y-6">
@@ -327,12 +441,12 @@ function CheckoutContent() {
                 type="submit" 
                 whileHover={{ scale: 1.02 }} 
                 whileTap={{ scale: 0.98 }} 
-                disabled={loading || items.length === 0} 
+                disabled={loading || items.length === 0 || loadingShipping} 
                 className="w-full h-24 rounded-[2rem] font-heading font-black text-2xl flex items-center justify-center gap-6 transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed border-none bg-cardano-blue text-white shadow-[0_20px_60px_rgba(0,51,173,0.3)] relative overflow-hidden group cursor-pointer"
               >
                 <div className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out skew-x-[-20deg]" />
                 <CreditCard className="w-8 h-8 group-hover:scale-110 transition-transform" />
-                <span>{loading ? "INITIALIZING ROUTE..." : `INITIALIZE PAYMENT — $${total.toFixed(2)}`}</span>
+                <span>{loading ? "INITIALIZING ROUTE..." : `INITIALIZE PAYMENT — $${(total + shippingCost).toFixed(2)}`}</span>
               </motion.button>
             </div>
           </form>
@@ -483,7 +597,7 @@ function CheckoutContent() {
                   ) : (
                     <>
                       <Lock size={16} />
-                      <span>PAY NOW — ${total.toFixed(2)}</span>
+                      <span>PAY NOW — ${(total + shippingCost).toFixed(2)}</span>
                     </>
                   )}
                 </button>
