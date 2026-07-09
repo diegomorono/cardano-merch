@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { submitOrderToPopCustoms, CartItem } from "@/lib/popcustoms";
 
 export async function GET(req: Request) {
   try {
@@ -30,44 +29,10 @@ export async function GET(req: Request) {
     }
 
     const orderNumber = metadata.order_number;
-    const shipping = {
-      name: metadata.shipping_name || "",
-      email: metadata.shipping_email || "",
-      address: metadata.shipping_address || "",
-      city: metadata.shipping_city || "",
-      state: metadata.shipping_state || "",
-      country_code: metadata.shipping_country_code || "US",
-      zip_code: metadata.shipping_zip_code || "",
-      phone_number: metadata.shipping_phone_number || "",
-    };
-
-    interface CartItemMetadata {
-      sku: string;
-      qty: number;
-    }
-
-    let cart: CartItem[] = [];
-    try {
-      const cartRaw = JSON.parse(metadata.cart_data || "[]") as CartItemMetadata[];
-      cart = cartRaw.map((item) => ({
-        sku: item.sku,
-        quantity: item.qty,
-      }));
-    } catch (parseErr) {
-      console.error("[Confirm Order]: Failed to parse cart metadata", parseErr);
-      return NextResponse.json({ message: "Invalid cart metadata." }, { status: 400 });
-    }
-
-    console.log(`[Confirm Order]: Fulfilling order ${orderNumber} via POPCustoms...`);
-    
-    // submitOrderToPopCustoms is fully idempotent and resolves duplication errors internally
-    const result = await submitOrderToPopCustoms(cart, shipping, orderNumber);
-    console.log(`[Confirm Order]: POPCustoms Fulfillment complete:`, result);
 
     return NextResponse.json({
       success: true,
       order_number: orderNumber,
-      details: result,
     });
   } catch (error) {
     const errorMsg = error instanceof Error ? error.message : "Order verification failed";
