@@ -23,6 +23,18 @@ interface CheckoutSessionRequestBody {
   shipping?: ShippingDataInput;
 }
 
+// Pre-index catalog for O(1) lookup (hoisted to avoid building on every request)
+const catalogMap = new Map<string, { title: string; price: number; sku: string }>();
+for (const p of productsCatalog) {
+  for (const v of p.variants) {
+    catalogMap.set(v.sku, {
+      title: `${p.title} (${v.size})`,
+      price: v.recommendPrice,
+      sku: v.sku,
+    });
+  }
+}
+
 export async function POST(req: Request) {
   try {
     const body = (await req.json()) as CheckoutSessionRequestBody;
@@ -57,20 +69,8 @@ export async function POST(req: Request) {
     const validatedCartDetails: Array<{ sku: string; quantity: number; title: string; price: number }> = [];
 
     for (const item of cart) {
-      // Find item in local catalog
-      const match = productsCatalog
-        .map((p) => {
-          const variant = p.variants.find((v) => v.sku === item.sku);
-          if (variant) {
-            return {
-              title: `${p.title} (${variant.size})`,
-              price: variant.recommendPrice,
-              sku: variant.sku,
-            };
-          }
-          return null;
-        })
-        .find((x) => x !== null);
+      // Find item in local catalog via map
+      const match = catalogMap.get(item.sku);
 
       if (!match) {
         return NextResponse.json(
