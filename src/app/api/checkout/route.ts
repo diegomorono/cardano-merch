@@ -66,19 +66,19 @@ export async function POST(req: Request) {
     }
 
     // 1. Calculate total product catalog amount securely on the server
+    // Pre-calculate a lookup dictionary for O(1) variant lookup
+    const skuToPrice = new Map<string, number>();
+    for (const product of productsCatalog) {
+      for (const variant of product.variants) {
+        skuToPrice.set(variant.sku, variant.recommendPrice);
+      }
+    }
+
     let productsAmount = 0;
     for (const item of cart) {
-      const match = productsCatalog
-        .map((p) => {
-          const variant = p.variants.find((v) => v.sku === item.sku);
-          if (variant) {
-            return variant.recommendPrice;
-          }
-          return null;
-        })
-        .find((x) => x !== null);
+      const match = skuToPrice.get(item.sku);
 
-      if (!match) {
+      if (match === undefined) {
         return NextResponse.json(
           { message: `VALIDATION ERROR: SKU ${item.sku} not found in catalog.` },
           { status: 400 }
