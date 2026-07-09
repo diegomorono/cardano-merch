@@ -64,7 +64,7 @@ export async function POST(req: Request) {
     } catch (err) {
       const errMsg = err instanceof Error ? err.message : "Signature verification failed";
       console.error(`[WEBHOOK] Signature verification failed: ${errMsg}`);
-      return NextResponse.json({ received: true, error: `Webhook Signature Error: ${errMsg}` }, { status: 200 }); // Guaranteed return
+      return NextResponse.json({ received: true, error: `Webhook Signature Error: ${errMsg}` }, { status: 400 });
     }
 
     // 3. Process Checkout Session Completed event
