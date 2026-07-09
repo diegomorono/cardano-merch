@@ -66,7 +66,9 @@ export async function mintZkReceipt(
     console.log(`[Midnight SDK]: Calling contract mint(${walletAddress}, ${orderValue}) with query context:`, mockQueryContext);
     
     // Generate a mock transaction hash representing successful blockchain inclusion
-    const txHash = 'tx_mid_' + Math.random().toString(16).substring(2, 10) + Math.random().toString(16).substring(2, 10);
+    const array = new Uint8Array(8);
+    crypto.getRandomValues(array);
+    const txHash = 'tx_mid_' + Array.from(array).map(b => b.toString(16).padStart(2, '0')).join('');
     console.log(`[Midnight SDK]: ZK-Receipt successfully minted to Testnet. Transaction Hash: ${txHash}`);
 
     return {
