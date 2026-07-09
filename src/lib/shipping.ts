@@ -114,19 +114,30 @@ const ZONE_OVERRIDES: Record<string, ZoneRateConfig> = {
   }
 };
 
+let countryToZoneMap: Record<string, string> | null = null;
+
 export function getShippingZoneAndRates(countryCode: string): { zone: string; rates: ZoneRateConfig } {
   const upper = countryCode.toUpperCase();
-  const data = deliveryData as any;
-  const zones = data.manufacturerZones["pop"] || [];
   
-  let matchedZone = null;
-  for (const z of zones) {
-    if (z.countries.includes(upper)) {
-      matchedZone = z.zone;
-      break;
+  if (!countryToZoneMap) {
+    countryToZoneMap = {};
+    const data = deliveryData as {
+      manufacturerZones?: {
+        pop?: Array<{ zone: string; countries: string[] }>
+      }
+    };
+    const zones = data.manufacturerZones?.["pop"] || [];
+    for (const z of zones) {
+      if (Array.isArray(z.countries)) {
+        for (const country of z.countries) {
+          countryToZoneMap[country] = z.zone;
+        }
+      }
     }
   }
   
+  let matchedZone = countryToZoneMap[upper] || null;
+
   if (!matchedZone) {
     matchedZone = "Rest Of World";
   }
