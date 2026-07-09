@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { ShoppingCart, ArrowRight, Star, Plus, Minus, Command } from "lucide-react";
-import { useState, useRef, useEffect, Suspense } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 
