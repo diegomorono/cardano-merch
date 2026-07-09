@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef, Suspense } from "react";
 import { useRouter } from "next/navigation";
-import { ShoppingCart, ArrowLeft, Shield, Package, Trash2, Plus, Minus, Command, CreditCard, Lock, X, Check, Search, ChevronDown } from "lucide-react";
+import { ArrowLeft, Shield, Trash2, Plus, Minus, Command, CreditCard, Lock, X, Check, Search, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import countriesData from "@/lib/countries-data.json";
