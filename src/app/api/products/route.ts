@@ -1,8 +1,21 @@
 import { NextResponse } from "next/server";
 import { productsCatalog } from "@/lib/catalog";
 
+// Cache variables for in-memory caching
+let cachedProducts: any = null;
+let cacheTimestamp = 0;
+const CACHE_TTL = 3600 * 1000; // 1 hour
+
+// Next.js static Route Handler cache behavior
+export const revalidate = 3600;
+
 export async function GET() {
   try {
+    // Return cached response if valid
+    if (cachedProducts && Date.now() - cacheTimestamp < CACHE_TTL) {
+      return NextResponse.json(cachedProducts);
+    }
+
     const account = (process.env.POPCUSTOMS_ACCOUNT || "").trim();
     const password = (process.env.POPCUSTOMS_PASSWORD || "").trim();
     const storeId = (process.env.POPCUSTOMS_STORE_ID || "").replace(/['"\s]/g, "").trim();
@@ -79,9 +92,21 @@ export async function GET() {
       };
     });
 
+    // Update memory cache
+    cachedProducts = mappedProducts;
+    cacheTimestamp = Date.now();
+
     return NextResponse.json(mappedProducts);
   } catch (error: any) {
-    console.warn(`[POPCustoms Sync Failed]: ${error.message}. Returning local fallback catalog.`);
+    console.warn(`[POPCustoms Sync Failed]: ${error.message}.`);
+
+    // If we have stale cache, serve it instead of local fallback for better resiliency
+    if (cachedProducts) {
+      console.warn("Returning stale cached products due to API failure.");
+      return NextResponse.json(cachedProducts);
+    }
+
+    console.warn("Returning local fallback catalog.");
     // Safe fallback to local mockup state
     return NextResponse.json(productsCatalog);
   }
