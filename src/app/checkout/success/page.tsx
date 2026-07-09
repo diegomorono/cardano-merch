@@ -3,7 +3,7 @@
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Command, Shield, AlertTriangle, ArrowLeft } from "lucide-react";
+import { Command, AlertTriangle, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 
