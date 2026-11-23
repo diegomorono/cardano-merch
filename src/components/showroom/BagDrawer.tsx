@@ -19,8 +19,14 @@ export function BagDrawer({ isOpen, onClose, products }: BagDrawerProps) {
   const totalCount = items.reduce((acc, item) => acc + item.quantity, 0);
 
   const resolveProductThumb = (sku: string): string | null => {
-    const matched = products.find((p) => p.variants.some((v) => v.sku === sku));
-    return matched?.images[0] ?? null;
+    for (const p of products) {
+      const variant = p.variants.find((v) => v.sku === sku);
+      if (variant) {
+        const colorImg = p.colorImages?.[variant.color]?.[0];
+        return colorImg ?? p.images[0] ?? null;
+      }
+    }
+    return null;
   };
 
   const handleCheckout = () => {
@@ -120,7 +126,7 @@ export function BagDrawer({ isOpen, onClose, products }: BagDrawerProps) {
                               {item.title}
                             </p>
                             <p className="text-[11px] text-white/45 mt-0.5 uppercase tracking-wider">
-                              Spec: {item.size} · SKU {item.sku}
+                              Size: {item.size} · SKU {item.sku}
                             </p>
                           </div>
                           <button

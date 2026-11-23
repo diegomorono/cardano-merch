@@ -16,7 +16,7 @@ jest.mock('next/navigation', () => ({
   useSearchParams: () => new URLSearchParams(),
 }))
 
-// Mock framer-motion with stable component references per HTML tag
+// Mock framer-motion with stable memoized component identity per HTML tag
 jest.mock('framer-motion', () => {
   const React = jest.requireActual('react');
   const componentCache = new Map();

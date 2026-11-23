@@ -12,6 +12,7 @@ import { InspectionOverlay } from "./InspectionOverlay";
 import { ShowroomHUD } from "./ShowroomHUD";
 import { StoreWall } from "./StoreWall";
 import {
+  ClothingFilter,
   FlyCloneItem,
   Product,
   ProductVariant,
@@ -26,15 +27,19 @@ interface SpatialRoomStageProps {
 
 function resolveInitialWall(initialProductId: string | null): WallId {
   if (!initialProductId) return "clothing";
-  const matched = productsCatalog.find((p) => p.id === initialProductId);
+  const matched = productsCatalog.find(
+    (p) => p.id === initialProductId || p.popcustomsId === initialProductId
+  );
   return matched ? matched.category : "clothing";
 }
 
 function resolveInitialRackIndex(initialProductId: string | null): number {
   const clothing = productsCatalog.filter((p) => p.category === "clothing");
-  if (!initialProductId) return Math.min(1, Math.max(0, clothing.length - 1));
-  const idx = clothing.findIndex((p) => p.id === initialProductId);
-  return idx >= 0 ? idx : Math.min(1, Math.max(0, clothing.length - 1));
+  if (!initialProductId) return 0;
+  const idx = clothing.findIndex(
+    (p) => p.id === initialProductId || p.popcustomsId === initialProductId
+  );
+  return idx >= 0 ? idx : 0;
 }
 
 export function SpatialRoomStage({ initialProductId = null }: SpatialRoomStageProps) {
@@ -42,12 +47,15 @@ export function SpatialRoomStage({ initialProductId = null }: SpatialRoomStagePr
   const [activeWall, setActiveWall] = useState<WallId>(() =>
     resolveInitialWall(initialProductId)
   );
+  const [clothingFilter, setClothingFilter] = useState<ClothingFilter>("all");
   const [activeRackIndex, setActiveRackIndex] = useState<number>(() =>
     resolveInitialRackIndex(initialProductId)
   );
   const [inspectedProductId, setInspectedProductId] = useState<string | null>(() => {
     if (!initialProductId) return null;
-    const matched = productsCatalog.find((p) => p.id === initialProductId);
+    const matched = productsCatalog.find(
+      (p) => p.id === initialProductId || p.popcustomsId === initialProductId
+    );
     return matched ? matched.id : null;
   });
   const [isBagOpen, setIsBagOpen] = useState<boolean>(false);
@@ -58,7 +66,7 @@ export function SpatialRoomStage({ initialProductId = null }: SpatialRoomStagePr
   const cartIconRef = useRef<HTMLButtonElement | null>(null);
   const { items: cartItems, addToCart } = useCart();
 
-  // Hydrate dynamically from /api/products (preserving instant zero-skeleton initial render)
+  // Hydrate dynamically from /api/products while preserving instant zero-skeleton initial render
   useEffect(() => {
     let cancelled = false;
     async function syncCatalog() {
@@ -79,11 +87,27 @@ export function SpatialRoomStage({ initialProductId = null }: SpatialRoomStagePr
     };
   }, []);
 
-  // Partition catalog cleanly into architectural walls
-  const clothingItems = useMemo(
+  // Partition catalog cleanly into architectural walls & clothing sub-filters
+  const allClothingItems = useMemo(
     () => catalog.filter((p) => p.category === "clothing"),
     [catalog]
   );
+  const shirtCount = useMemo(
+    () => allClothingItems.filter((p) => p.garmentType !== "hoodie").length,
+    [allClothingItems]
+  );
+  const hoodieCount = useMemo(
+    () => allClothingItems.filter((p) => p.garmentType === "hoodie").length,
+    [allClothingItems]
+  );
+  const visibleClothingItems = useMemo(() => {
+    if (clothingFilter === "all") return allClothingItems;
+    if (clothingFilter === "hoodie") {
+      return allClothingItems.filter((p) => p.garmentType === "hoodie");
+    }
+    return allClothingItems.filter((p) => p.garmentType !== "hoodie");
+  }, [allClothingItems, clothingFilter]);
+
   const drinkwareItems = useMemo(
     () => catalog.filter((p) => p.category === "drinkware"),
     [catalog]
@@ -100,10 +124,10 @@ export function SpatialRoomStage({ initialProductId = null }: SpatialRoomStagePr
 
   const inspectedSiblings = useMemo(() => {
     if (!inspectedProduct) return [];
-    if (inspectedProduct.category === "clothing") return clothingItems;
+    if (inspectedProduct.category === "clothing") return visibleClothingItems;
     if (inspectedProduct.category === "drinkware") return drinkwareItems;
     return gearItems;
-  }, [inspectedProduct, clothingItems, drinkwareItems, gearItems]);
+  }, [inspectedProduct, visibleClothingItems, drinkwareItems, gearItems]);
 
   const totalCartItems = useMemo(
     () => cartItems.reduce((acc, item) => acc + item.quantity, 0),
@@ -120,27 +144,38 @@ export function SpatialRoomStage({ initialProductId = null }: SpatialRoomStagePr
     setActiveWall(wall);
   }, []);
 
+  const handleChangeClothingFilter = useCallback((nextFilter: ClothingFilter) => {
+    setClothingFilter(nextFilter);
+    setActiveRackIndex(0);
+  }, []);
+
   const handleInspectProduct = useCallback(
     (product: Product) => {
       if (product.category === "clothing") {
-        const idx = clothingItems.findIndex((p) => p.id === product.id);
-        if (idx >= 0) setActiveRackIndex(idx);
+        const idx = visibleClothingItems.findIndex((p) => p.id === product.id);
+        if (idx >= 0) {
+          setActiveRackIndex(idx);
+        } else {
+          setClothingFilter("all");
+          const allIdx = allClothingItems.findIndex((p) => p.id === product.id);
+          if (allIdx >= 0) setActiveRackIndex(allIdx);
+        }
       }
       setActiveWall(product.category);
       setInspectedProductId(product.id);
     },
-    [clothingItems]
+    [visibleClothingItems, allClothingItems]
   );
 
   const handleSelectSibling = useCallback(
     (sibling: Product) => {
       setInspectedProductId(sibling.id);
       if (sibling.category === "clothing") {
-        const idx = clothingItems.findIndex((p) => p.id === sibling.id);
+        const idx = visibleClothingItems.findIndex((p) => p.id === sibling.id);
         if (idx >= 0) setActiveRackIndex(idx);
       }
     },
-    [clothingItems]
+    [visibleClothingItems]
   );
 
   // Global keyboard shortcuts: ArrowLeft / ArrowRight for rack & inspection stepping, Escape to close
@@ -175,10 +210,10 @@ export function SpatialRoomStage({ initialProductId = null }: SpatialRoomStagePr
           return;
         }
 
-        if (activeWall === "clothing" && clothingItems.length > 0) {
+        if (activeWall === "clothing" && visibleClothingItems.length > 0) {
           event.preventDefault();
           setActiveRackIndex((prev) =>
-            Math.max(0, Math.min(clothingItems.length - 1, prev + delta))
+            Math.max(0, Math.min(visibleClothingItems.length - 1, prev + delta))
           );
         }
       }
@@ -188,7 +223,7 @@ export function SpatialRoomStage({ initialProductId = null }: SpatialRoomStagePr
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [
     activeWall,
-    clothingItems.length,
+    visibleClothingItems.length,
     inspectedProduct,
     inspectedProductId,
     inspectedSiblings,
@@ -197,7 +232,6 @@ export function SpatialRoomStage({ initialProductId = null }: SpatialRoomStagePr
     handleSelectSibling,
   ]);
 
-  // Add to bag + spawn curved-arc ghost clone flying straight into cartIconRef
   const handleAddToBag = useCallback(
     (
       product: Product,
@@ -277,19 +311,19 @@ export function SpatialRoomStage({ initialProductId = null }: SpatialRoomStagePr
             data-testid={`showroom-wall-${wall.id}`}
             className="relative h-full w-screen shrink-0 overflow-hidden vault-wall-surface"
           >
-            {/* Subtle Architectural Concrete Texture Layer */}
+            {/* Architectural Concrete Grain */}
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-0 vault-concrete-grain opacity-70"
             />
 
-            {/* Overhead Architectural Ceiling Spotlight Cone */}
+            {/* Overhead Ceiling Spotlight Cone */}
             <div
               aria-hidden="true"
               className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[72vw] h-[44vh] bg-[radial-gradient(ellipse_at_top,rgba(148,180,255,0.16)_0%,rgba(0,51,173,0.06)_45%,transparent_76%)]"
             />
 
-            {/* Architectural Room Corner Seams (revealed cleanly during horizontal wall panning) */}
+            {/* Architectural Room Corner Seams */}
             {idx > 0 && (
               <div
                 aria-hidden="true"
@@ -303,16 +337,15 @@ export function SpatialRoomStage({ initialProductId = null }: SpatialRoomStagePr
               />
             )}
 
-            {/* Floor / Wall Horizon Separation Plane */}
+            {/* Floor / Wall Horizon Separation */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-[25%] vault-floor-surface border-t border-white/[0.09] z-10"
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-[24%] vault-floor-surface border-t border-white/[0.09] z-10"
             >
-              {/* Crisp baseboard shadow groove */}
               <div className="absolute inset-x-0 top-0 h-5 bg-gradient-to-b from-black/65 to-transparent" />
             </div>
 
-            {/* Wall-Specific Display Architecture */}
+            {/* Wall-Specific Architecture */}
             <div className="relative z-20 w-full h-full">
               {wall.id === "store" && (
                 <StoreWall
@@ -325,8 +358,16 @@ export function SpatialRoomStage({ initialProductId = null }: SpatialRoomStagePr
 
               {wall.id === "clothing" && (
                 <ClothingRackWall
-                  items={clothingItems}
-                  activeIndex={Math.min(activeRackIndex, Math.max(0, clothingItems.length - 1))}
+                  items={visibleClothingItems}
+                  allClothingCount={allClothingItems.length}
+                  shirtCount={shirtCount}
+                  hoodieCount={hoodieCount}
+                  filter={clothingFilter}
+                  onChangeFilter={handleChangeClothingFilter}
+                  activeIndex={Math.min(
+                    activeRackIndex,
+                    Math.max(0, visibleClothingItems.length - 1)
+                  )}
                   onChangeIndex={setActiveRackIndex}
                   onInspectProduct={handleInspectProduct}
                   isInspecting={Boolean(inspectedProduct)}
@@ -369,7 +410,7 @@ export function SpatialRoomStage({ initialProductId = null }: SpatialRoomStagePr
         onAddToBag={handleAddToBag}
       />
 
-      {/* PERSISTENT MINIMAL HUD (Top Mark, Top-Right Bag Icon, Bottom Floating Pill Dock) */}
+      {/* PERSISTENT MINIMAL HUD */}
       <ShowroomHUD
         activeWall={activeWall}
         onSelectWall={handleSelectWall}
@@ -381,20 +422,20 @@ export function SpatialRoomStage({ initialProductId = null }: SpatialRoomStagePr
         onResetHome={handleResetHome}
       />
 
-      {/* CURVED-ARC FLY-TO-BAG GHOST CLONE PORTAL */}
+      {/* FLY-TO-BAG GHOST CLONE PORTAL */}
       <FlyToBagPortal
         clones={flyClones}
         onCloneComplete={handleFlyCloneComplete}
       />
 
-      {/* SLIDE-OVER VAULT BAG DRAWER (Routes to /checkout) */}
+      {/* SLIDE-OVER VAULT BAG DRAWER */}
       <BagDrawer
         isOpen={isBagOpen}
         onClose={() => setIsBagOpen(false)}
         products={catalog}
       />
 
-      {/* VAULT INFO & SPECIFICATIONS MODAL */}
+      {/* VAULT INFO MODAL */}
       <VaultInfoModal
         isOpen={isInfoOpen}
         onClose={() => setIsInfoOpen(false)}

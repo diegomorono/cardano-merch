@@ -2,10 +2,24 @@ export type ShowroomCategory = "clothing" | "drinkware" | "gear";
 
 export type WallId = "store" | ShowroomCategory;
 
+export type GarmentType = "shirt" | "hoodie";
+
+export type GarmentFit = "Men" | "Women" | "Unisex";
+
+export type ClothingFilter = "all" | GarmentType;
+
+export const COLOR_SWATCH_MAP: Record<string, string> = {
+  Black: "#17191F",
+  Navy: "#162447",
+  Gray: "#A7AEB8",
+  White: "#ECEFF4",
+};
+
 export interface ProductVariant {
   sku: string;
   size: string;
   color: string;
+  fit?: GarmentFit;
   weight: number;
   dropshippingPrice: number;
   recommendPrice: number;
@@ -13,10 +27,15 @@ export interface ProductVariant {
 
 export interface Product {
   id: string;
+  popcustomsId?: string;
   title: string;
   description: string;
   color: string;
   colorHex: string;
+  availableColors?: string[];
+  colorImages?: Record<string, string[]>;
+  fits?: GarmentFit[];
+  garmentType?: GarmentType;
   category: ShowroomCategory;
   eyebrow: string;
   era: string;

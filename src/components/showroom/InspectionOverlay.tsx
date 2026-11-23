@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, ChevronLeft, ChevronRight, Minus, Plus, X } from "lucide-react";
-import { Product, ProductVariant } from "./types";
+import { COLOR_SWATCH_MAP, GarmentFit, Product, ProductVariant } from "./types";
 
 interface InspectionOverlayProps {
   product: Product | null;
@@ -31,12 +31,24 @@ interface InspectionDialogContentProps {
   ) => void;
 }
 
-function getDefaultVariantSku(product: Product): string {
-  const defaultVariant =
-    product.variants.find((v) => v.size === "M") ||
-    product.variants.find((v) => v.size === "L") ||
-    product.variants[0];
-  return defaultVariant?.sku ?? "";
+function getInitialFit(product: Product): GarmentFit | undefined {
+  if (product.fits && product.fits.length > 0) return product.fits[0];
+  return product.variants[0]?.fit;
+}
+
+function getInitialColor(product: Product): string {
+  if (product.availableColors && product.availableColors.length > 0) {
+    return product.availableColors[0];
+  }
+  return product.variants[0]?.color ?? product.color;
+}
+
+function pickDefaultSize(variants: ProductVariant[]): string {
+  const pref =
+    variants.find((v) => v.size === "M") ||
+    variants.find((v) => v.size === "L") ||
+    variants[0];
+  return pref?.size ?? "";
 }
 
 function InspectionDialogContent({
@@ -46,8 +58,14 @@ function InspectionDialogContent({
   onSelectSibling,
   onAddToBag,
 }: InspectionDialogContentProps) {
-  const [selectedVariantSku, setSelectedVariantSku] = useState<string>(() =>
-    getDefaultVariantSku(product)
+  const [selectedFit, setSelectedFit] = useState<GarmentFit | undefined>(() =>
+    getInitialFit(product)
+  );
+  const [selectedColor, setSelectedColor] = useState<string>(() =>
+    getInitialColor(product)
+  );
+  const [selectedSize, setSelectedSize] = useState<string>(() =>
+    pickDefaultSize(product.variants)
   );
   const [quantity, setQuantity] = useState<number>(1);
   const [justAdded, setJustAdded] = useState<boolean>(false);
@@ -62,6 +80,34 @@ function InspectionDialogContent({
     };
   }, []);
 
+  // Filter variants cleanly by selected Fit & Color
+  const filteredVariants = useMemo(() => {
+    const byFit = selectedFit
+      ? product.variants.filter((v) => !v.fit || v.fit === selectedFit)
+      : product.variants;
+    const byColor = byFit.filter(
+      (v) => v.color.toLowerCase() === selectedColor.toLowerCase()
+    );
+    if (byColor.length > 0) return byColor;
+    if (byFit.length > 0) return byFit;
+    return product.variants;
+  }, [product.variants, selectedFit, selectedColor]);
+
+  const activeVariant: ProductVariant | undefined = useMemo(() => {
+    return (
+      filteredVariants.find((v) => v.size === selectedSize) ||
+      filteredVariants.find((v) => v.size === "M") ||
+      filteredVariants[0]
+    );
+  }, [filteredVariants, selectedSize]);
+
+  // Resolve gallery images for the currently selected colorway
+  const activeGallery = useMemo(() => {
+    const colorSet = product.colorImages?.[selectedColor];
+    if (colorSet && colorSet.length > 0) return colorSet;
+    return product.images;
+  }, [product.colorImages, product.images, selectedColor]);
+
   const currentIdx = siblingProducts.findIndex((p) => p.id === product.id);
 
   const stepSibling = (delta: number) => {
@@ -71,14 +117,27 @@ function InspectionDialogContent({
     onSelectSibling(siblingProducts[nextIdx]);
   };
 
-  const activeVariant: ProductVariant | undefined =
-    product.variants.find((v) => v.sku === selectedVariantSku) ||
-    product.variants[0];
-
   if (!activeVariant) return null;
 
+  const handleSelectColor = (color: string) => {
+    setSelectedColor(color);
+    setActiveImageIdx(0);
+  };
+
   const handleConfirmAdd = () => {
-    onAddToBag(product, activeVariant, quantity, stageImageRef.current);
+    const cartTitle =
+      product.fits && product.fits.length > 1 && selectedFit
+        ? `${product.title} (${selectedFit} · ${selectedColor})`
+        : product.availableColors && product.availableColors.length > 1
+          ? `${product.title} (${selectedColor})`
+          : product.title;
+
+    onAddToBag(
+      { ...product, title: cartTitle, images: activeGallery },
+      activeVariant,
+      quantity,
+      stageImageRef.current
+    );
     setJustAdded(true);
     setQuantity(1);
     if (confirmTimerRef.current) clearTimeout(confirmTimerRef.current);
@@ -88,6 +147,11 @@ function InspectionDialogContent({
   };
 
   const isApparel = product.category === "clothing";
+  const colorOptions = product.availableColors ?? [];
+  const fitOptions = product.fits ?? [];
+  const viewLabels = ["Studio", "On Model", "Detail"];
+  const safeImageIdx = Math.min(activeImageIdx, Math.max(0, activeGallery.length - 1));
+  const isModelView = safeImageIdx > 0;
 
   return (
     <motion.div
@@ -98,22 +162,22 @@ function InspectionDialogContent({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-0 z-40 pointer-events-none flex flex-col md:flex-row items-center justify-center md:justify-between px-4 sm:px-8 lg:px-14 pt-16 sm:pt-20 pb-20 sm:pb-24 gap-4 md:gap-8"
+      transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed inset-0 z-40 pointer-events-none flex flex-col md:flex-row items-center justify-center md:justify-between px-4 sm:px-8 lg:px-14 pt-16 sm:pt-20 pb-20 sm:pb-24 gap-4 md:gap-10"
     >
       {/* Backdrop Click-Out Layer */}
       <div
         onClick={onClose}
         aria-hidden="true"
-        className="pointer-events-auto fixed inset-0 bg-[#07090F]/38 backdrop-blur-[2px] -z-10"
+        className="pointer-events-auto fixed inset-0 bg-[#07090F]/48 backdrop-blur-[3px] -z-10"
       />
 
       {/* LEFT-CENTER STAGE: Zoomed Garment/Artifact + Flanking Circular < > Steppers */}
-      <div className="pointer-events-auto relative flex-1 w-full md:w-auto h-[38dvh] sm:h-[44dvh] md:h-[72dvh] flex items-center justify-center">
+      <div className="pointer-events-auto relative flex-1 w-full md:w-auto h-[37dvh] sm:h-[42dvh] md:h-[72dvh] flex flex-col items-center justify-center">
         {/* Subtle Spotlight Halo Behind Inspected Piece */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute w-[260px] sm:w-[380px] h-[260px] sm:h-[380px] rounded-full bg-[radial-gradient(circle,rgba(0,85,255,0.22)_0%,rgba(255,255,255,0.06)_45%,transparent_72%)] blur-2xl"
+          className="pointer-events-none absolute w-[260px] sm:w-[400px] h-[260px] sm:h-[400px] rounded-full bg-[radial-gradient(circle,rgba(0,85,255,0.22)_0%,rgba(255,255,255,0.06)_45%,transparent_72%)] blur-2xl"
         />
 
         {/* Previous Piece Arrow (<) */}
@@ -122,7 +186,7 @@ function InspectionDialogContent({
             type="button"
             onClick={() => stepSibling(-1)}
             aria-label="Inspect previous piece"
-            className="absolute left-1 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#111520]/85 hover:bg-white text-white hover:text-[#050505] border border-white/16 backdrop-blur-xl flex items-center justify-center shadow-[0_10px_28px_rgba(0,0,0,0.55)] transition-all cursor-pointer"
+            className="absolute left-1 sm:left-3 lg:left-6 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#111520]/85 hover:bg-white text-white hover:text-[#050505] border border-white/16 backdrop-blur-xl flex items-center justify-center shadow-[0_10px_28px_rgba(0,0,0,0.55)] transition-all cursor-pointer"
           >
             <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
@@ -131,23 +195,27 @@ function InspectionDialogContent({
         {/* Zoomed Product Visual (exact source coordinates for Fly-to-Bag clone) */}
         <AnimatePresence mode="wait">
           <motion.div
-            key={`${product.id}-${activeImageIdx}`}
+            key={`${product.id}-${selectedColor}-${safeImageIdx}`}
             ref={stageImageRef}
-            initial={{ opacity: 0, scale: 0.88, x: -16 }}
+            initial={{ opacity: 0, scale: 0.9, x: -12 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
-            exit={{ opacity: 0, scale: 0.92, x: 16 }}
-            transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+            exit={{ opacity: 0, scale: 0.93, x: 12 }}
+            transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
             className={`relative z-10 flex items-center justify-center ${
-              isApparel
-                ? "h-full max-h-[340px] sm:max-h-[420px] md:max-h-[580px] aspect-[3/4]"
-                : "h-full max-h-[260px] sm:max-h-[340px] md:max-h-[450px] aspect-square"
+              isModelView
+                ? "h-[84%] max-h-[480px] aspect-square rounded-3xl overflow-hidden bg-white/95 p-2 shadow-[0_28px_70px_rgba(0,0,0,0.75)] ring-1 ring-white/20"
+                : isApparel
+                  ? "h-[92%] max-h-[340px] sm:max-h-[400px] md:max-h-[540px] aspect-[3/4]"
+                  : "h-[88%] max-h-[260px] sm:max-h-[330px] md:max-h-[430px] aspect-square"
             }`}
           >
             <img
-              src={product.images[activeImageIdx] || product.images[0]}
-              alt={product.title}
+              src={activeGallery[safeImageIdx] || product.images[0]}
+              alt={`${product.title} — ${selectedColor}`}
               draggable={false}
-              className="w-full h-full object-contain garment-active-shadow"
+              className={`w-full h-full object-contain ${
+                isModelView ? "rounded-2xl" : "garment-active-shadow"
+              }`}
             />
           </motion.div>
         </AnimatePresence>
@@ -158,39 +226,44 @@ function InspectionDialogContent({
             type="button"
             onClick={() => stepSibling(1)}
             aria-label="Inspect next piece"
-            className="absolute right-1 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#111520]/85 hover:bg-white text-white hover:text-[#050505] border border-white/16 backdrop-blur-xl flex items-center justify-center shadow-[0_10px_28px_rgba(0,0,0,0.55)] transition-all cursor-pointer"
+            className="absolute right-1 sm:right-3 lg:right-6 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#111520]/85 hover:bg-white text-white hover:text-[#050505] border border-white/16 backdrop-blur-xl flex items-center justify-center shadow-[0_10px_28px_rgba(0,0,0,0.55)] transition-all cursor-pointer"
           >
             <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         )}
 
-        {/* Optional Multi-View Dots when product has >1 photo */}
-        {product.images.length > 1 && (
-          <div className="absolute -bottom-1 sm:bottom-2 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0E111A]/80 border border-white/12 backdrop-blur-md">
-            {product.images.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => setActiveImageIdx(i)}
-                aria-label={`View angle ${i + 1}`}
-                className={`h-1.5 rounded-full transition-all cursor-pointer border-none ${
-                  activeImageIdx === i
-                    ? "w-5 bg-[#0055FF]"
-                    : "w-1.5 bg-white/30 hover:bg-white/60"
-                }`}
-              />
-            ))}
+        {/* Studio / On Model View Switcher Pill */}
+        {activeGallery.length > 1 && (
+          <div className="mt-2 sm:mt-3 z-20 inline-flex items-center gap-1 p-1 rounded-full bg-[#0E111A]/85 border border-white/14 backdrop-blur-xl">
+            {activeGallery.map((_, i) => {
+              const active = safeImageIdx === i;
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setActiveImageIdx(i)}
+                  aria-label={`View ${viewLabels[i] ?? `Angle ${i + 1}`}`}
+                  className={`px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.16em] transition-colors cursor-pointer border-none ${
+                    active
+                      ? "bg-white text-[#050505]"
+                      : "bg-transparent text-white/60 hover:text-white"
+                  }`}
+                >
+                  {viewLabels[i] ?? `View ${i + 1}`}
+                </button>
+              );
+            })}
           </div>
         )}
       </div>
 
-      {/* RIGHT FLOATING PURCHASE CARD (Desktop) / BOTTOM COMPACT SHEET (Mobile <768px) */}
+      {/* RIGHT FLOATING PURCHASE CARD (Desktop) / COMPACT STACKED SHEET (Mobile <768px) */}
       <motion.div
-        initial={{ opacity: 0, x: 40, scale: 0.97 }}
+        initial={{ opacity: 0, x: 36, scale: 0.97 }}
         animate={{ opacity: 1, x: 0, scale: 1 }}
-        exit={{ opacity: 0, x: 32, scale: 0.97 }}
-        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        className="pointer-events-auto relative w-full max-w-md md:w-[390px] lg:w-[420px] max-h-[45dvh] md:max-h-[72dvh] overflow-y-auto rounded-3xl bg-[#10131C]/92 border border-white/14 backdrop-blur-2xl shadow-[0_32px_90px_rgba(0,0,0,0.78),inset_0_1px_0_rgba(255,255,255,0.08)] p-5 sm:p-7 text-white shrink-0"
+        exit={{ opacity: 0, x: 28, scale: 0.97 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className="pointer-events-auto relative w-full max-w-md md:w-[410px] lg:w-[435px] max-h-[46dvh] md:max-h-[74dvh] overflow-y-auto rounded-3xl bg-[#10131C]/94 border border-white/14 backdrop-blur-2xl shadow-[0_32px_90px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.08)] p-5 sm:p-7 text-white shrink-0"
       >
         {/* Close Button (×) */}
         <button
@@ -202,12 +275,12 @@ function InspectionDialogContent({
           <X className="w-4 h-4" />
         </button>
 
-        {/* Eyebrow, Title, Price & Colorway */}
+        {/* Header Block: Eyebrow -> Title -> Price */}
         <div className="pr-9 space-y-1.5">
-          <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#5B92FF]">
+          <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#6CA0FF]">
             {product.eyebrow} · {product.era}
           </p>
-          <h2 className="font-heading text-xl sm:text-2xl font-black tracking-tight uppercase leading-tight text-white">
+          <h2 className="font-heading text-xl sm:text-2xl font-black tracking-tight uppercase leading-[1.12] text-white">
             {product.title}
           </h2>
           <div className="flex items-baseline gap-2.5 pt-1">
@@ -218,56 +291,120 @@ function InspectionDialogContent({
               USD
             </span>
           </div>
-          <div className="flex items-center gap-2 pt-0.5 text-xs text-white/55">
-            <span
-              aria-hidden="true"
-              className="w-2.5 h-2.5 rounded-full border border-white/30 shrink-0"
-              style={{ backgroundColor: product.colorHex }}
-            />
-            <span>Colour: {product.color}</span>
-          </div>
         </div>
 
-        {/* Compact Material Spec Line */}
-        <p className="mt-3.5 text-xs text-white/50 leading-relaxed line-clamp-2 md:line-clamp-3">
+        {/* Description */}
+        <p className="mt-3 text-xs text-white/55 leading-relaxed line-clamp-2 md:line-clamp-3">
           {product.description}
         </p>
 
-        {/* Pill-Style Size / Specification Selector */}
-        <div className="mt-4 sm:mt-5 space-y-2.5">
-          <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/55">
-              Select {isApparel ? "size" : "specification"}
-            </span>
-            <span className="text-[10px] font-mono text-white/35">
-              {product.fabricSpec}
-            </span>
-          </div>
+        {/* Colour & Fit Controls Row (Aligned cleanly side-by-side when both present) */}
+        <div className="mt-4 pt-4 border-t border-white/10 space-y-4">
+          {colorOptions.length > 1 ? (
+            <div className="flex items-center justify-between gap-4">
+              <div className="text-xs text-white/60">
+                Colour: <span className="font-semibold text-white">{selectedColor}</span>
+              </div>
+              <div className="flex items-center gap-2" role="radiogroup" aria-label="Select colorway">
+                {colorOptions.map((col) => {
+                  const isSelected = col === selectedColor;
+                  return (
+                    <button
+                      key={col}
+                      type="button"
+                      role="radio"
+                      aria-checked={isSelected}
+                      aria-label={`Select color ${col}`}
+                      onClick={() => handleSelectColor(col)}
+                      className={`w-6 h-6 rounded-full cursor-pointer transition-all border ${
+                        isSelected
+                          ? "ring-2 ring-white ring-offset-2 ring-offset-[#10131C] border-white/80 scale-110"
+                          : "border-white/30 hover:scale-105 opacity-80 hover:opacity-100"
+                      }`}
+                      style={{ backgroundColor: COLOR_SWATCH_MAP[col] ?? product.colorHex }}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 text-xs text-white/60">
+              <span
+                aria-hidden="true"
+                className="w-2.5 h-2.5 rounded-full border border-white/35 shrink-0"
+                style={{ backgroundColor: COLOR_SWATCH_MAP[selectedColor] ?? product.colorHex }}
+              />
+              <span>
+                Colour: <span className="font-semibold text-white">{selectedColor}</span>
+              </span>
+            </div>
+          )}
 
-          <div className="flex flex-wrap gap-2">
-            {product.variants.map((variant) => {
-              const isSelected = variant.sku === activeVariant.sku;
-              return (
-                <button
-                  key={variant.sku}
-                  type="button"
-                  onClick={() => setSelectedVariantSku(variant.sku)}
-                  aria-pressed={isSelected}
-                  className={`px-3.5 py-2 rounded-full text-xs font-bold tracking-wider transition-all duration-200 cursor-pointer border ${
-                    isSelected
-                      ? "bg-white text-[#050505] border-white shadow-[0_6px_20px_rgba(255,255,255,0.22)]"
-                      : "bg-white/[0.04] text-white/75 border-white/14 hover:border-white/35 hover:text-white"
-                  }`}
-                >
-                  {variant.size}
-                </button>
-              );
-            })}
+          {/* Fit Toggle (Men / Women for paired POPCustoms shirts) */}
+          {fitOptions.length > 1 && (
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/55">
+                Cut / Fit
+              </span>
+              <div className="inline-flex items-center gap-1 p-0.5 rounded-full bg-white/[0.05] border border-white/12">
+                {fitOptions.map((fit) => {
+                  const active = selectedFit === fit;
+                  return (
+                    <button
+                      key={fit}
+                      type="button"
+                      onClick={() => setSelectedFit(fit)}
+                      aria-pressed={active}
+                      className={`px-3.5 py-1 rounded-full text-[11px] font-bold tracking-wider transition-colors cursor-pointer border-none ${
+                        active
+                          ? "bg-white text-[#050505]"
+                          : "bg-transparent text-white/65 hover:text-white"
+                      }`}
+                    >
+                      {fit}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Pill-Style Size / Specification Selector */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/55">
+                Select {isApparel ? "size" : "specification"}
+              </span>
+              <span className="text-[10px] font-mono text-white/40 truncate">
+                {product.fabricSpec}
+              </span>
+            </div>
+
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
+              {filteredVariants.map((variant) => {
+                const isSelected = variant.sku === activeVariant.sku;
+                return (
+                  <button
+                    key={variant.sku}
+                    type="button"
+                    onClick={() => setSelectedSize(variant.size)}
+                    aria-pressed={isSelected}
+                    className={`min-w-[44px] px-3 py-1.5 rounded-full text-xs font-bold tracking-wider transition-all duration-200 cursor-pointer border ${
+                      isSelected
+                        ? "bg-white text-[#050505] border-white shadow-[0_6px_18px_rgba(255,255,255,0.22)]"
+                        : "bg-white/[0.04] text-white/75 border-white/14 hover:border-white/35 hover:text-white"
+                    }`}
+                  >
+                    {variant.size}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
         {/* Quantity Stepper Row */}
-        <div className="mt-4 sm:mt-5 flex items-center justify-between py-2.5 border-y border-white/10">
+        <div className="mt-4 flex items-center justify-between py-2.5 border-y border-white/10">
           <span className="text-xs font-medium text-white/65">Quantity</span>
           <div className="inline-flex items-center rounded-full bg-white/[0.05] border border-white/12 p-0.5">
             <button
@@ -295,7 +432,7 @@ function InspectionDialogContent({
           </div>
         </div>
 
-        {/* Full-Width Rounded-Full Primary CTA (Add to bag -> Added to bag ✓) */}
+        {/* Full-Width Rounded-Full Primary CTA */}
         <motion.button
           type="button"
           whileHover={{ scale: 1.01 }}
@@ -307,7 +444,7 @@ function InspectionDialogContent({
               ? { backgroundColor: "#10B981", color: "#052E16" }
               : { backgroundColor: "#FFFFFF", color: "#050505" }
           }
-          className="mt-4 sm:mt-5 w-full py-3.5 px-6 rounded-full font-heading text-xs sm:text-sm font-bold uppercase tracking-[0.18em] flex items-center justify-center gap-2 transition-colors duration-300 shadow-[0_12px_36px_rgba(0,0,0,0.45)] cursor-pointer border-none"
+          className="mt-4 w-full py-3.5 px-6 rounded-full font-heading text-xs sm:text-sm font-bold uppercase tracking-[0.18em] flex items-center justify-center gap-2 transition-colors duration-300 shadow-[0_12px_36px_rgba(0,0,0,0.45)] cursor-pointer border-none"
         >
           {justAdded ? (
             <>

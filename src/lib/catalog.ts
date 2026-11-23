@@ -1,191 +1,11 @@
 import { Product, ProductVariant, ShowroomCategory } from "@/components/showroom/types";
+import { popcustomsApparelCatalog } from "./popcustoms-apparel";
 
 export type { Product, ProductVariant, ShowroomCategory };
 
-function buildApparelVariants(
-  prefix: string,
-  color: string,
-  baseDrop: number,
-  baseRetail: number,
-  baseWeight: number
-): ProductVariant[] {
-  const sizes: Array<{ size: string; deltaDrop: number; deltaRetail: number; weightStep: number }> = [
-    { size: "XS", deltaDrop: 0, deltaRetail: 0, weightStep: -20 },
-    { size: "S", deltaDrop: 0, deltaRetail: 0, weightStep: 0 },
-    { size: "M", deltaDrop: 0, deltaRetail: 0, weightStep: 20 },
-    { size: "L", deltaDrop: 0, deltaRetail: 0, weightStep: 40 },
-    { size: "XL", deltaDrop: 0, deltaRetail: 0, weightStep: 60 },
-    { size: "2XL", deltaDrop: 2, deltaRetail: 4, weightStep: 80 },
-  ];
-
-  return sizes.map((entry, idx) => ({
-    sku: `${prefix}-${idx + 1}`,
-    size: entry.size,
-    color,
-    weight: baseWeight + entry.weightStep,
-    dropshippingPrice: Number((baseDrop + entry.deltaDrop).toFixed(2)),
-    recommendPrice: Number((baseRetail + entry.deltaRetail).toFixed(2)),
-  }));
-}
-
-export const productsCatalog: Product[] = [
+const drinkwareAndGearCatalog: Product[] = [
   // =========================================================================
-  // CLOTHING WALL (7 Hanger-Aligned Garments)
-  // =========================================================================
-  {
-    id: "cardano-black-shirt",
-    title: "Cardano Doodle + Logo Design",
-    description:
-      "Made from soft, breathable, and pill-resistant cotton fabric. Ribbed knit neckline design and regular fit — comfortable, fashionable and versatile. 4 colors customized and printing on the front and back. Double-needle sewing technology adds durability, making it last for many wears and washes. Excellent color retention after washes.",
-    color: "Obsidian Black",
-    colorHex: "#181B22",
-    category: "clothing",
-    eyebrow: "Unisex Heavyweight Tee",
-    era: "Genesis Flagship",
-    fabricSpec: "100% American Cotton · 220 GSM",
-    specs: [
-      "Premium Organic Cotton",
-      "Heavyweight 220 GSM",
-      "Double-Needle Construction",
-      "300 DPI Archival DTG Print",
-    ],
-    images: [
-      "/showroom/products/tee-cardano-doodle.png",
-      "https://samples.popcustoms.com/23551/GLD_C5-M/20240703/1720007326-1-Q4py2wJnDb.jpeg",
-      "https://samples.popcustoms.com/23551/GLD_C5-M/20240703/1720007326-4-Q4py2wJnDb.jpeg",
-    ],
-    variants: [
-      { sku: "N79G24RY-3", size: "S", color: "Black", weight: 160, dropshippingPrice: 12.39, recommendPrice: 24.78 },
-      { sku: "N79G24RY-4", size: "M", color: "Black", weight: 180, dropshippingPrice: 12.39, recommendPrice: 24.78 },
-      { sku: "N79G24RY-1", size: "L", color: "Black", weight: 200, dropshippingPrice: 12.39, recommendPrice: 24.78 },
-      { sku: "N79G24RY-2", size: "XL", color: "Black", weight: 220, dropshippingPrice: 12.39, recommendPrice: 24.78 },
-      { sku: "N79G24RY-5", size: "2XL", color: "Black", weight: 240, dropshippingPrice: 12.39, recommendPrice: 24.78 },
-      { sku: "N79G24RY-6", size: "3XL", color: "Black", weight: 260, dropshippingPrice: 13.39, recommendPrice: 26.78 },
-    ],
-  },
-  {
-    id: "midnight-privacy-hoodie",
-    title: "Midnight Privacy Crescent",
-    description:
-      "Engineered for zero-knowledge sovereignty. Heavyweight brushed fleece pullover featuring the Midnight Privacy Crescent emblem printed with binary-opacity archival inks for zero-halo longevity.",
-    color: "Void Obsidian",
-    colorHex: "#161922",
-    category: "clothing",
-    eyebrow: "Heavyweight Pullover Hoodie",
-    era: "Basho · Midnight Partner Chain",
-    fabricSpec: "Heavy Poly-Cotton Fleece · 350 GSM",
-    specs: [
-      "350 GSM Structured Fleece",
-      "Double-Lined Hood & Metal Aglets",
-      "CMYK-Proofed Archival Ink",
-      "Reinforced Kangaroo Pocket",
-    ],
-    images: ["/showroom/products/hoodie-midnight-privacy.png"],
-    variants: buildApparelVariants("CM-MDP-HD", "Void Obsidian", 28.5, 58.0, 480),
-  },
-  {
-    id: "haskell-lambda-tee",
-    title: "Sovereign Compiler Haskell λ",
-    description:
-      "Fragile smart contracts on other chains drain user funds daily, while side-effect-free functional programming compiles mathematical validation logic. Printed on architectural Concrete Mist 100% cotton.",
-    color: "Concrete Mist",
-    colorHex: "#C4CAD6",
-    category: "clothing",
-    eyebrow: "Functional Core Tee",
-    era: "Goguen · Plutus Era",
-    fabricSpec: "100% Ring-Spun Cotton · 230 GSM",
-    specs: [
-      "230 GSM Boxy Architectural Cut",
-      "Hard-Edge Vector Geometry Print",
-      "Pre-Shrunk Ribbed Collar",
-      "Side-Effect Free Status Signal",
-    ],
-    images: ["/showroom/products/tee-haskell-lambda.png"],
-    variants: buildApparelVariants("CM-HSK-TE", "Concrete Mist", 14.5, 32.0, 210),
-  },
-  {
-    id: "ouroboros-pos-hoodie",
-    title: "Ouroboros Infinity Consensus",
-    description:
-      "Peer-reviewed mathematical consensus rendered as a wearable monument. Deep Cardano Midnight Navy pullover hoodie showcasing the recursive Ouroboros proof-of-stake seal.",
-    color: "Midnight Navy",
-    colorHex: "#152448",
-    category: "clothing",
-    eyebrow: "Consensus Pullover Hoodie",
-    era: "Shelley · Ouroboros Praos",
-    fabricSpec: "Heavy Brushed Fleece · 340 GSM",
-    specs: [
-      "Cardano Midnight Navy Dye",
-      "340 GSM Structured Drape",
-      "Ribbed Waistband & Wrist Cuffs",
-      "Zero-Slashing Consensus Lore",
-    ],
-    images: ["/showroom/products/hoodie-ouroboros-pos.png"],
-    variants: buildApparelVariants("CM-OUR-HD", "Midnight Navy", 29.0, 62.0, 490),
-  },
-  {
-    id: "ghost-matrix-tee",
-    title: "Ghost in the Matrix — 100% Uptime",
-    description:
-      "Weaponizing out-group slurs into a badge of operational supremacy. Retro-futuristic stipple halftone print celebrating 100% uninterrupted mainnet uptime since Genesis on mineral-washed graphite cotton.",
-    color: "Washed Graphite",
-    colorHex: "#2A2F3A",
-    category: "clothing",
-    eyebrow: "Mineral-Washed Graphic Tee",
-    era: "Defiance Archive",
-    fabricSpec: "Vintage Washed Cotton · 230 GSM",
-    specs: [
-      "230 GSM Mineral-Washed Cotton",
-      "Dithered Halftone Stipple Print",
-      "Oversized Sovereign Drop Shoulder",
-      "100% Uptime Since Genesis",
-    ],
-    images: ["/showroom/products/tee-ghost-matrix.png"],
-    variants: buildApparelVariants("CM-GHM-TE", "Washed Graphite", 15.0, 32.0, 220),
-  },
-  {
-    id: "elected-drep-tee",
-    title: "Elected DRep — CIP-1694 Seal",
-    description:
-      "Built for active constitutional governance participants and on-chain Delegate Representatives. Features the Voltaire civic seal on heavyweight Slate Cobalt cotton.",
-    color: "Slate Cobalt",
-    colorHex: "#1A284A",
-    category: "clothing",
-    eyebrow: "Governance Issue Tee",
-    era: "Voltaire · CIP-1694",
-    fabricSpec: "100% American Cotton · 220 GSM",
-    specs: [
-      "220 GSM Heavyweight Cotton",
-      "Constitutional Seal Front Print",
-      "Breathable Structured Fit",
-      "On-Chain Treasury Civic Signal",
-    ],
-    images: ["/showroom/products/tee-elected-drep.png"],
-    variants: buildApparelVariants("CM-DRP-TE", "Slate Cobalt", 15.5, 34.0, 210),
-  },
-  {
-    id: "mithril-shield-hoodie",
-    title: "Mithril Light Client Shield",
-    description:
-      "Multi-signature stake-based proof aggregation crystallized into heavyweight matte charcoal fleece. Precision-placed chest emblem calibrated to optical center gravity.",
-    color: "Stealth Charcoal",
-    colorHex: "#20252F",
-    category: "clothing",
-    eyebrow: "Protocol Armor Hoodie",
-    era: "Basho · Mithril Protocol",
-    fabricSpec: "Heavyweight Fleece · 340 GSM",
-    specs: [
-      "340 GSM Matte Charcoal Fleece",
-      "Optical-Centroid Chest Placement",
-      "Double-Stitch Reinforced Seams",
-      "Cold-Wash Colorfast Ink",
-    ],
-    images: ["/showroom/products/hoodie-mithril-shield.png"],
-    variants: buildApparelVariants("CM-MTH-HD", "Stealth Charcoal", 28.5, 60.0, 485),
-  },
-
-  // =========================================================================
-  // DRINKWARE WALL (4 Architectural Vessels)
+  // DRINKWARE WALL (4 Architectural Vessels — Preserved)
   // =========================================================================
   {
     id: "compiler-fuel-tumbler",
@@ -277,7 +97,7 @@ export const productsCatalog: Product[] = [
   },
 
   // =========================================================================
-  // GEAR WALL (5 Sovereign Carry & Desk Artifacts)
+  // GEAR WALL (5 Sovereign Carry & Desk Artifacts — Preserved)
   // =========================================================================
   {
     id: "eutxo-tote-bag",
@@ -390,4 +210,9 @@ export const productsCatalog: Product[] = [
       { sku: "CM-JJ11-XL", size: "800×300MM", color: "Carbon Blue", weight: 580, dropshippingPrice: 19.5, recommendPrice: 42.0 },
     ],
   },
+];
+
+export const productsCatalog: Product[] = [
+  ...popcustomsApparelCatalog,
+  ...drinkwareAndGearCatalog,
 ];

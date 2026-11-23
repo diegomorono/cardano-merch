@@ -22,7 +22,8 @@ This index maps the files, routes, and logical directories of the `cardano-merch
 *   [productos/](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/productos/) — Excel spreadsheets managing catalog product attributes.
 *   [delivery_data/](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/delivery_data/) — Directory containing shipping rates and quotes datasets.
 *   [public/](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/public/) — Static brand assets, mockup images, and logos.
-*   [public/showroom/products/](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/public/showroom/products/) — Transparent hanger-aligned garment PNGs and studio-isolated drinkware/gear artifacts.
+*   [public/showroom/products/](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/public/showroom/products/) — Studio-isolated Drinkware & Gear transparent PNG artifacts.
+*   [public/showroom/apparel/](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/public/showroom/apparel/) — Hanger-aligned transparent WebP studio garments extracted from POPCustoms `productos/` mockups across all colorways.
 *   [branding/](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/branding/) — High-fidelity brand assets, designs, logos, and promotional video assets.
 *   [scripts/](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/scripts/) — Developer automation and interceptor scripts.
 *   [supabase/](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/supabase/) — Local Supabase migrations database schema folder.
@@ -57,7 +58,8 @@ This index maps the files, routes, and logical directories of the `cardano-merch
 *   [src/app/api/webhooks/stripe/route.ts](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/src/app/api/webhooks/stripe/route.ts) — **Stripe Webhook API:** Processes payments asynchronously and triggers order fulfillment.
 *   [src/app/api/shipping/route.ts](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/src/app/api/shipping/route.ts) — **Shipping API:** Calculates available transit methods and dynamic quotes.
 *   [src/lib/shipping.ts](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/src/lib/shipping.ts) — **Shipping Utility:** Implements zone lookup logic and print-on-demand cost aggregation.
-*   [src/lib/catalog.ts](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/src/lib/catalog.ts) — **Catalog Utility:** Expanded 16-artifact showroom catalog mapped across Clothing, Drinkware, and Gear walls.
+*   [src/lib/catalog.ts](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/src/lib/catalog.ts) — **Catalog Utility:** Unified showroom catalog combining real POPCustoms apparel with curated Drinkware & Gear walls.
+*   [src/lib/popcustoms-apparel.ts](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/src/lib/popcustoms-apparel.ts) — **POPCustoms Apparel Data:** Compiled 26 unique shirts & hoodies (1,010 real POPCustoms SKU variants across fits, colors, and sizes).
 *   [src/lib/popcustoms.ts](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/src/lib/popcustoms.ts) — **POPCUSTOMS Client:** Manages API keys, bearer tokens, store requests, and order post schemas.
 *   [src/lib/products.ts](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/src/lib/products.ts) — **Database Products Utility:** Re-exports catalog items and typed showroom product interfaces.
 *   [src/lib/delivery-data.json](file:///c:/Users/User/.gemini/antigravity-ide/scratch/cardano-merch/src/lib/delivery-data.json) — **Delivery Zone Matrix:** Cache of global shipping regions and base rates.
