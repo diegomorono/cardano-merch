@@ -17,7 +17,9 @@ export const popcustomsApparelCatalog: Product[] = [
     ],
     "colorImages": {
       "Black": [
-        "/showroom/apparel/964325-black.webp"
+        "/showroom/apparel/964325-black.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-11-RY3zPt7d1g.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-19-RY3zPt7d1g.jpeg"
       ],
       "Navy": [
         "/showroom/apparel/964325-navy.webp",
@@ -25,16 +27,22 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-17-RY3zPt7d1g.jpeg"
       ],
       "Gray": [
-        "/showroom/apparel/964325-gray.webp"
+        "/showroom/apparel/964325-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-12-RY3zPt7d1g.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-20-RY3zPt7d1g.jpeg"
       ],
       "White": [
-        "/showroom/apparel/964325-white.webp"
+        "/showroom/apparel/964325-white.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-10-RY3zPt7d1g.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-18-RY3zPt7d1g.jpeg"
       ]
     },
     "fitColorImages": {
       "Unisex": {
         "Black": [
-          "/showroom/apparel/964325-black.webp"
+          "/showroom/apparel/964325-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-11-RY3zPt7d1g.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-19-RY3zPt7d1g.jpeg"
         ],
         "Navy": [
           "/showroom/apparel/964325-navy.webp",
@@ -42,10 +50,14 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-17-RY3zPt7d1g.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/964325-gray.webp"
+          "/showroom/apparel/964325-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-12-RY3zPt7d1g.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-20-RY3zPt7d1g.jpeg"
         ],
         "White": [
-          "/showroom/apparel/964325-white.webp"
+          "/showroom/apparel/964325-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-10-RY3zPt7d1g.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-18-RY3zPt7d1g.jpeg"
         ]
       }
     },
@@ -64,7 +76,9 @@ export const popcustomsApparelCatalog: Product[] = [
       "Relaxed Sovereign Silhouette"
     ],
     "images": [
-      "/showroom/apparel/964325-black.webp"
+      "/showroom/apparel/964325-black.webp",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-11-RY3zPt7d1g.jpeg",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-19-RY3zPt7d1g.jpeg"
     ],
     "variants": [
       {
@@ -334,7 +348,8 @@ export const popcustomsApparelCatalog: Product[] = [
     ],
     "colorImages": {
       "Gray": [
-        "/showroom/apparel/964332-gray.webp"
+        "/showroom/apparel/964332-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260703/1783047735-2-Dl3trkJBeX.jpeg"
       ],
       "White": [
         "/showroom/apparel/964332-white.webp",
@@ -344,7 +359,8 @@ export const popcustomsApparelCatalog: Product[] = [
     "fitColorImages": {
       "Women": {
         "Gray": [
-          "/showroom/apparel/964331-gray.webp"
+          "/showroom/apparel/964331-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260703/1783047693-1-Tht46HxM4W.jpeg"
         ],
         "White": [
           "/showroom/apparel/964331-white.webp",
@@ -353,7 +369,8 @@ export const popcustomsApparelCatalog: Product[] = [
       },
       "Men": {
         "Gray": [
-          "/showroom/apparel/964332-gray.webp"
+          "/showroom/apparel/964332-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260703/1783047735-2-Dl3trkJBeX.jpeg"
         ],
         "White": [
           "/showroom/apparel/964332-white.webp",
@@ -377,7 +394,8 @@ export const popcustomsApparelCatalog: Product[] = [
       "Pre-Shrunk Ribbed Crewneck"
     ],
     "images": [
-      "/showroom/apparel/964332-gray.webp"
+      "/showroom/apparel/964332-gray.webp",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260703/1783047735-2-Dl3trkJBeX.jpeg"
     ],
     "variants": [
       {
@@ -683,7 +701,8 @@ export const popcustomsApparelCatalog: Product[] = [
     ],
     "colorImages": {
       "Gray": [
-        "/showroom/apparel/964356-gray.webp"
+        "/showroom/apparel/964356-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260703/1783051549-2-KIdh0i1cn1.jpeg"
       ],
       "White": [
         "/showroom/apparel/964356-white.webp",
@@ -693,7 +712,8 @@ export const popcustomsApparelCatalog: Product[] = [
     "fitColorImages": {
       "Women": {
         "Gray": [
-          "/showroom/apparel/964355-gray.webp"
+          "/showroom/apparel/964355-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260703/1783051500-2-t3MS8zdWgp.jpeg"
         ],
         "White": [
           "/showroom/apparel/964355-white.webp",
@@ -702,7 +722,8 @@ export const popcustomsApparelCatalog: Product[] = [
       },
       "Men": {
         "Gray": [
-          "/showroom/apparel/964356-gray.webp"
+          "/showroom/apparel/964356-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260703/1783051549-2-KIdh0i1cn1.jpeg"
         ],
         "White": [
           "/showroom/apparel/964356-white.webp",
@@ -726,7 +747,8 @@ export const popcustomsApparelCatalog: Product[] = [
       "Pre-Shrunk Ribbed Crewneck"
     ],
     "images": [
-      "/showroom/apparel/964356-gray.webp"
+      "/showroom/apparel/964356-gray.webp",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260703/1783051549-2-KIdh0i1cn1.jpeg"
     ],
     "variants": [
       {
@@ -1034,7 +1056,9 @@ export const popcustomsApparelCatalog: Product[] = [
     ],
     "colorImages": {
       "Black": [
-        "/showroom/apparel/967265-black.webp"
+        "/showroom/apparel/967265-black.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-10-rN1owtwkcl.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-18-rN1owtwkcl.jpeg"
       ],
       "Navy": [
         "/showroom/apparel/967265-navy.webp",
@@ -1042,16 +1066,22 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-19-rN1owtwkcl.jpeg"
       ],
       "Gray": [
-        "/showroom/apparel/967265-gray.webp"
+        "/showroom/apparel/967265-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-12-rN1owtwkcl.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-20-rN1owtwkcl.jpeg"
       ],
       "White": [
-        "/showroom/apparel/967265-white.webp"
+        "/showroom/apparel/967265-white.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-9-rN1owtwkcl.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-17-rN1owtwkcl.jpeg"
       ]
     },
     "fitColorImages": {
       "Unisex": {
         "Black": [
-          "/showroom/apparel/967265-black.webp"
+          "/showroom/apparel/967265-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-10-rN1owtwkcl.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-18-rN1owtwkcl.jpeg"
         ],
         "Navy": [
           "/showroom/apparel/967265-navy.webp",
@@ -1059,10 +1089,14 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-19-rN1owtwkcl.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967265-gray.webp"
+          "/showroom/apparel/967265-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-12-rN1owtwkcl.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-20-rN1owtwkcl.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967265-white.webp"
+          "/showroom/apparel/967265-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-9-rN1owtwkcl.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-17-rN1owtwkcl.jpeg"
         ]
       }
     },
@@ -1081,7 +1115,9 @@ export const popcustomsApparelCatalog: Product[] = [
       "Relaxed Sovereign Silhouette"
     ],
     "images": [
-      "/showroom/apparel/967265-black.webp"
+      "/showroom/apparel/967265-black.webp",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-10-rN1owtwkcl.jpeg",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-18-rN1owtwkcl.jpeg"
     ],
     "variants": [
       {
@@ -1357,13 +1393,16 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260710/1783619215-2-0lfiHun8Mi.jpeg"
       ],
       "Navy": [
-        "/showroom/apparel/966148-navy.webp"
+        "/showroom/apparel/966148-navy.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260710/1783619215-4-0lfiHun8Mi.jpeg"
       ],
       "Gray": [
-        "/showroom/apparel/966148-gray.webp"
+        "/showroom/apparel/966148-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260710/1783619215-3-0lfiHun8Mi.jpeg"
       ],
       "White": [
-        "/showroom/apparel/966148-white.webp"
+        "/showroom/apparel/966148-white.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260710/1783619215-1-0lfiHun8Mi.jpeg"
       ]
     },
     "fitColorImages": {
@@ -1373,13 +1412,16 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260710/1783619215-2-0lfiHun8Mi.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/966148-navy.webp"
+          "/showroom/apparel/966148-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260710/1783619215-4-0lfiHun8Mi.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/966148-gray.webp"
+          "/showroom/apparel/966148-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260710/1783619215-3-0lfiHun8Mi.jpeg"
         ],
         "White": [
-          "/showroom/apparel/966148-white.webp"
+          "/showroom/apparel/966148-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260710/1783619215-1-0lfiHun8Mi.jpeg"
         ]
       },
       "Women": {
@@ -1388,13 +1430,16 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260710/1783619319-3-kRotu2G9ra.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/966152-navy.webp"
+          "/showroom/apparel/966152-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260710/1783619319-4-kRotu2G9ra.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/966152-gray.webp"
+          "/showroom/apparel/966152-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260710/1783619319-1-kRotu2G9ra.jpeg"
         ],
         "White": [
-          "/showroom/apparel/966152-white.webp"
+          "/showroom/apparel/966152-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260710/1783619319-2-kRotu2G9ra.jpeg"
         ]
       }
     },
@@ -2015,13 +2060,16 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784049918-2-LXUMDd2OHy.jpeg"
       ],
       "Navy": [
-        "/showroom/apparel/967261-navy.webp"
+        "/showroom/apparel/967261-navy.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784049918-4-LXUMDd2OHy.jpeg"
       ],
       "Gray": [
-        "/showroom/apparel/967261-gray.webp"
+        "/showroom/apparel/967261-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784049918-3-LXUMDd2OHy.jpeg"
       ],
       "White": [
-        "/showroom/apparel/967261-white.webp"
+        "/showroom/apparel/967261-white.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784049918-1-LXUMDd2OHy.jpeg"
       ]
     },
     "fitColorImages": {
@@ -2031,13 +2079,16 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784050185-1-qt62rcKYfA.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/967253-navy.webp"
+          "/showroom/apparel/967253-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784050185-4-qt62rcKYfA.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967253-gray.webp"
+          "/showroom/apparel/967253-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784050185-3-qt62rcKYfA.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967253-white.webp"
+          "/showroom/apparel/967253-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784050185-2-qt62rcKYfA.jpeg"
         ]
       },
       "Men": {
@@ -2046,13 +2097,16 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784049918-2-LXUMDd2OHy.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/967261-navy.webp"
+          "/showroom/apparel/967261-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784049918-4-LXUMDd2OHy.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967261-gray.webp"
+          "/showroom/apparel/967261-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784049918-3-LXUMDd2OHy.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967261-white.webp"
+          "/showroom/apparel/967261-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784049918-1-LXUMDd2OHy.jpeg"
         ]
       }
     },
@@ -2784,13 +2838,16 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784050482-1-wcBzIhkIKd.jpeg"
       ],
       "Navy": [
-        "/showroom/apparel/967262-navy.webp"
+        "/showroom/apparel/967262-navy.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784050482-4-wcBzIhkIKd.jpeg"
       ],
       "Gray": [
-        "/showroom/apparel/967262-gray.webp"
+        "/showroom/apparel/967262-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784050482-3-wcBzIhkIKd.jpeg"
       ],
       "White": [
-        "/showroom/apparel/967262-white.webp"
+        "/showroom/apparel/967262-white.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784050482-2-wcBzIhkIKd.jpeg"
       ]
     },
     "fitColorImages": {
@@ -2800,13 +2857,16 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784050482-1-wcBzIhkIKd.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/967262-navy.webp"
+          "/showroom/apparel/967262-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784050482-4-wcBzIhkIKd.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967262-gray.webp"
+          "/showroom/apparel/967262-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784050482-3-wcBzIhkIKd.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967262-white.webp"
+          "/showroom/apparel/967262-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784050482-2-wcBzIhkIKd.jpeg"
         ]
       },
       "Women": {
@@ -2815,13 +2875,16 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784050658-2-eBF9wGw2BX.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/967263-navy.webp"
+          "/showroom/apparel/967263-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784050658-4-eBF9wGw2BX.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967263-gray.webp"
+          "/showroom/apparel/967263-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784050658-3-eBF9wGw2BX.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967263-white.webp"
+          "/showroom/apparel/967263-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784050658-1-eBF9wGw2BX.jpeg"
         ]
       }
     },
@@ -3436,7 +3499,8 @@ export const popcustomsApparelCatalog: Product[] = [
     ],
     "colorImages": {
       "Gray": [
-        "/showroom/apparel/967312-gray.webp"
+        "/showroom/apparel/967312-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784065449-2-0m63RkuAMv.jpeg"
       ],
       "White": [
         "/showroom/apparel/967312-white.webp",
@@ -3446,7 +3510,8 @@ export const popcustomsApparelCatalog: Product[] = [
     "fitColorImages": {
       "Women": {
         "Gray": [
-          "/showroom/apparel/967312-gray.webp"
+          "/showroom/apparel/967312-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784065449-2-0m63RkuAMv.jpeg"
         ],
         "White": [
           "/showroom/apparel/967312-white.webp",
@@ -3469,7 +3534,8 @@ export const popcustomsApparelCatalog: Product[] = [
       "Pre-Shrunk Ribbed Crewneck"
     ],
     "images": [
-      "/showroom/apparel/967312-gray.webp"
+      "/showroom/apparel/967312-gray.webp",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784065449-2-0m63RkuAMv.jpeg"
     ],
     "variants": [
       {
@@ -3632,10 +3698,14 @@ export const popcustomsApparelCatalog: Product[] = [
     ],
     "colorImages": {
       "Black": [
-        "/showroom/apparel/967332-black.webp"
+        "/showroom/apparel/967332-black.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066989-8-oZkNEk85Tl.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066989-14-oZkNEk85Tl.jpeg"
       ],
       "Gray": [
-        "/showroom/apparel/967332-gray.webp"
+        "/showroom/apparel/967332-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066989-9-oZkNEk85Tl.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066989-15-oZkNEk85Tl.jpeg"
       ],
       "White": [
         "/showroom/apparel/967332-white.webp",
@@ -3646,10 +3716,14 @@ export const popcustomsApparelCatalog: Product[] = [
     "fitColorImages": {
       "Unisex": {
         "Black": [
-          "/showroom/apparel/967332-black.webp"
+          "/showroom/apparel/967332-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066989-8-oZkNEk85Tl.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066989-14-oZkNEk85Tl.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967332-gray.webp"
+          "/showroom/apparel/967332-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066989-9-oZkNEk85Tl.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066989-15-oZkNEk85Tl.jpeg"
         ],
         "White": [
           "/showroom/apparel/967332-white.webp",
@@ -3673,7 +3747,9 @@ export const popcustomsApparelCatalog: Product[] = [
       "Relaxed Sovereign Silhouette"
     ],
     "images": [
-      "/showroom/apparel/967332-black.webp"
+      "/showroom/apparel/967332-black.webp",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066989-8-oZkNEk85Tl.jpeg",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066989-14-oZkNEk85Tl.jpeg"
     ],
     "variants": [
       {
@@ -3885,10 +3961,12 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784066004-2-Qa7UBDkQ67.jpeg"
       ],
       "Navy": [
-        "/showroom/apparel/967319-navy.webp"
+        "/showroom/apparel/967319-navy.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784066004-3-Qa7UBDkQ67.jpeg"
       ],
       "White": [
-        "/showroom/apparel/967319-white.webp"
+        "/showroom/apparel/967319-white.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784066004-1-Qa7UBDkQ67.jpeg"
       ]
     },
     "fitColorImages": {
@@ -3898,10 +3976,12 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784066004-2-Qa7UBDkQ67.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/967319-navy.webp"
+          "/showroom/apparel/967319-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784066004-3-Qa7UBDkQ67.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967319-white.webp"
+          "/showroom/apparel/967319-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784066004-1-Qa7UBDkQ67.jpeg"
         ]
       }
     },
@@ -4161,13 +4241,16 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784067615-2-bzds421RRk.jpeg"
       ],
       "Navy": [
-        "/showroom/apparel/967341-navy.webp"
+        "/showroom/apparel/967341-navy.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784067615-4-bzds421RRk.jpeg"
       ],
       "Gray": [
-        "/showroom/apparel/967341-gray.webp"
+        "/showroom/apparel/967341-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784067615-3-bzds421RRk.jpeg"
       ],
       "White": [
-        "/showroom/apparel/967341-white.webp"
+        "/showroom/apparel/967341-white.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784067615-1-bzds421RRk.jpeg"
       ]
     },
     "fitColorImages": {
@@ -4177,13 +4260,16 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784067615-2-bzds421RRk.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/967341-navy.webp"
+          "/showroom/apparel/967341-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784067615-4-bzds421RRk.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967341-gray.webp"
+          "/showroom/apparel/967341-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784067615-3-bzds421RRk.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967341-white.webp"
+          "/showroom/apparel/967341-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784067615-1-bzds421RRk.jpeg"
         ]
       },
       "Women": {
@@ -4192,13 +4278,16 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784067844-2-rWxLL14GaO.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/967343-navy.webp"
+          "/showroom/apparel/967343-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784067844-4-rWxLL14GaO.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967343-gray.webp"
+          "/showroom/apparel/967343-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784067844-3-rWxLL14GaO.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967343-white.webp"
+          "/showroom/apparel/967343-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784067844-1-rWxLL14GaO.jpeg"
         ]
       }
     },
@@ -4815,7 +4904,9 @@ export const popcustomsApparelCatalog: Product[] = [
     ],
     "colorImages": {
       "Black": [
-        "/showroom/apparel/967345-black.webp"
+        "/showroom/apparel/967345-black.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-11-4iSCmTnIu7.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-19-4iSCmTnIu7.jpeg"
       ],
       "Navy": [
         "/showroom/apparel/967345-navy.webp",
@@ -4823,16 +4914,22 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-20-4iSCmTnIu7.jpeg"
       ],
       "Gray": [
-        "/showroom/apparel/967345-gray.webp"
+        "/showroom/apparel/967345-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-9-4iSCmTnIu7.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-17-4iSCmTnIu7.jpeg"
       ],
       "White": [
-        "/showroom/apparel/967345-white.webp"
+        "/showroom/apparel/967345-white.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-10-4iSCmTnIu7.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-18-4iSCmTnIu7.jpeg"
       ]
     },
     "fitColorImages": {
       "Unisex": {
         "Black": [
-          "/showroom/apparel/967345-black.webp"
+          "/showroom/apparel/967345-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-11-4iSCmTnIu7.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-19-4iSCmTnIu7.jpeg"
         ],
         "Navy": [
           "/showroom/apparel/967345-navy.webp",
@@ -4840,10 +4937,14 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-20-4iSCmTnIu7.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967345-gray.webp"
+          "/showroom/apparel/967345-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-9-4iSCmTnIu7.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-17-4iSCmTnIu7.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967345-white.webp"
+          "/showroom/apparel/967345-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-10-4iSCmTnIu7.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-18-4iSCmTnIu7.jpeg"
         ]
       }
     },
@@ -4862,7 +4963,9 @@ export const popcustomsApparelCatalog: Product[] = [
       "Relaxed Sovereign Silhouette"
     ],
     "images": [
-      "/showroom/apparel/967345-black.webp"
+      "/showroom/apparel/967345-black.webp",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-11-4iSCmTnIu7.jpeg",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-19-4iSCmTnIu7.jpeg"
     ],
     "variants": [
       {
@@ -5138,13 +5241,16 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784075269-2-dP7Mvz0l1p.jpeg"
       ],
       "Navy": [
-        "/showroom/apparel/967361-navy.webp"
+        "/showroom/apparel/967361-navy.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784075269-4-dP7Mvz0l1p.jpeg"
       ],
       "Gray": [
-        "/showroom/apparel/967361-gray.webp"
+        "/showroom/apparel/967361-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784075269-3-dP7Mvz0l1p.jpeg"
       ],
       "White": [
-        "/showroom/apparel/967361-white.webp"
+        "/showroom/apparel/967361-white.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784075269-1-dP7Mvz0l1p.jpeg"
       ]
     },
     "fitColorImages": {
@@ -5154,13 +5260,16 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784075225-2-mE4RL8ZDYY.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/967360-navy.webp"
+          "/showroom/apparel/967360-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784075225-4-mE4RL8ZDYY.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967360-gray.webp"
+          "/showroom/apparel/967360-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784075225-3-mE4RL8ZDYY.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967360-white.webp"
+          "/showroom/apparel/967360-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784075225-1-mE4RL8ZDYY.jpeg"
         ]
       },
       "Men": {
@@ -5169,13 +5278,16 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784075269-2-dP7Mvz0l1p.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/967361-navy.webp"
+          "/showroom/apparel/967361-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784075269-4-dP7Mvz0l1p.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967361-gray.webp"
+          "/showroom/apparel/967361-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784075269-3-dP7Mvz0l1p.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967361-white.webp"
+          "/showroom/apparel/967361-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784075269-1-dP7Mvz0l1p.jpeg"
         ]
       }
     },
@@ -5790,7 +5902,8 @@ export const popcustomsApparelCatalog: Product[] = [
     ],
     "colorImages": {
       "Gray": [
-        "/showroom/apparel/967364-gray.webp"
+        "/showroom/apparel/967364-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784075991-2-CBAAh9i32x.jpeg"
       ],
       "White": [
         "/showroom/apparel/967364-white.webp",
@@ -5800,7 +5913,8 @@ export const popcustomsApparelCatalog: Product[] = [
     "fitColorImages": {
       "Men": {
         "Gray": [
-          "/showroom/apparel/967364-gray.webp"
+          "/showroom/apparel/967364-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784075991-2-CBAAh9i32x.jpeg"
         ],
         "White": [
           "/showroom/apparel/967364-white.webp",
@@ -5809,7 +5923,8 @@ export const popcustomsApparelCatalog: Product[] = [
       },
       "Women": {
         "Gray": [
-          "/showroom/apparel/967366-gray.webp"
+          "/showroom/apparel/967366-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784076060-2-7qLyOLEZnw.jpeg"
         ],
         "White": [
           "/showroom/apparel/967366-white.webp",
@@ -5833,7 +5948,8 @@ export const popcustomsApparelCatalog: Product[] = [
       "Pre-Shrunk Ribbed Crewneck"
     ],
     "images": [
-      "/showroom/apparel/967364-gray.webp"
+      "/showroom/apparel/967364-gray.webp",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784075991-2-CBAAh9i32x.jpeg"
     ],
     "variants": [
       {
@@ -6141,7 +6257,9 @@ export const popcustomsApparelCatalog: Product[] = [
     ],
     "colorImages": {
       "Black": [
-        "/showroom/apparel/967362-black.webp"
+        "/showroom/apparel/967362-black.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-9-zbuXzPdr11.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-17-zbuXzPdr11.jpeg"
       ],
       "Navy": [
         "/showroom/apparel/967362-navy.webp",
@@ -6149,16 +6267,22 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-19-zbuXzPdr11.jpeg"
       ],
       "Gray": [
-        "/showroom/apparel/967362-gray.webp"
+        "/showroom/apparel/967362-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-12-zbuXzPdr11.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-20-zbuXzPdr11.jpeg"
       ],
       "White": [
-        "/showroom/apparel/967362-white.webp"
+        "/showroom/apparel/967362-white.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-10-zbuXzPdr11.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-18-zbuXzPdr11.jpeg"
       ]
     },
     "fitColorImages": {
       "Unisex": {
         "Black": [
-          "/showroom/apparel/967362-black.webp"
+          "/showroom/apparel/967362-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-9-zbuXzPdr11.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-17-zbuXzPdr11.jpeg"
         ],
         "Navy": [
           "/showroom/apparel/967362-navy.webp",
@@ -6166,10 +6290,14 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-19-zbuXzPdr11.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967362-gray.webp"
+          "/showroom/apparel/967362-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-12-zbuXzPdr11.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-20-zbuXzPdr11.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967362-white.webp"
+          "/showroom/apparel/967362-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-10-zbuXzPdr11.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-18-zbuXzPdr11.jpeg"
         ]
       }
     },
@@ -6188,7 +6316,9 @@ export const popcustomsApparelCatalog: Product[] = [
       "Relaxed Sovereign Silhouette"
     ],
     "images": [
-      "/showroom/apparel/967362-black.webp"
+      "/showroom/apparel/967362-black.webp",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-9-zbuXzPdr11.jpeg",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-17-zbuXzPdr11.jpeg"
     ],
     "variants": [
       {
@@ -6458,7 +6588,8 @@ export const popcustomsApparelCatalog: Product[] = [
     ],
     "colorImages": {
       "Gray": [
-        "/showroom/apparel/967369-gray.webp"
+        "/showroom/apparel/967369-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784076463-2-aX9OAtZOA4.jpeg"
       ],
       "White": [
         "/showroom/apparel/967369-white.webp",
@@ -6468,7 +6599,8 @@ export const popcustomsApparelCatalog: Product[] = [
     "fitColorImages": {
       "Men": {
         "Gray": [
-          "/showroom/apparel/967369-gray.webp"
+          "/showroom/apparel/967369-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784076463-2-aX9OAtZOA4.jpeg"
         ],
         "White": [
           "/showroom/apparel/967369-white.webp",
@@ -6477,7 +6609,8 @@ export const popcustomsApparelCatalog: Product[] = [
       },
       "Women": {
         "Gray": [
-          "/showroom/apparel/967370-gray.webp"
+          "/showroom/apparel/967370-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784076518-2-mCGeDxLWDp.jpeg"
         ],
         "White": [
           "/showroom/apparel/967370-white.webp",
@@ -6501,7 +6634,8 @@ export const popcustomsApparelCatalog: Product[] = [
       "Pre-Shrunk Ribbed Crewneck"
     ],
     "images": [
-      "/showroom/apparel/967369-gray.webp"
+      "/showroom/apparel/967369-gray.webp",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784076463-2-aX9OAtZOA4.jpeg"
     ],
     "variants": [
       {
@@ -6813,13 +6947,16 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784077354-2-ZqwoUMHAmI.jpeg"
       ],
       "Navy": [
-        "/showroom/apparel/967375-navy.webp"
+        "/showroom/apparel/967375-navy.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784077354-4-ZqwoUMHAmI.jpeg"
       ],
       "Gray": [
-        "/showroom/apparel/967375-gray.webp"
+        "/showroom/apparel/967375-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784077354-3-ZqwoUMHAmI.jpeg"
       ],
       "White": [
-        "/showroom/apparel/967375-white.webp"
+        "/showroom/apparel/967375-white.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784077354-1-ZqwoUMHAmI.jpeg"
       ]
     },
     "fitColorImages": {
@@ -6829,13 +6966,16 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784077354-2-ZqwoUMHAmI.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/967375-navy.webp"
+          "/showroom/apparel/967375-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784077354-4-ZqwoUMHAmI.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967375-gray.webp"
+          "/showroom/apparel/967375-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784077354-3-ZqwoUMHAmI.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967375-white.webp"
+          "/showroom/apparel/967375-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784077354-1-ZqwoUMHAmI.jpeg"
         ]
       },
       "Women": {
@@ -6844,13 +6984,16 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784077401-2-DVkFM6yVRP.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/967376-navy.webp"
+          "/showroom/apparel/967376-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784077401-4-DVkFM6yVRP.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967376-gray.webp"
+          "/showroom/apparel/967376-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784077401-3-DVkFM6yVRP.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967376-white.webp"
+          "/showroom/apparel/967376-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784077401-1-DVkFM6yVRP.jpeg"
         ]
       }
     },
@@ -7467,7 +7610,9 @@ export const popcustomsApparelCatalog: Product[] = [
     ],
     "colorImages": {
       "Black": [
-        "/showroom/apparel/967373-black.webp"
+        "/showroom/apparel/967373-black.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-10-oxbjZInq12.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-18-oxbjZInq12.jpeg"
       ],
       "Navy": [
         "/showroom/apparel/967373-navy.webp",
@@ -7475,16 +7620,22 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-19-oxbjZInq12.jpeg"
       ],
       "Gray": [
-        "/showroom/apparel/967373-gray.webp"
+        "/showroom/apparel/967373-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-12-oxbjZInq12.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-20-oxbjZInq12.jpeg"
       ],
       "White": [
-        "/showroom/apparel/967373-white.webp"
+        "/showroom/apparel/967373-white.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-9-oxbjZInq12.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-17-oxbjZInq12.jpeg"
       ]
     },
     "fitColorImages": {
       "Unisex": {
         "Black": [
-          "/showroom/apparel/967373-black.webp"
+          "/showroom/apparel/967373-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-10-oxbjZInq12.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-18-oxbjZInq12.jpeg"
         ],
         "Navy": [
           "/showroom/apparel/967373-navy.webp",
@@ -7492,10 +7643,14 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-19-oxbjZInq12.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967373-gray.webp"
+          "/showroom/apparel/967373-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-12-oxbjZInq12.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-20-oxbjZInq12.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967373-white.webp"
+          "/showroom/apparel/967373-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-9-oxbjZInq12.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-17-oxbjZInq12.jpeg"
         ]
       }
     },
@@ -7514,7 +7669,9 @@ export const popcustomsApparelCatalog: Product[] = [
       "Relaxed Sovereign Silhouette"
     ],
     "images": [
-      "/showroom/apparel/967373-black.webp"
+      "/showroom/apparel/967373-black.webp",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-10-oxbjZInq12.jpeg",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-18-oxbjZInq12.jpeg"
     ],
     "variants": [
       {
@@ -7790,13 +7947,16 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784089232-2-iOoXra39pu.jpeg"
       ],
       "Navy": [
-        "/showroom/apparel/967401-navy.webp"
+        "/showroom/apparel/967401-navy.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784089232-4-iOoXra39pu.jpeg"
       ],
       "Gray": [
-        "/showroom/apparel/967401-gray.webp"
+        "/showroom/apparel/967401-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784089232-3-iOoXra39pu.jpeg"
       ],
       "White": [
-        "/showroom/apparel/967401-white.webp"
+        "/showroom/apparel/967401-white.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784089232-1-iOoXra39pu.jpeg"
       ]
     },
     "fitColorImages": {
@@ -7806,13 +7966,16 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784089232-2-iOoXra39pu.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/967401-navy.webp"
+          "/showroom/apparel/967401-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784089232-4-iOoXra39pu.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967401-gray.webp"
+          "/showroom/apparel/967401-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784089232-3-iOoXra39pu.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967401-white.webp"
+          "/showroom/apparel/967401-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784089232-1-iOoXra39pu.jpeg"
         ]
       },
       "Women": {
@@ -7821,13 +7984,16 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784089285-2-Ero73kfxII.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/967402-navy.webp"
+          "/showroom/apparel/967402-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784089285-4-Ero73kfxII.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967402-gray.webp"
+          "/showroom/apparel/967402-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784089285-3-Ero73kfxII.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967402-white.webp"
+          "/showroom/apparel/967402-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784089285-1-Ero73kfxII.jpeg"
         ]
       }
     },
@@ -8448,13 +8614,16 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260717/1784223146-2-MBcwmFD04C.jpeg"
       ],
       "Navy": [
-        "/showroom/apparel/967729-navy.webp"
+        "/showroom/apparel/967729-navy.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260717/1784223146-4-MBcwmFD04C.jpeg"
       ],
       "Gray": [
-        "/showroom/apparel/967729-gray.webp"
+        "/showroom/apparel/967729-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260717/1784223146-3-MBcwmFD04C.jpeg"
       ],
       "White": [
-        "/showroom/apparel/967729-white.webp"
+        "/showroom/apparel/967729-white.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260717/1784223146-1-MBcwmFD04C.jpeg"
       ]
     },
     "fitColorImages": {
@@ -8464,13 +8633,16 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260717/1784223146-2-MBcwmFD04C.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/967729-navy.webp"
+          "/showroom/apparel/967729-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260717/1784223146-4-MBcwmFD04C.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967729-gray.webp"
+          "/showroom/apparel/967729-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260717/1784223146-3-MBcwmFD04C.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967729-white.webp"
+          "/showroom/apparel/967729-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260717/1784223146-1-MBcwmFD04C.jpeg"
         ]
       },
       "Women": {
@@ -8479,13 +8651,16 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260717/1784223214-2-dNwh7A541X.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/967730-navy.webp"
+          "/showroom/apparel/967730-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260717/1784223214-4-dNwh7A541X.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967730-gray.webp"
+          "/showroom/apparel/967730-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260717/1784223214-3-dNwh7A541X.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967730-white.webp"
+          "/showroom/apparel/967730-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260717/1784223214-1-dNwh7A541X.jpeg"
         ]
       }
     },
@@ -9102,7 +9277,9 @@ export const popcustomsApparelCatalog: Product[] = [
     ],
     "colorImages": {
       "Black": [
-        "/showroom/apparel/967734-black.webp"
+        "/showroom/apparel/967734-black.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-7-OyIXGlTUzL.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-15-OyIXGlTUzL.jpeg"
       ],
       "Navy": [
         "/showroom/apparel/967734-navy.webp",
@@ -9110,16 +9287,22 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-13-OyIXGlTUzL.jpeg"
       ],
       "Gray": [
-        "/showroom/apparel/967734-gray.webp"
+        "/showroom/apparel/967734-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-8-OyIXGlTUzL.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-16-OyIXGlTUzL.jpeg"
       ],
       "White": [
-        "/showroom/apparel/967734-white.webp"
+        "/showroom/apparel/967734-white.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-6-OyIXGlTUzL.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-14-OyIXGlTUzL.jpeg"
       ]
     },
     "fitColorImages": {
       "Unisex": {
         "Black": [
-          "/showroom/apparel/967734-black.webp"
+          "/showroom/apparel/967734-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-7-OyIXGlTUzL.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-15-OyIXGlTUzL.jpeg"
         ],
         "Navy": [
           "/showroom/apparel/967734-navy.webp",
@@ -9127,10 +9310,14 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-13-OyIXGlTUzL.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967734-gray.webp"
+          "/showroom/apparel/967734-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-8-OyIXGlTUzL.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-16-OyIXGlTUzL.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967734-white.webp"
+          "/showroom/apparel/967734-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-6-OyIXGlTUzL.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-14-OyIXGlTUzL.jpeg"
         ]
       }
     },
@@ -9149,7 +9336,9 @@ export const popcustomsApparelCatalog: Product[] = [
       "Relaxed Sovereign Silhouette"
     ],
     "images": [
-      "/showroom/apparel/967734-black.webp"
+      "/showroom/apparel/967734-black.webp",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-7-OyIXGlTUzL.jpeg",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-15-OyIXGlTUzL.jpeg"
     ],
     "variants": [
       {
@@ -9425,13 +9614,16 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260717/1784224532-2-lsl61iu2rd.jpeg"
       ],
       "Navy": [
-        "/showroom/apparel/967733-navy.webp"
+        "/showroom/apparel/967733-navy.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260717/1784224532-4-lsl61iu2rd.jpeg"
       ],
       "Gray": [
-        "/showroom/apparel/967733-gray.webp"
+        "/showroom/apparel/967733-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260717/1784224532-3-lsl61iu2rd.jpeg"
       ],
       "White": [
-        "/showroom/apparel/967733-white.webp"
+        "/showroom/apparel/967733-white.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260717/1784224532-1-lsl61iu2rd.jpeg"
       ]
     },
     "fitColorImages": {
@@ -9441,13 +9633,16 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260717/1784224341-3-0IKMPYfpMS.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/967732-navy.webp"
+          "/showroom/apparel/967732-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260717/1784224341-4-0IKMPYfpMS.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967732-gray.webp"
+          "/showroom/apparel/967732-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260717/1784224341-1-0IKMPYfpMS.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967732-white.webp"
+          "/showroom/apparel/967732-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260717/1784224341-2-0IKMPYfpMS.jpeg"
         ]
       },
       "Men": {
@@ -9456,13 +9651,16 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260717/1784224532-2-lsl61iu2rd.jpeg"
         ],
         "Navy": [
-          "/showroom/apparel/967733-navy.webp"
+          "/showroom/apparel/967733-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260717/1784224532-4-lsl61iu2rd.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967733-gray.webp"
+          "/showroom/apparel/967733-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260717/1784224532-3-lsl61iu2rd.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967733-white.webp"
+          "/showroom/apparel/967733-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260717/1784224532-1-lsl61iu2rd.jpeg"
         ]
       }
     },
@@ -10079,7 +10277,9 @@ export const popcustomsApparelCatalog: Product[] = [
     ],
     "colorImages": {
       "Black": [
-        "/showroom/apparel/967735-black.webp"
+        "/showroom/apparel/967735-black.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-7-H4htVN0BUv.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-15-H4htVN0BUv.jpeg"
       ],
       "Navy": [
         "/showroom/apparel/967735-navy.webp",
@@ -10087,16 +10287,22 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-13-H4htVN0BUv.jpeg"
       ],
       "Gray": [
-        "/showroom/apparel/967735-gray.webp"
+        "/showroom/apparel/967735-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-8-H4htVN0BUv.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-16-H4htVN0BUv.jpeg"
       ],
       "White": [
-        "/showroom/apparel/967735-white.webp"
+        "/showroom/apparel/967735-white.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-6-H4htVN0BUv.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-14-H4htVN0BUv.jpeg"
       ]
     },
     "fitColorImages": {
       "Unisex": {
         "Black": [
-          "/showroom/apparel/967735-black.webp"
+          "/showroom/apparel/967735-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-7-H4htVN0BUv.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-15-H4htVN0BUv.jpeg"
         ],
         "Navy": [
           "/showroom/apparel/967735-navy.webp",
@@ -10104,10 +10310,14 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-13-H4htVN0BUv.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967735-gray.webp"
+          "/showroom/apparel/967735-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-8-H4htVN0BUv.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-16-H4htVN0BUv.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967735-white.webp"
+          "/showroom/apparel/967735-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-6-H4htVN0BUv.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-14-H4htVN0BUv.jpeg"
         ]
       }
     },
@@ -10126,7 +10336,9 @@ export const popcustomsApparelCatalog: Product[] = [
       "Relaxed Sovereign Silhouette"
     ],
     "images": [
-      "/showroom/apparel/967735-black.webp"
+      "/showroom/apparel/967735-black.webp",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-7-H4htVN0BUv.jpeg",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-15-H4htVN0BUv.jpeg"
     ],
     "variants": [
       {
@@ -10398,7 +10610,9 @@ export const popcustomsApparelCatalog: Product[] = [
     ],
     "colorImages": {
       "Black": [
-        "/showroom/apparel/967737-black.webp"
+        "/showroom/apparel/967737-black.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-11-hTdbZfOz2d.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-19-hTdbZfOz2d.jpeg"
       ],
       "Navy": [
         "/showroom/apparel/967737-navy.webp",
@@ -10406,16 +10620,22 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-20-hTdbZfOz2d.jpeg"
       ],
       "Gray": [
-        "/showroom/apparel/967737-gray.webp"
+        "/showroom/apparel/967737-gray.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-9-hTdbZfOz2d.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-17-hTdbZfOz2d.jpeg"
       ],
       "White": [
-        "/showroom/apparel/967737-white.webp"
+        "/showroom/apparel/967737-white.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-10-hTdbZfOz2d.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-18-hTdbZfOz2d.jpeg"
       ]
     },
     "fitColorImages": {
       "Unisex": {
         "Black": [
-          "/showroom/apparel/967737-black.webp"
+          "/showroom/apparel/967737-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-11-hTdbZfOz2d.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-19-hTdbZfOz2d.jpeg"
         ],
         "Navy": [
           "/showroom/apparel/967737-navy.webp",
@@ -10423,10 +10643,14 @@ export const popcustomsApparelCatalog: Product[] = [
           "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-20-hTdbZfOz2d.jpeg"
         ],
         "Gray": [
-          "/showroom/apparel/967737-gray.webp"
+          "/showroom/apparel/967737-gray.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-9-hTdbZfOz2d.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-17-hTdbZfOz2d.jpeg"
         ],
         "White": [
-          "/showroom/apparel/967737-white.webp"
+          "/showroom/apparel/967737-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-10-hTdbZfOz2d.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-18-hTdbZfOz2d.jpeg"
         ]
       }
     },
@@ -10445,7 +10669,9 @@ export const popcustomsApparelCatalog: Product[] = [
       "Relaxed Sovereign Silhouette"
     ],
     "images": [
-      "/showroom/apparel/967737-black.webp"
+      "/showroom/apparel/967737-black.webp",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-11-hTdbZfOz2d.jpeg",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-19-hTdbZfOz2d.jpeg"
     ],
     "variants": [
       {
@@ -10715,7 +10941,9 @@ export const popcustomsApparelCatalog: Product[] = [
     ],
     "colorImages": {
       "Black": [
-        "/showroom/apparel/967738-black.webp"
+        "/showroom/apparel/967738-black.webp",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226379-5-CSXHFi99GH.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226379-9-CSXHFi99GH.jpeg"
       ],
       "Navy": [
         "/showroom/apparel/967738-navy.webp",
@@ -10726,7 +10954,9 @@ export const popcustomsApparelCatalog: Product[] = [
     "fitColorImages": {
       "Unisex": {
         "Black": [
-          "/showroom/apparel/967738-black.webp"
+          "/showroom/apparel/967738-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226379-5-CSXHFi99GH.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226379-9-CSXHFi99GH.jpeg"
         ],
         "Navy": [
           "/showroom/apparel/967738-navy.webp",
@@ -10750,7 +10980,9 @@ export const popcustomsApparelCatalog: Product[] = [
       "Relaxed Sovereign Silhouette"
     ],
     "images": [
-      "/showroom/apparel/967738-black.webp"
+      "/showroom/apparel/967738-black.webp",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226379-5-CSXHFi99GH.jpeg",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226379-9-CSXHFi99GH.jpeg"
     ],
     "variants": [
       {
