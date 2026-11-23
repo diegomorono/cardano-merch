@@ -35,11 +35,11 @@ function resolveInitialWall(initialProductId: string | null): WallId {
 
 function resolveInitialRackIndex(initialProductId: string | null): number {
   const clothing = productsCatalog.filter((p) => p.category === "clothing");
-  if (!initialProductId) return 0;
+  if (!initialProductId) return Math.min(2, Math.max(0, clothing.length - 1));
   const idx = clothing.findIndex(
     (p) => p.id === initialProductId || p.popcustomsId === initialProductId
   );
-  return idx >= 0 ? idx : 0;
+  return idx >= 0 ? idx : Math.min(2, Math.max(0, clothing.length - 1));
 }
 
 export function SpatialRoomStage({ initialProductId = null }: SpatialRoomStageProps) {
@@ -144,10 +144,19 @@ export function SpatialRoomStage({ initialProductId = null }: SpatialRoomStagePr
     setActiveWall(wall);
   }, []);
 
-  const handleChangeClothingFilter = useCallback((nextFilter: ClothingFilter) => {
-    setClothingFilter(nextFilter);
-    setActiveRackIndex(0);
-  }, []);
+  const handleChangeClothingFilter = useCallback(
+    (nextFilter: ClothingFilter) => {
+      setClothingFilter(nextFilter);
+      const nextCount =
+        nextFilter === "all"
+          ? allClothingItems.length
+          : nextFilter === "hoodie"
+            ? hoodieCount
+            : shirtCount;
+      setActiveRackIndex(Math.min(2, Math.max(0, nextCount - 1)));
+    },
+    [allClothingItems.length, hoodieCount, shirtCount]
+  );
 
   const handleInspectProduct = useCallback(
     (product: Product) => {
@@ -323,17 +332,17 @@ export function SpatialRoomStage({ initialProductId = null }: SpatialRoomStagePr
               className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[72vw] h-[44vh] bg-[radial-gradient(ellipse_at_top,rgba(148,180,255,0.16)_0%,rgba(0,51,173,0.06)_45%,transparent_76%)]"
             />
 
-            {/* Architectural Room Corner Seams */}
+            {/* Architectural Room Corner Seams (desktop/tablet wall junctions only; hidden on mobile to prevent bleed through translucent flanking garments) */}
             {idx > 0 && (
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-y-0 left-0 w-10 sm:w-16 bg-gradient-to-r from-black/60 via-black/22 to-transparent border-l border-white/[0.06] z-20"
+                className="hidden sm:block pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-black/45 via-black/15 to-transparent border-l border-white/[0.06] z-[12]"
               />
             )}
             {idx < SHOWROOM_WALLS.length - 1 && (
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-y-0 right-0 w-10 sm:w-16 bg-gradient-to-l from-black/60 via-black/22 to-transparent border-r border-white/[0.06] z-20"
+                className="hidden sm:block pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-black/45 via-black/15 to-transparent border-r border-white/[0.06] z-[12]"
               />
             )}
 
@@ -417,8 +426,14 @@ export function SpatialRoomStage({ initialProductId = null }: SpatialRoomStagePr
         totalCartItems={totalCartItems}
         bagBounceTick={bagBounceTick}
         cartIconRef={cartIconRef}
-        onOpenBag={() => setIsBagOpen(true)}
-        onOpenInfo={() => setIsInfoOpen(true)}
+        onOpenBag={() => {
+          setIsInfoOpen(false);
+          setIsBagOpen(true);
+        }}
+        onOpenInfo={() => {
+          setIsBagOpen(false);
+          setIsInfoOpen(true);
+        }}
         onResetHome={handleResetHome}
       />
 

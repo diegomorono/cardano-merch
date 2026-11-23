@@ -120,6 +120,15 @@ h1, h2, h3, .heading-xl {
     drop-shadow(0 0 28px rgba(0, 85, 255, 0.22));
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Liquid Metal Blur */
 .liquid-blur {
   filter: blur(80px);

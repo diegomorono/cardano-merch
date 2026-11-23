@@ -58,8 +58,9 @@ export function StoreWall({
   return (
     <section
       aria-label="Store Entrance Wall"
-      className="relative w-full h-full flex flex-col items-center justify-center px-5 sm:px-10 pt-20 pb-24 select-none"
+      className="relative w-full h-full flex flex-col items-center justify-center px-5 sm:px-10 pt-[84px] sm:pt-[94px] pb-[84px] sm:pb-[96px] overflow-y-auto no-scrollbar select-none"
     >
+      <div className="w-full flex flex-col items-center justify-center my-auto">
       {/* Monumental Architectural Back-Wall Emblem */}
       <motion.div
         animate={{ opacity: isDimmed ? 0.1 : 1 }}
@@ -143,6 +144,7 @@ export function StoreWall({
           </motion.div>
         ))}
       </motion.div>
+      </div>
     </section>
   );
 }

@@ -43,8 +43,8 @@ export function BagDrawer({ isOpen, onClose, products }: BagDrawerProps) {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            exit={{ opacity: 0, pointerEvents: "none" }}
+            transition={{ duration: 0.18 }}
             onClick={onClose}
             className="fixed inset-0 z-[90] bg-black/65 backdrop-blur-sm"
             aria-hidden="true"
@@ -124,7 +124,7 @@ export function BagDrawer({ isOpen, onClose, products }: BagDrawerProps) {
                       <div className="flex-1 min-w-0 flex flex-col justify-between">
                         <div className="flex items-start justify-between gap-2">
                           <div className="min-w-0">
-                            <p className="text-xs font-semibold text-white truncate">
+                            <p className="text-xs font-semibold text-white line-clamp-2 leading-snug">
                               {item.title}
                             </p>
                             <p className="text-[11px] text-white/45 mt-0.5 uppercase tracking-wider">

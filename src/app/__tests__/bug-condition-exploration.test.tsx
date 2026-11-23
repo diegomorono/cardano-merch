@@ -55,13 +55,19 @@ describe("Spatial Virtual Showroom & POPCustoms Catalog Invariants", () => {
   test("3. Clicking centered POPCustoms garment opens Inspection Mode, adds real SKU to bag, and Escape exits", () => {
     render(<Home />);
 
-    const firstClothing = productsCatalog.find((p) => p.category === "clothing");
-    expect(firstClothing).toBeDefined();
+    const clothingItems = productsCatalog.filter((p) => p.category === "clothing");
+    const defaultCentered = clothingItems[Math.min(2, clothingItems.length - 1)];
+    expect(defaultCentered).toBeDefined();
 
-    const centerGarment = screen.getByTestId(`rack-garment-${firstClothing!.id}`);
+    // Verify clean HTML-entity-free copy across catalog
+    for (const p of productsCatalog) {
+      expect(p.description).not.toMatch(/&nbsp;|&amp;|<p>/i);
+    }
+
+    const centerGarment = screen.getByTestId(`rack-garment-${defaultCentered.id}`);
     fireEvent.click(centerGarment);
 
-    const dialog = screen.getByRole("dialog", { name: new RegExp(`Inspect ${firstClothing!.title}`, "i") });
+    const dialog = screen.getByRole("dialog", { name: new RegExp(`Inspect ${defaultCentered.title}`, "i") });
     expect(dialog).toBeInTheDocument();
 
     const addToBagBtn = screen.getByTestId("add-to-bag-cta");
@@ -72,7 +78,7 @@ describe("Spatial Virtual Showroom & POPCustoms Catalog Invariants", () => {
 
     fireEvent.keyDown(window, { key: "Escape" });
     expect(
-      screen.queryByRole("dialog", { name: new RegExp(`Inspect ${firstClothing!.title}`, "i") })
+      screen.queryByRole("dialog", { name: new RegExp(`Inspect ${defaultCentered.title}`, "i") })
     ).not.toBeInTheDocument();
   });
 

@@ -156,7 +156,7 @@ export function ClothingRackWall({
         )}
       </motion.div>
 
-      {/* ARCHITECTURAL WALL WATERMARK BEHIND THE RAIL */}
+      {/* ARCHITECTURAL WALL WATERMARK BEHIND THE RAIL (shown cleanly on tall viewports so it never collides with rail) */}
       <motion.div
         aria-hidden="true"
         animate={{
@@ -164,9 +164,9 @@ export function ClothingRackWall({
           scale: isInspecting ? 0.95 : 1,
         }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        className="pointer-events-none absolute top-[15.5%] sm:top-[16.5%] left-1/2 -translate-x-1/2 flex flex-col items-center z-10"
+        className="pointer-events-none hidden [@media(min-height:800px)]:flex absolute top-[14.5%] left-1/2 -translate-x-1/2 flex-col items-center z-10"
       >
-        <span className="font-heading font-black text-4xl sm:text-6xl md:text-7xl tracking-[0.16em] uppercase text-white/[0.08] whitespace-nowrap">
+        <span className="font-heading font-black text-4xl sm:text-5xl md:text-6xl tracking-[0.18em] uppercase text-white/[0.07] whitespace-nowrap">
           CARDANO
         </span>
       </motion.div>
