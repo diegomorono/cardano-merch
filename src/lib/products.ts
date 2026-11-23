@@ -1,21 +1,6 @@
 import { productsCatalog } from "./catalog";
+import type { Product, ProductVariant, ShowroomCategory } from "./catalog";
 
-export interface ProductVariant {
-  sku: string;
-  size: string;
-  color: string;
-  weight: number;
-  dropshippingPrice: number;
-  recommendPrice: number;
-}
+export type { Product, ProductVariant, ShowroomCategory };
 
-export interface Product {
-  id: string;
-  title: string;
-  description: string;
-  images: string[];
-  variants: ProductVariant[];
-  color: string;
-}
-
-export const products = productsCatalog;
+export const products: Product[] = productsCatalog;

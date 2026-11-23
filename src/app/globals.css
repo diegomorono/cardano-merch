@@ -6,7 +6,10 @@
   --color-cardano-light: #0055FF;
   --color-charcoal: #050505;
   --color-obsidian: #0A0A0A;
-  
+  --color-vault-wall: #181B24;
+  --color-vault-wall-deep: #0E1017;
+  --color-vault-floor: #0B0D13;
+
   --font-heading: "Space Grotesk", sans-serif;
   --font-body: "Plus Jakarta Sans", sans-serif;
 }
@@ -26,7 +29,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body);
-  font-weight: 450; /* Slightly heavier base weight for better visibility on dark backgrounds */
+  font-weight: 450;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -36,7 +39,85 @@ h1, h2, h3, .heading-xl {
   text-transform: uppercase;
   font-weight: 700;
   line-height: 1.1;
-  letter-spacing: -0.03em; /* Tighter tracking for premium feel */
+  letter-spacing: -0.03em;
+}
+
+/* =========================================================================
+   DARK BRUTALIST CRYPTOGRAPHIC VAULT — ARCHITECTURAL SHOWROOM SURFACES
+   ========================================================================= */
+
+.vault-wall-surface {
+  background:
+    radial-gradient(ellipse 68% 58% at 50% 24%, rgba(56, 72, 114, 0.34) 0%, rgba(24, 27, 36, 0.12) 48%, rgba(11, 13, 19, 0) 78%),
+    radial-gradient(ellipse 46% 30% at 50% 0%, rgba(0, 85, 255, 0.16) 0%, transparent 72%),
+    linear-gradient(180deg, #1A1E29 0%, #161923 54%, #11141C 100%);
+}
+
+.vault-concrete-grain {
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 0),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 28px 28px, 160px 100%;
+}
+
+.vault-floor-surface {
+  background:
+    radial-gradient(ellipse 64% 60% at 50% 0%, rgba(44, 58, 96, 0.34) 0%, rgba(12, 14, 20, 0.85) 56%, #07090D 100%),
+    linear-gradient(180deg, #131722 0%, #0B0D13 38%, #07080C 100%);
+}
+
+.vault-rail-bar {
+  background: linear-gradient(
+    180deg,
+    #4F586C 0%,
+    #95A2BC 24%,
+    #2E3442 56%,
+    #181B24 85%,
+    #0C0E14 100%
+  );
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.72),
+    0 2px 4px rgba(0, 0, 0, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.vault-pegboard-panel {
+  background-color: #161A24;
+  background-image:
+    radial-gradient(circle, rgba(4, 6, 10, 0.85) 2.5px, transparent 3px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.08) 3px, transparent 3.5px);
+  background-size: 32px 32px;
+  background-position: 0 0, 0 1px;
+  box-shadow:
+    0 32px 70px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.vault-shelf-ledge {
+  background: linear-gradient(180deg, #363D4E 0%, #1F2430 48%, #10131B 100%);
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, 0.82),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.rack-perspective-stage {
+  perspective: 1400px;
+  perspective-origin: 50% 44%;
+}
+
+.rack-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.garment-contact-shadow {
+  filter: drop-shadow(0 28px 34px rgba(0, 0, 0, 0.72)) drop-shadow(0 6px 14px rgba(0, 0, 0, 0.55));
+}
+
+.garment-active-shadow {
+  filter:
+    drop-shadow(0 36px 48px rgba(0, 0, 0, 0.85))
+    drop-shadow(0 0 28px rgba(0, 85, 255, 0.22));
 }
 
 /* Liquid Metal Blur */
@@ -101,7 +182,7 @@ h1, h2, h3, .heading-xl {
   text-shadow: 0 0 20px rgba(0, 51, 173, 0.3);
 }
 
-/* Form Styling */
+/* Form Styling (used by /checkout) */
 .merch-input {
   width: 100%;
   background: rgba(255, 255, 255, 0.03);
@@ -133,7 +214,7 @@ h1, h2, h3, .heading-xl {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Force white button base override to prevent mobile/safari browser agent or dark mode hijacking */
+/* Force white button base override on checkout / CTA buttons */
 button.bg-white,
 input[type="button"].bg-white,
 input[type="submit"].bg-white,
@@ -147,7 +228,6 @@ main button.bg-white.text-black {
   appearance: none;
 }
 
-/* Specific overrides for mobile resolutions to ensure the Add to Cart button is absolutely white */
 @media (max-width: 639px) {
   button.bg-white,
   .bg-white.text-black,
@@ -165,4 +245,3 @@ main button.bg-white.text-black {
   background: #ffffff !important;
   color: #050505 !important;
 }
-
