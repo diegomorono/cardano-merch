@@ -22,8 +22,10 @@ export function BagDrawer({ isOpen, onClose, products }: BagDrawerProps) {
     for (const p of products) {
       const variant = p.variants.find((v) => v.sku === sku);
       if (variant) {
+        const fitImg =
+          variant.fit && p.fitColorImages?.[variant.fit]?.[variant.color]?.[0];
         const colorImg = p.colorImages?.[variant.color]?.[0];
-        return colorImg ?? p.images[0] ?? null;
+        return fitImg ?? colorImg ?? p.images[0] ?? null;
       }
     }
     return null;

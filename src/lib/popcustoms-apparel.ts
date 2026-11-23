@@ -21,7 +21,8 @@ export const popcustomsApparelCatalog: Product[] = [
       ],
       "Navy": [
         "/showroom/apparel/964325-navy.webp",
-        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-9-RY3zPt7d1g.jpeg"
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-9-RY3zPt7d1g.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-17-RY3zPt7d1g.jpeg"
       ],
       "Gray": [
         "/showroom/apparel/964325-gray.webp"
@@ -30,12 +31,30 @@ export const popcustomsApparelCatalog: Product[] = [
         "/showroom/apparel/964325-white.webp"
       ]
     },
+    "fitColorImages": {
+      "Unisex": {
+        "Black": [
+          "/showroom/apparel/964325-black.webp"
+        ],
+        "Navy": [
+          "/showroom/apparel/964325-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-9-RY3zPt7d1g.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260703/1783046391-17-RY3zPt7d1g.jpeg"
+        ],
+        "Gray": [
+          "/showroom/apparel/964325-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/964325-white.webp"
+        ]
+      }
+    },
     "fits": [
       "Unisex"
     ],
     "garmentType": "hoodie",
     "category": "clothing",
-    "eyebrow": "Heavyweight Fleece Hoodie",
+    "eyebrow": "Unisex Heavyweight Hoodie",
     "era": "Defiance Archive",
     "fabricSpec": "100% Cotton Fleece · 285 GSM",
     "specs": [
@@ -322,13 +341,33 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260703/1783047735-1-Dl3trkJBeX.jpeg"
       ]
     },
+    "fitColorImages": {
+      "Women": {
+        "Gray": [
+          "/showroom/apparel/964331-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/964331-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260703/1783047693-2-Tht46HxM4W.jpeg"
+        ]
+      },
+      "Men": {
+        "Gray": [
+          "/showroom/apparel/964332-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/964332-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260703/1783047735-1-Dl3trkJBeX.jpeg"
+        ]
+      }
+    },
     "fits": [
       "Men",
       "Women"
     ],
     "garmentType": "shirt",
     "category": "clothing",
-    "eyebrow": "Unisex Heavyweight Tee",
+    "eyebrow": "Men & Women Heavyweight Tee",
     "era": "Voltaire · CIP-1694",
     "fabricSpec": "100% American Cotton · 180 GSM",
     "specs": [
@@ -651,13 +690,33 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260703/1783051549-1-KIdh0i1cn1.jpeg"
       ]
     },
+    "fitColorImages": {
+      "Women": {
+        "Gray": [
+          "/showroom/apparel/964355-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/964355-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260703/1783051500-1-t3MS8zdWgp.jpeg"
+        ]
+      },
+      "Men": {
+        "Gray": [
+          "/showroom/apparel/964356-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/964356-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260703/1783051549-1-KIdh0i1cn1.jpeg"
+        ]
+      }
+    },
     "fits": [
       "Men",
       "Women"
     ],
     "garmentType": "shirt",
     "category": "clothing",
-    "eyebrow": "Unisex Heavyweight Tee",
+    "eyebrow": "Men & Women Heavyweight Tee",
     "era": "Shelley · Ouroboros PoS",
     "fabricSpec": "100% American Cotton · 180 GSM",
     "specs": [
@@ -979,7 +1038,8 @@ export const popcustomsApparelCatalog: Product[] = [
       ],
       "Navy": [
         "/showroom/apparel/967265-navy.webp",
-        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-11-rN1owtwkcl.jpeg"
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-11-rN1owtwkcl.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-19-rN1owtwkcl.jpeg"
       ],
       "Gray": [
         "/showroom/apparel/967265-gray.webp"
@@ -988,12 +1048,30 @@ export const popcustomsApparelCatalog: Product[] = [
         "/showroom/apparel/967265-white.webp"
       ]
     },
+    "fitColorImages": {
+      "Unisex": {
+        "Black": [
+          "/showroom/apparel/967265-black.webp"
+        ],
+        "Navy": [
+          "/showroom/apparel/967265-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-11-rN1owtwkcl.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784050988-19-rN1owtwkcl.jpeg"
+        ],
+        "Gray": [
+          "/showroom/apparel/967265-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967265-white.webp"
+        ]
+      }
+    },
     "fits": [
       "Unisex"
     ],
     "garmentType": "hoodie",
     "category": "clothing",
-    "eyebrow": "Heavyweight Fleece Hoodie",
+    "eyebrow": "Unisex Heavyweight Hoodie",
     "era": "Byron · Genesis Era",
     "fabricSpec": "100% Cotton Fleece · 285 GSM",
     "specs": [
@@ -1288,13 +1366,45 @@ export const popcustomsApparelCatalog: Product[] = [
         "/showroom/apparel/966148-white.webp"
       ]
     },
+    "fitColorImages": {
+      "Men": {
+        "Black": [
+          "/showroom/apparel/966148-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260710/1783619215-2-0lfiHun8Mi.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/966148-navy.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/966148-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/966148-white.webp"
+        ]
+      },
+      "Women": {
+        "Black": [
+          "/showroom/apparel/966152-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260710/1783619319-3-kRotu2G9ra.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/966152-navy.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/966152-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/966152-white.webp"
+        ]
+      }
+    },
     "fits": [
       "Men",
       "Women"
     ],
     "garmentType": "shirt",
     "category": "clothing",
-    "eyebrow": "Unisex Heavyweight Tee",
+    "eyebrow": "Men & Women Heavyweight Tee",
     "era": "Shelley · Ouroboros PoS",
     "fabricSpec": "100% American Cotton · 180 GSM",
     "specs": [
@@ -1914,13 +2024,45 @@ export const popcustomsApparelCatalog: Product[] = [
         "/showroom/apparel/967261-white.webp"
       ]
     },
+    "fitColorImages": {
+      "Women": {
+        "Black": [
+          "/showroom/apparel/967253-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784050185-1-qt62rcKYfA.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/967253-navy.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/967253-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967253-white.webp"
+        ]
+      },
+      "Men": {
+        "Black": [
+          "/showroom/apparel/967261-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784049918-2-LXUMDd2OHy.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/967261-navy.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/967261-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967261-white.webp"
+        ]
+      }
+    },
     "fits": [
       "Men",
       "Women"
     ],
     "garmentType": "shirt",
     "category": "clothing",
-    "eyebrow": "Unisex Heavyweight Tee",
+    "eyebrow": "Men & Women Heavyweight Tee",
     "era": "Goguen · Plutus Era",
     "fabricSpec": "100% American Cotton · 180 GSM",
     "specs": [
@@ -2525,15 +2667,25 @@ export const popcustomsApparelCatalog: Product[] = [
     "colorImages": {
       "White": [
         "/showroom/apparel/967323-white.webp",
-        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066646-3-xxWOR5b4ze.jpeg"
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066646-3-xxWOR5b4ze.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066646-5-xxWOR5b4ze.jpeg"
       ]
+    },
+    "fitColorImages": {
+      "Unisex": {
+        "White": [
+          "/showroom/apparel/967323-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066646-3-xxWOR5b4ze.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066646-5-xxWOR5b4ze.jpeg"
+        ]
+      }
     },
     "fits": [
       "Unisex"
     ],
     "garmentType": "hoodie",
     "category": "clothing",
-    "eyebrow": "Heavyweight Fleece Hoodie",
+    "eyebrow": "Unisex Heavyweight Hoodie",
     "era": "Community Lore",
     "fabricSpec": "100% Cotton Fleece · 285 GSM",
     "specs": [
@@ -2544,7 +2696,8 @@ export const popcustomsApparelCatalog: Product[] = [
     ],
     "images": [
       "/showroom/apparel/967323-white.webp",
-      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066646-3-xxWOR5b4ze.jpeg"
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066646-3-xxWOR5b4ze.jpeg",
+      "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066646-5-xxWOR5b4ze.jpeg"
     ],
     "variants": [
       {
@@ -2640,13 +2793,45 @@ export const popcustomsApparelCatalog: Product[] = [
         "/showroom/apparel/967262-white.webp"
       ]
     },
+    "fitColorImages": {
+      "Men": {
+        "Black": [
+          "/showroom/apparel/967262-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784050482-1-wcBzIhkIKd.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/967262-navy.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/967262-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967262-white.webp"
+        ]
+      },
+      "Women": {
+        "Black": [
+          "/showroom/apparel/967263-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784050658-2-eBF9wGw2BX.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/967263-navy.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/967263-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967263-white.webp"
+        ]
+      }
+    },
     "fits": [
       "Men",
       "Women"
     ],
     "garmentType": "shirt",
     "category": "clothing",
-    "eyebrow": "Unisex Heavyweight Tee",
+    "eyebrow": "Men & Women Heavyweight Tee",
     "era": "Byron · Genesis Era",
     "fabricSpec": "100% American Cotton · 180 GSM",
     "specs": [
@@ -3258,6 +3443,17 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784065449-1-0m63RkuAMv.jpeg"
       ]
     },
+    "fitColorImages": {
+      "Women": {
+        "Gray": [
+          "/showroom/apparel/967312-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967312-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784065449-1-0m63RkuAMv.jpeg"
+        ]
+      }
+    },
     "fits": [
       "Women"
     ],
@@ -3443,15 +3639,31 @@ export const popcustomsApparelCatalog: Product[] = [
       ],
       "White": [
         "/showroom/apparel/967332-white.webp",
-        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066989-7-oZkNEk85Tl.jpeg"
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066989-7-oZkNEk85Tl.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066989-13-oZkNEk85Tl.jpeg"
       ]
+    },
+    "fitColorImages": {
+      "Unisex": {
+        "Black": [
+          "/showroom/apparel/967332-black.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/967332-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967332-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066989-7-oZkNEk85Tl.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784066989-13-oZkNEk85Tl.jpeg"
+        ]
+      }
     },
     "fits": [
       "Unisex"
     ],
     "garmentType": "hoodie",
     "category": "clothing",
-    "eyebrow": "Heavyweight Fleece Hoodie",
+    "eyebrow": "Unisex Heavyweight Hoodie",
     "era": "Voltaire · CIP-1694",
     "fabricSpec": "100% Cotton Fleece · 285 GSM",
     "specs": [
@@ -3678,6 +3890,20 @@ export const popcustomsApparelCatalog: Product[] = [
       "White": [
         "/showroom/apparel/967319-white.webp"
       ]
+    },
+    "fitColorImages": {
+      "Women": {
+        "Black": [
+          "/showroom/apparel/967319-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784066004-2-Qa7UBDkQ67.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/967319-navy.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967319-white.webp"
+        ]
+      }
     },
     "fits": [
       "Women"
@@ -3944,13 +4170,45 @@ export const popcustomsApparelCatalog: Product[] = [
         "/showroom/apparel/967341-white.webp"
       ]
     },
+    "fitColorImages": {
+      "Men": {
+        "Black": [
+          "/showroom/apparel/967341-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784067615-2-bzds421RRk.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/967341-navy.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/967341-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967341-white.webp"
+        ]
+      },
+      "Women": {
+        "Black": [
+          "/showroom/apparel/967343-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784067844-2-rWxLL14GaO.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/967343-navy.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/967343-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967343-white.webp"
+        ]
+      }
+    },
     "fits": [
       "Men",
       "Women"
     ],
     "garmentType": "shirt",
     "category": "clothing",
-    "eyebrow": "Unisex Heavyweight Tee",
+    "eyebrow": "Men & Women Heavyweight Tee",
     "era": "Basho · Scaling Era",
     "fabricSpec": "100% American Cotton · 180 GSM",
     "specs": [
@@ -4561,7 +4819,8 @@ export const popcustomsApparelCatalog: Product[] = [
       ],
       "Navy": [
         "/showroom/apparel/967345-navy.webp",
-        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-12-4iSCmTnIu7.jpeg"
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-12-4iSCmTnIu7.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-20-4iSCmTnIu7.jpeg"
       ],
       "Gray": [
         "/showroom/apparel/967345-gray.webp"
@@ -4570,12 +4829,30 @@ export const popcustomsApparelCatalog: Product[] = [
         "/showroom/apparel/967345-white.webp"
       ]
     },
+    "fitColorImages": {
+      "Unisex": {
+        "Black": [
+          "/showroom/apparel/967345-black.webp"
+        ],
+        "Navy": [
+          "/showroom/apparel/967345-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-12-4iSCmTnIu7.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784068112-20-4iSCmTnIu7.jpeg"
+        ],
+        "Gray": [
+          "/showroom/apparel/967345-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967345-white.webp"
+        ]
+      }
+    },
     "fits": [
       "Unisex"
     ],
     "garmentType": "hoodie",
     "category": "clothing",
-    "eyebrow": "Heavyweight Fleece Hoodie",
+    "eyebrow": "Unisex Heavyweight Hoodie",
     "era": "Byron · Genesis Era",
     "fabricSpec": "100% Cotton Fleece · 285 GSM",
     "specs": [
@@ -4870,13 +5147,45 @@ export const popcustomsApparelCatalog: Product[] = [
         "/showroom/apparel/967361-white.webp"
       ]
     },
+    "fitColorImages": {
+      "Women": {
+        "Black": [
+          "/showroom/apparel/967360-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784075225-2-mE4RL8ZDYY.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/967360-navy.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/967360-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967360-white.webp"
+        ]
+      },
+      "Men": {
+        "Black": [
+          "/showroom/apparel/967361-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784075269-2-dP7Mvz0l1p.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/967361-navy.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/967361-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967361-white.webp"
+        ]
+      }
+    },
     "fits": [
       "Men",
       "Women"
     ],
     "garmentType": "shirt",
     "category": "clothing",
-    "eyebrow": "Unisex Heavyweight Tee",
+    "eyebrow": "Men & Women Heavyweight Tee",
     "era": "Defiance Archive",
     "fabricSpec": "100% American Cotton · 180 GSM",
     "specs": [
@@ -5488,13 +5797,33 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784075991-1-CBAAh9i32x.jpeg"
       ]
     },
+    "fitColorImages": {
+      "Men": {
+        "Gray": [
+          "/showroom/apparel/967364-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967364-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784075991-1-CBAAh9i32x.jpeg"
+        ]
+      },
+      "Women": {
+        "Gray": [
+          "/showroom/apparel/967366-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967366-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784076060-1-7qLyOLEZnw.jpeg"
+        ]
+      }
+    },
     "fits": [
       "Men",
       "Women"
     ],
     "garmentType": "shirt",
     "category": "clothing",
-    "eyebrow": "Unisex Heavyweight Tee",
+    "eyebrow": "Men & Women Heavyweight Tee",
     "era": "Goguen · Plutus Era",
     "fabricSpec": "100% American Cotton · 180 GSM",
     "specs": [
@@ -5816,7 +6145,8 @@ export const popcustomsApparelCatalog: Product[] = [
       ],
       "Navy": [
         "/showroom/apparel/967362-navy.webp",
-        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-11-zbuXzPdr11.jpeg"
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-11-zbuXzPdr11.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-19-zbuXzPdr11.jpeg"
       ],
       "Gray": [
         "/showroom/apparel/967362-gray.webp"
@@ -5825,12 +6155,30 @@ export const popcustomsApparelCatalog: Product[] = [
         "/showroom/apparel/967362-white.webp"
       ]
     },
+    "fitColorImages": {
+      "Unisex": {
+        "Black": [
+          "/showroom/apparel/967362-black.webp"
+        ],
+        "Navy": [
+          "/showroom/apparel/967362-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-11-zbuXzPdr11.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784075568-19-zbuXzPdr11.jpeg"
+        ],
+        "Gray": [
+          "/showroom/apparel/967362-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967362-white.webp"
+        ]
+      }
+    },
     "fits": [
       "Unisex"
     ],
     "garmentType": "hoodie",
     "category": "clothing",
-    "eyebrow": "Heavyweight Fleece Hoodie",
+    "eyebrow": "Unisex Heavyweight Hoodie",
     "era": "Goguen · Plutus Era",
     "fabricSpec": "100% Cotton Fleece · 285 GSM",
     "specs": [
@@ -6117,13 +6465,33 @@ export const popcustomsApparelCatalog: Product[] = [
         "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784076463-1-aX9OAtZOA4.jpeg"
       ]
     },
+    "fitColorImages": {
+      "Men": {
+        "Gray": [
+          "/showroom/apparel/967369-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967369-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784076463-1-aX9OAtZOA4.jpeg"
+        ]
+      },
+      "Women": {
+        "Gray": [
+          "/showroom/apparel/967370-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967370-white.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784076518-1-mCGeDxLWDp.jpeg"
+        ]
+      }
+    },
     "fits": [
       "Men",
       "Women"
     ],
     "garmentType": "shirt",
     "category": "clothing",
-    "eyebrow": "Unisex Heavyweight Tee",
+    "eyebrow": "Men & Women Heavyweight Tee",
     "era": "Basho · Scaling Era",
     "fabricSpec": "100% American Cotton · 180 GSM",
     "specs": [
@@ -6454,13 +6822,45 @@ export const popcustomsApparelCatalog: Product[] = [
         "/showroom/apparel/967375-white.webp"
       ]
     },
+    "fitColorImages": {
+      "Men": {
+        "Black": [
+          "/showroom/apparel/967375-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784077354-2-ZqwoUMHAmI.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/967375-navy.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/967375-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967375-white.webp"
+        ]
+      },
+      "Women": {
+        "Black": [
+          "/showroom/apparel/967376-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784077401-2-DVkFM6yVRP.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/967376-navy.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/967376-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967376-white.webp"
+        ]
+      }
+    },
     "fits": [
       "Men",
       "Women"
     ],
     "garmentType": "shirt",
     "category": "clothing",
-    "eyebrow": "Unisex Heavyweight Tee",
+    "eyebrow": "Men & Women Heavyweight Tee",
     "era": "Basho · Midnight ZKP",
     "fabricSpec": "100% American Cotton · 180 GSM",
     "specs": [
@@ -7071,7 +7471,8 @@ export const popcustomsApparelCatalog: Product[] = [
       ],
       "Navy": [
         "/showroom/apparel/967373-navy.webp",
-        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-11-oxbjZInq12.jpeg"
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-11-oxbjZInq12.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-19-oxbjZInq12.jpeg"
       ],
       "Gray": [
         "/showroom/apparel/967373-gray.webp"
@@ -7080,12 +7481,30 @@ export const popcustomsApparelCatalog: Product[] = [
         "/showroom/apparel/967373-white.webp"
       ]
     },
+    "fitColorImages": {
+      "Unisex": {
+        "Black": [
+          "/showroom/apparel/967373-black.webp"
+        ],
+        "Navy": [
+          "/showroom/apparel/967373-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-11-oxbjZInq12.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260715/1784076992-19-oxbjZInq12.jpeg"
+        ],
+        "Gray": [
+          "/showroom/apparel/967373-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967373-white.webp"
+        ]
+      }
+    },
     "fits": [
       "Unisex"
     ],
     "garmentType": "hoodie",
     "category": "clothing",
-    "eyebrow": "Heavyweight Fleece Hoodie",
+    "eyebrow": "Unisex Heavyweight Hoodie",
     "era": "Basho · Midnight ZKP",
     "fabricSpec": "100% Cotton Fleece · 285 GSM",
     "specs": [
@@ -7380,13 +7799,45 @@ export const popcustomsApparelCatalog: Product[] = [
         "/showroom/apparel/967401-white.webp"
       ]
     },
+    "fitColorImages": {
+      "Men": {
+        "Black": [
+          "/showroom/apparel/967401-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260715/1784089232-2-iOoXra39pu.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/967401-navy.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/967401-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967401-white.webp"
+        ]
+      },
+      "Women": {
+        "Black": [
+          "/showroom/apparel/967402-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260715/1784089285-2-Ero73kfxII.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/967402-navy.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/967402-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967402-white.webp"
+        ]
+      }
+    },
     "fits": [
       "Men",
       "Women"
     ],
     "garmentType": "shirt",
     "category": "clothing",
-    "eyebrow": "Unisex Heavyweight Tee",
+    "eyebrow": "Men & Women Heavyweight Tee",
     "era": "Basho · Scaling Era",
     "fabricSpec": "100% American Cotton · 180 GSM",
     "specs": [
@@ -8006,13 +8457,45 @@ export const popcustomsApparelCatalog: Product[] = [
         "/showroom/apparel/967729-white.webp"
       ]
     },
+    "fitColorImages": {
+      "Men": {
+        "Black": [
+          "/showroom/apparel/967729-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260717/1784223146-2-MBcwmFD04C.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/967729-navy.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/967729-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967729-white.webp"
+        ]
+      },
+      "Women": {
+        "Black": [
+          "/showroom/apparel/967730-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260717/1784223214-2-dNwh7A541X.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/967730-navy.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/967730-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967730-white.webp"
+        ]
+      }
+    },
     "fits": [
       "Men",
       "Women"
     ],
     "garmentType": "shirt",
     "category": "clothing",
-    "eyebrow": "Unisex Heavyweight Tee",
+    "eyebrow": "Men & Women Heavyweight Tee",
     "era": "Basho · Scaling Era",
     "fabricSpec": "100% American Cotton · 180 GSM",
     "specs": [
@@ -8623,7 +9106,8 @@ export const popcustomsApparelCatalog: Product[] = [
       ],
       "Navy": [
         "/showroom/apparel/967734-navy.webp",
-        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-9-OyIXGlTUzL.jpeg"
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-5-OyIXGlTUzL.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-13-OyIXGlTUzL.jpeg"
       ],
       "Gray": [
         "/showroom/apparel/967734-gray.webp"
@@ -8632,12 +9116,30 @@ export const popcustomsApparelCatalog: Product[] = [
         "/showroom/apparel/967734-white.webp"
       ]
     },
+    "fitColorImages": {
+      "Unisex": {
+        "Black": [
+          "/showroom/apparel/967734-black.webp"
+        ],
+        "Navy": [
+          "/showroom/apparel/967734-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-5-OyIXGlTUzL.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225247-13-OyIXGlTUzL.jpeg"
+        ],
+        "Gray": [
+          "/showroom/apparel/967734-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967734-white.webp"
+        ]
+      }
+    },
     "fits": [
       "Unisex"
     ],
     "garmentType": "hoodie",
     "category": "clothing",
-    "eyebrow": "Heavyweight Fleece Hoodie",
+    "eyebrow": "Unisex Heavyweight Hoodie",
     "era": "Cardano Vault Edition",
     "fabricSpec": "100% Cotton Fleece · 285 GSM",
     "specs": [
@@ -8932,13 +9434,45 @@ export const popcustomsApparelCatalog: Product[] = [
         "/showroom/apparel/967733-white.webp"
       ]
     },
+    "fitColorImages": {
+      "Women": {
+        "Black": [
+          "/showroom/apparel/967732-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-W/20260717/1784224341-3-0IKMPYfpMS.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/967732-navy.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/967732-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967732-white.webp"
+        ]
+      },
+      "Men": {
+        "Black": [
+          "/showroom/apparel/967733-black.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C5-M/20260717/1784224532-2-lsl61iu2rd.jpeg"
+        ],
+        "Navy": [
+          "/showroom/apparel/967733-navy.webp"
+        ],
+        "Gray": [
+          "/showroom/apparel/967733-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967733-white.webp"
+        ]
+      }
+    },
     "fits": [
       "Men",
       "Women"
     ],
     "garmentType": "shirt",
     "category": "clothing",
-    "eyebrow": "Unisex Heavyweight Tee",
+    "eyebrow": "Men & Women Heavyweight Tee",
     "era": "Voltaire · CIP-1694",
     "fabricSpec": "100% American Cotton · 180 GSM",
     "specs": [
@@ -9549,7 +10083,8 @@ export const popcustomsApparelCatalog: Product[] = [
       ],
       "Navy": [
         "/showroom/apparel/967735-navy.webp",
-        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-9-H4htVN0BUv.jpeg"
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-5-H4htVN0BUv.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-13-H4htVN0BUv.jpeg"
       ],
       "Gray": [
         "/showroom/apparel/967735-gray.webp"
@@ -9558,12 +10093,30 @@ export const popcustomsApparelCatalog: Product[] = [
         "/showroom/apparel/967735-white.webp"
       ]
     },
+    "fitColorImages": {
+      "Unisex": {
+        "Black": [
+          "/showroom/apparel/967735-black.webp"
+        ],
+        "Navy": [
+          "/showroom/apparel/967735-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-5-H4htVN0BUv.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784225566-13-H4htVN0BUv.jpeg"
+        ],
+        "Gray": [
+          "/showroom/apparel/967735-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967735-white.webp"
+        ]
+      }
+    },
     "fits": [
       "Unisex"
     ],
     "garmentType": "hoodie",
     "category": "clothing",
-    "eyebrow": "Heavyweight Fleece Hoodie",
+    "eyebrow": "Unisex Heavyweight Hoodie",
     "era": "Voltaire · CIP-1694",
     "fabricSpec": "100% Cotton Fleece · 285 GSM",
     "specs": [
@@ -9849,7 +10402,8 @@ export const popcustomsApparelCatalog: Product[] = [
       ],
       "Navy": [
         "/showroom/apparel/967737-navy.webp",
-        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-12-hTdbZfOz2d.jpeg"
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-12-hTdbZfOz2d.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-20-hTdbZfOz2d.jpeg"
       ],
       "Gray": [
         "/showroom/apparel/967737-gray.webp"
@@ -9858,12 +10412,30 @@ export const popcustomsApparelCatalog: Product[] = [
         "/showroom/apparel/967737-white.webp"
       ]
     },
+    "fitColorImages": {
+      "Unisex": {
+        "Black": [
+          "/showroom/apparel/967737-black.webp"
+        ],
+        "Navy": [
+          "/showroom/apparel/967737-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-12-hTdbZfOz2d.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226008-20-hTdbZfOz2d.jpeg"
+        ],
+        "Gray": [
+          "/showroom/apparel/967737-gray.webp"
+        ],
+        "White": [
+          "/showroom/apparel/967737-white.webp"
+        ]
+      }
+    },
     "fits": [
       "Unisex"
     ],
     "garmentType": "hoodie",
     "category": "clothing",
-    "eyebrow": "Heavyweight Fleece Hoodie",
+    "eyebrow": "Unisex Heavyweight Hoodie",
     "era": "Defiance Archive",
     "fabricSpec": "100% Cotton Fleece · 285 GSM",
     "specs": [
@@ -10147,15 +10719,28 @@ export const popcustomsApparelCatalog: Product[] = [
       ],
       "Navy": [
         "/showroom/apparel/967738-navy.webp",
-        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226379-6-CSXHFi99GH.jpeg"
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226379-6-CSXHFi99GH.jpeg",
+        "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226379-10-CSXHFi99GH.jpeg"
       ]
+    },
+    "fitColorImages": {
+      "Unisex": {
+        "Black": [
+          "/showroom/apparel/967738-black.webp"
+        ],
+        "Navy": [
+          "/showroom/apparel/967738-navy.webp",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226379-6-CSXHFi99GH.jpeg",
+          "https://pop-samples.oss-accelerate.aliyuncs.com/23551/GLD_C7/20260717/1784226379-10-CSXHFi99GH.jpeg"
+        ]
+      }
     },
     "fits": [
       "Unisex"
     ],
     "garmentType": "hoodie",
     "category": "clothing",
-    "eyebrow": "Heavyweight Fleece Hoodie",
+    "eyebrow": "Unisex Heavyweight Hoodie",
     "era": "Community Lore",
     "fabricSpec": "100% Cotton Fleece · 285 GSM",
     "specs": [

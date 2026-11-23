@@ -80,7 +80,7 @@ function InspectionDialogContent({
     };
   }, []);
 
-  // Filter variants cleanly by selected Fit & Color
+  // Filter variants cleanly by selected Fit (Men / Women / Unisex) & Color
   const filteredVariants = useMemo(() => {
     const byFit = selectedFit
       ? product.variants.filter((v) => !v.fit || v.fit === selectedFit)
@@ -101,12 +101,15 @@ function InspectionDialogContent({
     );
   }, [filteredVariants, selectedSize]);
 
-  // Resolve gallery images for the currently selected colorway
+  // Resolve gallery images for the currently selected Fit (Men/Women) + Colorway!
   const activeGallery = useMemo(() => {
+    if (selectedFit && product.fitColorImages?.[selectedFit]?.[selectedColor]?.length) {
+      return product.fitColorImages[selectedFit][selectedColor];
+    }
     const colorSet = product.colorImages?.[selectedColor];
     if (colorSet && colorSet.length > 0) return colorSet;
     return product.images;
-  }, [product.colorImages, product.images, selectedColor]);
+  }, [product.fitColorImages, product.colorImages, product.images, selectedFit, selectedColor]);
 
   const currentIdx = siblingProducts.findIndex((p) => p.id === product.id);
 
@@ -121,7 +124,10 @@ function InspectionDialogContent({
 
   const handleSelectColor = (color: string) => {
     setSelectedColor(color);
-    setActiveImageIdx(0);
+  };
+
+  const handleSelectFit = (fit: GarmentFit) => {
+    setSelectedFit(fit);
   };
 
   const handleConfirmAdd = () => {
@@ -147,9 +153,14 @@ function InspectionDialogContent({
   };
 
   const isApparel = product.category === "clothing";
+  const isHoodie = product.garmentType === "hoodie";
   const colorOptions = product.availableColors ?? [];
   const fitOptions = product.fits ?? [];
-  const viewLabels = ["Studio", "On Model", "Detail"];
+
+  const viewLabels = isHoodie
+    ? ["Studio", "Men Model", "Women Model"]
+    : ["Studio", selectedFit === "Women" ? "Women Model" : "Men Model", "Detail"];
+
   const safeImageIdx = Math.min(activeImageIdx, Math.max(0, activeGallery.length - 1));
   const isModelView = safeImageIdx > 0;
 
@@ -192,15 +203,15 @@ function InspectionDialogContent({
           </button>
         )}
 
-        {/* Zoomed Product Visual (exact source coordinates for Fly-to-Bag clone) */}
+        {/* Zoomed Product Visual */}
         <AnimatePresence mode="wait">
           <motion.div
-            key={`${product.id}-${selectedColor}-${safeImageIdx}`}
+            key={`${product.id}-${selectedFit ?? "default"}-${selectedColor}-${safeImageIdx}`}
             ref={stageImageRef}
-            initial={{ opacity: 0, scale: 0.9, x: -12 }}
+            initial={{ opacity: 0, scale: 0.92, x: -10 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
-            exit={{ opacity: 0, scale: 0.93, x: 12 }}
-            transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
+            exit={{ opacity: 0, scale: 0.94, x: 10 }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
             className={`relative z-10 flex items-center justify-center ${
               isModelView
                 ? "h-[84%] max-h-[480px] aspect-square rounded-3xl overflow-hidden bg-white/95 p-2 shadow-[0_28px_70px_rgba(0,0,0,0.75)] ring-1 ring-white/20"
@@ -211,7 +222,7 @@ function InspectionDialogContent({
           >
             <img
               src={activeGallery[safeImageIdx] || product.images[0]}
-              alt={`${product.title} — ${selectedColor}`}
+              alt={`${product.title} — ${selectedFit ? `${selectedFit} · ` : ""}${selectedColor}`}
               draggable={false}
               className={`w-full h-full object-contain ${
                 isModelView ? "rounded-2xl" : "garment-active-shadow"
@@ -243,7 +254,7 @@ function InspectionDialogContent({
                   type="button"
                   onClick={() => setActiveImageIdx(i)}
                   aria-label={`View ${viewLabels[i] ?? `Angle ${i + 1}`}`}
-                  className={`px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.16em] transition-colors cursor-pointer border-none ${
+                  className={`px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.15em] transition-colors cursor-pointer border-none whitespace-nowrap ${
                     active
                       ? "bg-white text-[#050505]"
                       : "bg-transparent text-white/60 hover:text-white"
@@ -263,7 +274,7 @@ function InspectionDialogContent({
         animate={{ opacity: 1, x: 0, scale: 1 }}
         exit={{ opacity: 0, x: 28, scale: 0.97 }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="pointer-events-auto relative w-full max-w-md md:w-[410px] lg:w-[435px] max-h-[46dvh] md:max-h-[74dvh] overflow-y-auto rounded-3xl bg-[#10131C]/94 border border-white/14 backdrop-blur-2xl shadow-[0_32px_90px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.08)] p-5 sm:p-7 text-white shrink-0"
+        className="pointer-events-auto relative w-full max-w-md md:w-[415px] lg:w-[440px] max-h-[46dvh] md:max-h-[76dvh] overflow-y-auto rounded-3xl bg-[#10131C]/94 border border-white/14 backdrop-blur-2xl shadow-[0_32px_90px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.08)] p-5 sm:p-7 text-white shrink-0"
       >
         {/* Close Button (×) */}
         <button
@@ -298,8 +309,49 @@ function InspectionDialogContent({
           {product.description}
         </p>
 
-        {/* Colour & Fit Controls Row (Aligned cleanly side-by-side when both present) */}
+        {/* Configuration Controls: Fit (Men / Women) -> Colour -> Size */}
         <div className="mt-4 pt-4 border-t border-white/10 space-y-4">
+          {/* Prominent Men / Women Cut Selector for dual-gender POPCustoms products */}
+          {fitOptions.length > 1 && (
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/55">
+                  Select Fit
+                </span>
+                <span className="text-[11px] font-semibold text-white">
+                  {selectedFit === "Women" ? "Women's Fit" : "Men's Fit"}
+                </span>
+              </div>
+              <div
+                role="radiogroup"
+                aria-label="Select Men or Women fit"
+                className="grid grid-cols-2 gap-2"
+              >
+                {fitOptions.map((fit) => {
+                  const active = selectedFit === fit;
+                  return (
+                    <button
+                      key={fit}
+                      type="button"
+                      role="radio"
+                      aria-checked={active}
+                      data-testid={`fit-option-${fit.toLowerCase()}`}
+                      onClick={() => handleSelectFit(fit)}
+                      className={`py-2 px-4 rounded-full text-xs font-bold uppercase tracking-[0.16em] transition-all duration-200 cursor-pointer border ${
+                        active
+                          ? "bg-white text-[#050505] border-white shadow-[0_6px_18px_rgba(255,255,255,0.22)]"
+                          : "bg-white/[0.04] text-white/70 border-white/14 hover:border-white/35 hover:text-white"
+                      }`}
+                    >
+                      {fit}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Colour Selector */}
           {colorOptions.length > 1 ? (
             <div className="flex items-center justify-between gap-4">
               <div className="text-xs text-white/60">
@@ -337,35 +389,6 @@ function InspectionDialogContent({
               <span>
                 Colour: <span className="font-semibold text-white">{selectedColor}</span>
               </span>
-            </div>
-          )}
-
-          {/* Fit Toggle (Men / Women for paired POPCustoms shirts) */}
-          {fitOptions.length > 1 && (
-            <div className="flex items-center justify-between gap-4">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/55">
-                Cut / Fit
-              </span>
-              <div className="inline-flex items-center gap-1 p-0.5 rounded-full bg-white/[0.05] border border-white/12">
-                {fitOptions.map((fit) => {
-                  const active = selectedFit === fit;
-                  return (
-                    <button
-                      key={fit}
-                      type="button"
-                      onClick={() => setSelectedFit(fit)}
-                      aria-pressed={active}
-                      className={`px-3.5 py-1 rounded-full text-[11px] font-bold tracking-wider transition-colors cursor-pointer border-none ${
-                        active
-                          ? "bg-white text-[#050505]"
-                          : "bg-transparent text-white/65 hover:text-white"
-                      }`}
-                    >
-                      {fit}
-                    </button>
-                  );
-                })}
-              </div>
             </div>
           )}
 

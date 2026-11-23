@@ -34,6 +34,7 @@ export interface Product {
   colorHex: string;
   availableColors?: string[];
   colorImages?: Record<string, string[]>;
+  fitColorImages?: Record<string, Record<string, string[]>>;
   fits?: GarmentFit[];
   garmentType?: GarmentType;
   category: ShowroomCategory;

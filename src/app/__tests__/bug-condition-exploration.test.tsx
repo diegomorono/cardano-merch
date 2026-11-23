@@ -76,7 +76,41 @@ describe("Spatial Virtual Showroom & POPCustoms Catalog Invariants", () => {
     ).not.toBeInTheDocument();
   });
 
-  test("4. Checkout page logo retains hover effects, grayscale transition, and motion wrapper", () => {
+  test("4. Dual-fit POPCustoms shirts expose Men/Women selector switching fit SKU and photo", () => {
+    render(<Home />);
+
+    const dualFitShirt = productsCatalog.find(
+      (p) => p.category === "clothing" && p.fits && p.fits.includes("Men") && p.fits.includes("Women")
+    );
+    expect(dualFitShirt).toBeDefined();
+
+    // Filter to Shirts so dual-fit shirt is immediately accessible on the rack
+    fireEvent.click(screen.getByRole("tab", { name: /Shirts/i }));
+    const rackBtn = screen.getByTestId(`rack-garment-${dualFitShirt!.id}`);
+    // Click once to focus if not centered, then click again to open Inspection Mode
+    fireEvent.click(rackBtn);
+    if (!screen.queryByRole("dialog")) {
+      fireEvent.click(screen.getByTestId(`rack-garment-${dualFitShirt!.id}`));
+    }
+
+    const menBtn = screen.getByTestId("fit-option-men");
+    const womenBtn = screen.getByTestId("fit-option-women");
+    expect(menBtn).toHaveAttribute("aria-checked", "true");
+    expect(womenBtn).toHaveAttribute("aria-checked", "false");
+
+    fireEvent.click(womenBtn);
+    expect(womenBtn).toHaveAttribute("aria-checked", "true");
+    expect(menBtn).toHaveAttribute("aria-checked", "false");
+
+    fireEvent.click(screen.getByTestId("add-to-bag-cta"));
+    expect(mockAddToCart).toHaveBeenCalledWith(
+      expect.objectContaining({
+        title: expect.stringMatching(/Women/i),
+      })
+    );
+  });
+
+  test("5. Checkout page logo retains hover effects, grayscale transition, and motion wrapper", () => {
     const { container: checkoutContainer } = render(<CheckoutPage />);
 
     const checkoutLogoContainer = checkoutContainer.querySelector(".cursor-pointer.group");
